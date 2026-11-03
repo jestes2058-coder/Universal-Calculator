@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Inquiries | Universal Calculator</title>
+  <meta name="description" content="Contact the Universal Calculator team. Accessible, keyboard-friendly contact form with explicit privacy consent and data minimization.">
+  <link rel="icon" type="image/png" href="logo/logo.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Accessible Skip Link -->
+  <a href="#mainContent" class="skip-link">Skip to main content</a>
+
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="index.html" class="site-brand" aria-label="Universal Calculator Home">
+        <img src="logo/logo.png" alt="Universal Calculator Logo" class="brand-logo-img">
+        <div>
+          <span class="site-title">Universal Calculator</span>
+          <span class="site-badge">Technical Support</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" role="navigation" aria-label="Primary Navigation">
+        <ul>
+          <li><a href="index.html">Calculator</a></li>
+          <li><a href="index.html#referenceTable">Color Table</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="mainContent" class="container">
+    <div class="legal-content" style="max-width: 960px;">
+      
+      <header class="legal-header">
+        <h1>Contact & Technical Inquiries</h1>
+        <p class="legal-meta">Have feedback, discovered a bug, or have a standards question? Reach out below.</p>
+      </header>
+
+      <div class="contact-grid">
+        
+        <!-- Left Column: Accessible Form with Consent -->
+        <section aria-labelledby="formHeading">
+          <h2 id="formHeading" style="font-size: 1.25rem; margin-top: 0;">Send Us a Message</h2>
+          <p style="font-size: 0.9rem;">
+            Fields marked with <span class="required-star">*</span> are strictly mandatory to allow us to address your inquiry.
+          </p>
+
+          <!-- Dynamic Alert Announcement Box for Screen Readers -->
+          <div id="formAlertBox" class="alert-banner" tabindex="-1"></div>
+
+          <form id="complianceContactForm" novalidate>
+            
+            <!-- Honeypot field (Catches automated spam bots without invasive third-party captcha scripts) -->
+            <div class="honeypot-field" aria-hidden="true">
+              <label for="contact_hp">Leave this field blank</label>
+              <input type="text" id="contact_hp" name="contact_hp" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="form-field">
+              <label for="userName">Full Name <span class="required-star">*</span></label>
+              <input type="text" id="userName" name="userName" class="text-input" placeholder="e.g. Jane Doe" required autocomplete="name">
+            </div>
+
+            <div class="form-field">
+              <label for="userEmail">Email Address <span class="required-star">*</span></label>
+              <input type="email" id="userEmail" name="userEmail" class="text-input" placeholder="e.g. jane@example.com" required autocomplete="email">
+            </div>
+
+            <div class="form-field">
+              <label for="userSubject">Subject</label>
+              <select id="userSubject" name="userSubject" class="select-input">
+                <option value="calculator_bug">Calculator Bug / Calculation Discrepancy</option>
+                <option value="standards_query">IEC 60062 Standard Inquiry</option>
+                <option value="accessibility_feedback">Accessibility / WCAG Feedback</option>
+                <option value="privacy_legal">Data Protection / Privacy Request</option>
+                <option value="general_feedback">General Engineering Feedback</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="userMessage">Message Details <span class="required-star">*</span></label>
+              <textarea id="userMessage" name="userMessage" rows="5" class="text-input" placeholder="Please provide specific details regarding your inquiry..." required></textarea>
+            </div>
+
+            <!-- MANDATORY FORM CONSENT CHECKBOX (GDPR Art. 7 & CCPA Compliant) -->
+            <div class="checkbox-consent-group">
+              <input type="checkbox" id="consentCheckbox" name="consentCheckbox" required>
+              <label for="consentCheckbox">
+                <strong>Explicit Data Processing Consent:</strong> I agree that my provided contact details will be processed exclusively to respond to this inquiry in accordance with the 
+                <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>. Data will not be shared, sold, or used for unsolicited marketing. <span class="required-star">*</span>
+              </label>
+            </div>
+
+            <button type="submit" id="btnSubmitContact" class="btn-primary" style="width: 100%; padding: 0.75rem;">
+              Send Message Securely
+            </button>
+          </form>
+        </section>
+
+        <!-- Right Column: Business Details & Verification -->
+        <section aria-labelledby="businessInfoHeading">
+          <h2 id="businessInfoHeading" style="font-size: 1.25rem; margin-top: 0;">Business & Operator Details</h2>
+          
+          <div class="callout-box info" style="margin-top: 0;">
+            <p><strong>Official Business Contact:</strong></p>
+            <p style="margin-bottom: 0.35rem;"><strong>Entity:</strong> Universal Calculator Engineering Tools</p>
+            <p style="margin-bottom: 0.35rem;"><strong>Support Email:</strong> <a href="mailto:support@universalcalculator-sample.local">support@universalcalculator-sample.local</a></p>
+            <p style="margin-bottom: 0.35rem;"><strong>Privacy Office:</strong> <a href="mailto:privacy@universalcalculator-sample.local">privacy@universalcalculator-sample.local</a></p>
+            <p style="margin-bottom: 0.35rem;"><strong>Response Window:</strong> 1 to 2 business days</p>
+          </div>
+
+          <h3 style="margin-top: 1.5rem; font-size: 1rem;">Data Protection Guarantees</h3>
+          <ul class="legal-list" style="font-size: 0.875rem;">
+            <li><strong>Strict Data Minimization:</strong> We never ask for sensitive personal data or billing credentials.</li>
+            <li><strong>No Tracking Captchas:</strong> We do not expose you to Google reCAPTCHA or Cloudflare Turnstile telemetry tracking cookies.</li>
+            <li><strong>Automatic Message Pruning:</strong> Inquiries are safely purged after resolution.</li>
+          </ul>
+
+          <h3 style="margin-top: 1.5rem; font-size: 1rem;">Accessibility Assistance</h3>
+          <p style="font-size: 0.875rem;">
+            If you experience any accessibility barriers while using our calculators or screen readers, please inform us so our development team can immediately implement remediations.
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-bottom">
+      <div>&copy; 2026 Universal Calculator Tools. All rights reserved.</div>
+      <div><a href="privacy-policy.html">Privacy Policy</a> &bull; <a href="terms.html">Terms</a> &bull; <a href="cookie-policy.html">Cookies</a> &bull; <a href="refund-policy.html">Refunds</a></div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

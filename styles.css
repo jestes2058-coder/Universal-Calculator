@@ -1,0 +1,1149 @@
+/* ==========================================================================
+   RESISTOR, MATH, SCIENTIFIC & PHYSICS CALCULATOR - STYLESHEET
+   Compact, normal calculator web page style (max-width: 580px).
+   Features:
+   - Resistor Color Code & Real-World Circuit Simulator
+   - Standard Basic Math Calculator
+   - Full Scientific Calculator (Trig, Log, Powers, Deg/Rad)
+   - Comprehensive Physics Calculator (Mechanics, Electricity, Waves, Heat)
+   - Legal & Compliance Modals (WCAG AA/AAA, Zero-Tracking)
+   ========================================================================== */
+
+:root {
+  --bg-page: #eef2f6;
+  --calc-chassis: #ffffff;
+  --calc-border: #b8cde0;
+  --calc-shadow: 0 10px 28px rgba(0, 34, 68, 0.14), 0 2px 8px rgba(0, 0, 0, 0.04);
+  
+  --primary-navy: #003366;
+  --primary-nav-bg: #002244;
+  --accent-green: #4b8522;
+  --accent-green-hover: #3d6e1b;
+  --accent-blue: #0055aa;
+  
+  --lcd-bg: #f8fafc;
+  --lcd-border: #a0b5c8;
+  --lcd-text: #002244;
+  --lcd-subtext: #475569;
+  
+  --btn-num-bg: #ffffff;
+  --btn-num-hover: #f1f5f9;
+  --btn-op-bg: #e2e8f0;
+  --btn-op-hover: #cbd5e1;
+  --btn-fn-bg: #dbeafe;
+  --btn-fn-hover: #bfdbfe;
+  
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-light: #d8e2ec;
+  
+  --safe-bg: #eafaf1;
+  --safe-border: #2ecc71;
+  --safe-text: #196f3d;
+  
+  --danger-bg: #fdedec;
+  --danger-border: #e74c3c;
+  --danger-text: #922b21;
+  
+  --warning-bg: #fcf8e3;
+  --warning-border: #faebcc;
+  --warning-text: #8a6d3b;
+
+  --font-family: Arial, Helvetica, sans-serif;
+  --font-mono: Consolas, "Courier New", monospace;
+  --focus-ring: #0066cc;
+}
+
+/* --------------------------------------------------------------------------
+   BASE & RESET
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 10px;
+  line-height: 1.4;
+  font-size: 13px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 10px;
+  background: var(--primary-navy);
+  color: #fff;
+  padding: 6px 12px;
+  z-index: 10000;
+  font-weight: bold;
+}
+.skip-link:focus {
+  top: 5px;
+}
+
+/* --------------------------------------------------------------------------
+   CALCULATOR DEVICE WRAPPER (COMPACT CHASSIS)
+   -------------------------------------------------------------------------- */
+.calculator-device {
+  width: 100%;
+  max-width: 580px;
+  background-color: var(--calc-chassis);
+  border: 2px solid var(--calc-border);
+  border-radius: 12px;
+  box-shadow: var(--calc-shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Calculator Top Bar */
+.calc-header-bar {
+  background-color: var(--primary-navy);
+  color: #ffffff;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.calc-title-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.calc-logo-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 4px;
+  display: block;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1px;
+}
+
+.brand-logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 4px;
+  display: block;
+}
+
+.calc-title {
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: -0.3px;
+}
+
+.quick-jump-box {
+  display: flex;
+  align-items: center;
+}
+
+.quick-jump-select {
+  background-color: #002244;
+  color: #cce0ff;
+  border: 1px solid #004488;
+  border-radius: 4px;
+  font-size: 11px;
+  padding: 4px 6px;
+  max-width: 175px;
+  cursor: pointer;
+}
+
+.quick-jump-select:focus {
+  outline: 2px solid #3399ff;
+  background-color: #001a33;
+}
+
+/* --------------------------------------------------------------------------
+   MASTER CATEGORY SELECTOR TABS (8 UNIVERSAL DISCIPLINES)
+   -------------------------------------------------------------------------- */
+.master-tabs-bar {
+  background-color: var(--primary-nav-bg);
+  display: flex;
+  border-bottom: 2px solid #001a33;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.master-tabs-bar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.master-tab {
+  flex: 0 0 auto;
+  background: none;
+  border: none;
+  color: #c0d0e0;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.15s;
+  border-bottom: 3px solid transparent;
+}
+
+.master-tab:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.master-tab[aria-selected="true"] {
+  background-color: var(--calc-chassis);
+  color: var(--primary-navy);
+  border-bottom-color: var(--accent-green);
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+/* Sub-Tabs for Electronics & Multi-Tools */
+.sub-tabs-bar {
+  background-color: #e2e8f0;
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border-light);
+  padding: 3px;
+  gap: 3px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.sub-tabs-bar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.sub-tab {
+  flex: 0 0 auto;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 10.5px;
+  font-weight: bold;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.sub-tab:hover {
+  background-color: #cbd5e1;
+  color: var(--text-main);
+}
+
+.sub-tab[aria-selected="true"] {
+  background-color: var(--calc-chassis);
+  color: var(--primary-navy);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* --------------------------------------------------------------------------
+   DIGITAL LCD READOUT SCREEN (ADAPTS TO ALL CALCULATORS)
+   -------------------------------------------------------------------------- */
+.calc-lcd-screen {
+  background-color: var(--lcd-bg);
+  border: 1.5px solid var(--lcd-border);
+  border-radius: 8px;
+  margin: 10px 14px 8px;
+  padding: 9px 14px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.lcd-top-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.lcd-tag {
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--lcd-subtext);
+  letter-spacing: 0.5px;
+}
+
+.lcd-expression-line {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--lcd-subtext);
+  min-height: 15px;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lcd-main-digits {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--lcd-text);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  word-break: break-all;
+}
+
+.lcd-sub-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  padding-top: 5px;
+  border-top: 1px dashed var(--lcd-border);
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  color: var(--lcd-subtext);
+}
+
+/* --------------------------------------------------------------------------
+   INTERACTIVE GRAPHIC VIEWPORT (RESISTOR / CIRCUIT SCHEMATIC)
+   -------------------------------------------------------------------------- */
+.calc-graphic-window {
+  margin: 0 14px 8px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 5px;
+  text-align: center;
+}
+
+.calc-graphic-window svg {
+  width: 100%;
+  max-height: 85px;
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   MASTER PANELS
+   -------------------------------------------------------------------------- */
+.master-panel {
+  display: none;
+  flex-direction: column;
+}
+
+.master-panel.active {
+  display: flex;
+}
+
+.sub-panel-box {
+  padding: 0 14px 12px;
+  display: none;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.sub-panel-box.active {
+  display: flex;
+}
+
+/* --------------------------------------------------------------------------
+   PANEL 1: RESISTOR CONTROLS
+   -------------------------------------------------------------------------- */
+.band-selector-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3px;
+  background-color: var(--bg-page);
+  padding: 3px;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+}
+
+.band-count-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  font-size: 10.5px;
+  font-weight: bold;
+  padding: 4px 2px;
+  border-radius: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.band-count-btn[aria-pressed="true"] {
+  background-color: var(--calc-chassis);
+  color: var(--primary-navy);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.band-dropdowns-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 8px;
+}
+
+@media (max-width: 440px) {
+  .band-dropdowns-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.band-item-box {
+  background-color: var(--lcd-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 5px;
+  padding: 4px 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.band-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10.5px;
+  font-weight: bold;
+  color: var(--primary-navy);
+}
+
+.color-swatch-pip {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.3);
+}
+
+.calc-select-control {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid #a0b5c8;
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.calc-actions-strip {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.btn-calc-main {
+  flex: 1;
+  background-color: var(--accent-green);
+  color: #ffffff;
+  border: 1px solid #3d6e1b;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 11.5px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+}
+.btn-calc-main:hover {
+  background-color: var(--accent-green-hover);
+}
+
+.btn-calc-sub {
+  background-color: #004080;
+  color: #ffffff;
+  border: 1px solid #002b55;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-calc-reset {
+  background-color: #6c757d;
+  color: #ffffff;
+  border: 1px solid #545b62;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Circuit Simulator Styling */
+.sim-controls-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--lcd-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.sim-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.sim-input-row label {
+  font-size: 10.5px;
+  font-weight: bold;
+  color: var(--primary-navy);
+  flex: 0 0 110px;
+}
+
+.sim-input-group {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+}
+
+.sim-text-field {
+  width: 75px;
+  padding: 3px 6px;
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+  border: 1px solid #a0b5c8;
+  border-radius: 3px;
+}
+
+.sim-verdict-box {
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.sim-verdict-box.safe {
+  background-color: var(--safe-bg);
+  border: 1.5px solid var(--safe-border);
+  color: var(--safe-text);
+}
+
+.sim-verdict-box.danger {
+  background-color: var(--danger-bg);
+  border: 1.5px solid var(--danger-border);
+  color: var(--danger-text);
+}
+
+.sim-verdict-box.warning {
+  background-color: var(--warning-bg);
+  border: 1.5px solid var(--warning-border);
+  color: var(--warning-text);
+}
+
+.sim-verdict-title {
+  font-size: 11.5px;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.sim-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 3px 6px;
+  margin: 5px 0;
+  padding: 3px 6px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.text-area-box {
+  width: 100%;
+  height: 48px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  padding: 5px;
+  border: 1px solid #a0b5c8;
+  border-radius: 4px;
+}
+
+.sim-output-box {
+  background-color: var(--safe-bg);
+  border: 1px solid var(--safe-border);
+  padding: 7px 9px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.sim-output-val {
+  font-size: 14px;
+  font-weight: bold;
+  font-family: var(--font-mono);
+  color: #0b5345;
+}
+
+/* --------------------------------------------------------------------------
+   PANELS 2 & 3: BASIC & SCIENTIFIC CALCULATOR KEYPADS
+   -------------------------------------------------------------------------- */
+.keypad-container {
+  padding: 0 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.keypad-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.deg-rad-switch {
+  display: inline-flex;
+  background: var(--bg-page);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 1px;
+}
+
+.deg-rad-btn {
+  background: none;
+  border: none;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.deg-rad-btn.active {
+  background: var(--primary-navy);
+  color: #ffffff;
+}
+
+.memory-bar {
+  display: flex;
+  gap: 4px;
+}
+
+.btn-mem {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--primary-navy);
+  padding: 2px 7px;
+  cursor: pointer;
+}
+.btn-mem:hover { background: #e2e8f0; }
+
+/* Grid Keypad Layouts */
+.keys-grid-basic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.keys-grid-sci {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.calc-key {
+  font-family: var(--font-family);
+  font-size: 13px;
+  font-weight: bold;
+  padding: 10px 4px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  transition: all 0.08s ease;
+}
+
+.calc-key:active {
+  transform: translateY(1px);
+}
+
+/* Button variants */
+.calc-key.num {
+  background-color: var(--btn-num-bg);
+  color: #0f172a;
+}
+.calc-key.num:hover { background-color: var(--btn-num-hover); }
+
+.calc-key.op {
+  background-color: var(--btn-op-bg);
+  color: #003366;
+}
+.calc-key.op:hover { background-color: var(--btn-op-hover); }
+
+.calc-key.sci-fn {
+  background-color: var(--btn-fn-bg);
+  color: #004080;
+  font-size: 11px;
+  padding: 8px 3px;
+}
+.calc-key.sci-fn:hover { background-color: var(--btn-fn-hover); }
+
+.calc-key.clear {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+.calc-key.clear:hover { background-color: #fecaca; }
+
+.calc-key.equals {
+  background-color: var(--accent-green);
+  color: #ffffff;
+  border-color: #3d6e1b;
+}
+.calc-key.equals:hover { background-color: var(--accent-green-hover); }
+
+/* --------------------------------------------------------------------------
+   PANEL 4: PHYSICS CALCULATOR STYLING
+   -------------------------------------------------------------------------- */
+.physics-container {
+  padding: 0 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.physics-select-card {
+  background: var(--lcd-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.physics-form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.physics-form-row label {
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--primary-navy);
+  flex: 0 0 100px;
+}
+
+.physics-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+  margin-top: 4px;
+}
+
+@media (max-width: 440px) {
+  .physics-inputs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.physics-input-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.physics-input-cell label {
+  font-size: 10.5px;
+  font-weight: bold;
+  color: #334155;
+}
+
+.physics-input-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.physics-unit-tag {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-weight: bold;
+  min-width: 30px;
+}
+
+/* Physics Solution Card */
+.physics-solution-card {
+  background: var(--safe-bg);
+  border: 1.5px solid var(--safe-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.physics-solution-title {
+  font-weight: bold;
+  color: var(--safe-text);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.physics-formula-display {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: 4px 0;
+  color: #0f172a;
+}
+
+.physics-step-breakdown {
+  font-size: 10.5px;
+  color: #273746;
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   IEC 60062 REFERENCE TABLE & STANDARDS (ELECTRONICS SUB-TOOL)
+   -------------------------------------------------------------------------- */
+.ref-table-wrapper {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  background: #ffffff;
+}
+
+.iec-ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.iec-ref-table th, .iec-ref-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid #eef2f6;
+  text-align: left;
+}
+
+.iec-ref-table th {
+  background-color: #f1f5f9;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  color: var(--primary-navy);
+}
+
+.color-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.ref-formula-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  background-color: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 6px 8px;
+}
+
+/* --------------------------------------------------------------------------
+   COMMON SUMMARY / RESULT CARDS (FINANCE, FITNESS, CHEMISTRY)
+   -------------------------------------------------------------------------- */
+.result-summary-card {
+  background-color: #f8fafc;
+  border: 1.5px solid var(--calc-border);
+  border-radius: 6px;
+  padding: 9px 12px;
+  margin-top: 10px;
+}
+
+.result-header {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--primary-navy);
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px dashed #cbd5e1;
+}
+
+.result-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px 12px;
+  font-size: 11px;
+}
+
+.ratio-progress-bar {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   BMI CATEGORY GAUGE (FITNESS)
+   -------------------------------------------------------------------------- */
+.bmi-gauge-bar {
+  display: flex;
+  height: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 6px 0;
+  font-size: 9.5px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 20px;
+}
+
+.bmi-zone.under { background-color: #60a5fa; color: #fff; flex: 18.5; }
+.bmi-zone.normal { background-color: #22c55e; color: #fff; flex: 6.5; }
+.bmi-zone.over { background-color: #f59e0b; color: #fff; flex: 5.0; }
+.bmi-zone.obese { background-color: #ef4444; color: #fff; flex: 10; }
+
+.bmi-zone.active {
+  box-shadow: inset 0 0 0 2px #000;
+  font-size: 10.5px;
+}
+
+/* --------------------------------------------------------------------------
+   TWO-WAY INTERACTIVE UNIT CONVERTER
+   -------------------------------------------------------------------------- */
+.converter-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.conv-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.conv-swap-col {
+  display: flex;
+  align-items: center;
+  padding-top: 16px;
+}
+
+.btn-swap-units {
+  background: #e2e8f0;
+  border: 1px solid var(--calc-border);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.btn-swap-units:hover {
+  background: #cbd5e1;
+  color: var(--primary-navy);
+  transform: rotate(180deg);
+}
+
+.conv-rate-badge {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--primary-navy);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   FOOTER & LEGAL MODALS
+   -------------------------------------------------------------------------- */
+.calc-dmm-notice {
+  margin: 0 14px 8px;
+  padding: 5px 8px;
+  background-color: var(--warning-bg);
+  border-left: 3px solid var(--warning-text);
+  border-radius: 3px;
+  font-size: 10.5px;
+  color: #713f12;
+  line-height: 1.35;
+}
+
+.calc-bottom-bar {
+  background-color: var(--bg-page);
+  border-top: 1px solid var(--border-light);
+  padding: 8px 12px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.legal-links-row {
+  margin-bottom: 3px;
+}
+
+.legal-links-row button {
+  background: none;
+  border: none;
+  color: var(--accent-blue);
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 3px;
+  text-decoration: underline;
+}
+.legal-links-row button:hover {
+  color: #cc0000;
+}
+
+.calc-copy-line {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+/* Modal Windows */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  z-index: 99999;
+}
+
+.modal-backdrop.is-open {
+  display: flex;
+}
+
+.modal-window {
+  background: #ffffff;
+  border: 2px solid var(--primary-navy);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 540px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  background-color: var(--primary-navy);
+  color: #ffffff;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.btn-close-modal {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 12px 14px;
+  overflow-y: auto;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #333333;
+}
+
+.modal-body h4 {
+  font-size: 12px;
+  color: var(--primary-navy);
+  margin: 10px 0 3px;
+}
+
+.modal-body p {
+  margin-bottom: 6px;
+}
+
+.modal-footer {
+  padding: 6px 12px;
+  background-color: var(--bg-page);
+  border-top: 1px solid var(--border-light);
+  text-align: right;
+}
+
+/* Cookie Toast Notice */
+.cookie-toast-banner {
+  position: fixed;
+  bottom: 8px;
+  left: 12px;
+  right: 12px;
+  max-width: 460px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1.5px solid var(--primary-navy);
+  border-radius: 6px;
+  padding: 6px 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 9999;
+  font-size: 11px;
+}
+
+.cookie-toast-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

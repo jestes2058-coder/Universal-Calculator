@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Calculator</title>
+  <meta name="description" content="Universal Calculator: All-in-one compact web calculator for Electronics, Basic Math, Scientific, Physics, Finance, BMI Fitness, Unit Conversions, and Chemistry.">
+  <link rel="icon" type="image/png" href="logo/logo.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Accessible Skip Link -->
+  <a href="#calculatorApp" class="skip-link">Skip to calculator</a>
+
+  <!-- ======================================================================
+       UNIVERSAL COMPACT CALCULATOR (580px DEVICE PROPORTIONS)
+       ====================================================================== -->
+  <main class="calculator-device" id="calculatorApp" role="main" aria-label="Universal Engineering, Science, Math &amp; Finance Calculator">
+    
+    <!-- Top Header Bar with Quick Jump Selector -->
+    <header class="calc-header-bar">
+      <div class="calc-title-box">
+        <img src="logo/logo.png" alt="Universal Calculator Logo" class="calc-logo-img">
+        <span class="calc-title">Universal Calculator</span>
+      </div>
+      
+      <!-- Quick Jump Selector matching all-in-one catalog -->
+      <div class="quick-jump-box">
+        <label for="quickCalcSelect" class="sr-only">Jump to calculator</label>
+        <select id="quickCalcSelect" class="quick-jump-select" title="Jump directly to any calculator">
+          <option value="">⚡ Jump to tool...</option>
+          <optgroup label="⚡ Electronics">
+            <option value="tabMasterElectronics:subTabColor">Resistor Color Code (2-6 Band)</option>
+            <option value="tabMasterElectronics:subTabCapacitor">Capacitor Code &amp; Value</option>
+            <option value="tabMasterElectronics:subTabDiode">Diode &amp; Zener Regulator</option>
+            <option value="tabMasterElectronics:subTabTransistor">Transistor (BJT / FET) Biasing</option>
+            <option value="tabMasterElectronics:subTabCircuit">Circuit &amp; LED Safety Simulator</option>
+            <option value="tabMasterElectronics:subTabParallel">Resistors in Parallel</option>
+            <option value="tabMasterElectronics:subTabSeries">Resistors in Series</option>
+            <option value="tabMasterElectronics:subTabConductor">Conductor Resistance</option>
+            <option value="tabMasterElectronics:subTabReference">IEC 60062 Color Table</option>
+          </optgroup>
+          <optgroup label="🔢 Mathematics">
+            <option value="tabMasterBasic">Basic Math &amp; Memory (4x5 Keypad)</option>
+            <option value="tabMasterSci">Scientific Calculator (Trig, Log, Rad/Deg)</option>
+          </optgroup>
+          <optgroup label="⚛️ Physics Lab">
+            <option value="tabMasterPhysics:kinematics">Mechanics &amp; Motion</option>
+            <option value="tabMasterPhysics:energy_work">Energy, Work &amp; Power</option>
+            <option value="tabMasterPhysics:dynamics">Forces &amp; Universal Gravity</option>
+            <option value="tabMasterPhysics:electricity">Electricity &amp; Ohm's Law</option>
+            <option value="tabMasterPhysics:waves_optics">Waves, Sound &amp; Optics</option>
+            <option value="tabMasterPhysics:thermodynamics">Thermodynamics &amp; Heat</option>
+          </optgroup>
+          <optgroup label="💰 Finance">
+            <option value="tabMasterFinance:loan">Loan &amp; Mortgage EMI</option>
+            <option value="tabMasterFinance:compound">Compound Interest</option>
+            <option value="tabMasterFinance:tip">Tip &amp; Split Calculator</option>
+          </optgroup>
+          <optgroup label="🏃 Fitness &amp; Health">
+            <option value="tabMasterFitness:bmi">BMI (Body Mass Index)</option>
+            <option value="tabMasterFitness:bmr">BMR &amp; Daily Calories</option>
+          </optgroup>
+          <optgroup label="🔄 Universal Unit Converter">
+            <option value="tabMasterConverter:length">Length Converter</option>
+            <option value="tabMasterConverter:mass">Mass &amp; Weight Converter</option>
+            <option value="tabMasterConverter:temp">Temperature Converter</option>
+            <option value="tabMasterConverter:speed">Speed Converter</option>
+            <option value="tabMasterConverter:pressure">Pressure Converter</option>
+            <option value="tabMasterConverter:storage">Digital Storage</option>
+            <option value="tabMasterConverter:energy">Energy &amp; Power</option>
+          </optgroup>
+          <optgroup label="🧪 Chemistry &amp; Fluids">
+            <option value="tabMasterChemistry:dilution">Solution Dilution (C1V1 = C2V2)</option>
+            <option value="tabMasterChemistry:ph">pH &amp; Hydronium Concentration</option>
+            <option value="tabMasterChemistry:molar">Molar Mass Reference</option>
+            <option value="tabMasterChemistry:pressure">Fluid Hydrostatic Pressure</option>
+          </optgroup>
+        </select>
+      </div>
+    </header>
+
+    <!-- Master Mode Selector Tabs (8 Universal Disciplines) -->
+    <nav class="master-tabs-bar" role="tablist" aria-label="Master Calculator Modes">
+      <button type="button" id="tabMasterElectronics" class="master-tab" role="tab" aria-selected="true" aria-controls="panelMasterElectronics">
+        ⚡ Electronics
+      </button>
+      <button type="button" id="tabMasterBasic" class="master-tab" role="tab" aria-selected="false" aria-controls="panelMasterBasic">
+        🔢 Math
+      </button>
+      <button type="button" id="tabMasterSci" class="master-tab" role="tab" aria-selected="false" aria-controls="panelMasterSci">
+        🔬 Scientific
+      </button>
+      <button type="button" id="tabMasterPhysics" class="master-tab" role="tab" aria-selected="false" aria-controls="panelMasterPhysics">
+        ⚛️ Physics
+      </button>
+      <button type="button" id="tabMasterFinance" class="master-tab" role="tab" aria-selected="false" aria-controls="panelMasterFinance">
+        💰 Finance
+      </button>
+      <button type="button" id="tabMasterFitness" class="master-tab" role="tab" aria-selected="false" aria-controls="panelMasterFitness">
+        🏃 Fitness
+      </button>
+      <button type="button" id="tabMasterConverter" class="master-tab" role="tab" aria-selected="false" aria-controls="panelMasterConverter">
+        🔄 Units
+      </button>
+      <button type="button" id="tabMasterChemistry" class="master-tab" role="tab" aria-selected="false" aria-controls="panelMasterChemistry">
+        🧪 Chemistry
+      </button>
+    </nav>
+
+    <!-- Unified Digital LCD Screen (Dynamically updates across all modes) -->
+    <section class="calc-lcd-screen" aria-live="polite" aria-atomic="true">
+      <div class="lcd-top-row">
+        <span class="lcd-tag" id="lcdModeLabel">Calculated Resistance</span>
+        <div class="lcd-expression-line" id="lcdExpression"></div>
+      </div>
+      <div class="lcd-main-digits" id="lcdMainValue">10,000 Ω (10 kΩ) ±5%</div>
+      <div class="lcd-sub-row">
+        <span id="lcdSubLeft">Range: 9,500 Ω – 10,500 Ω</span>
+        <span id="lcdSubRight">Series: E12 / E24 Standard</span>
+      </div>
+    </section>
+
+    <!-- Interactive Graphic Window (Visible in Electronics mode) -->
+    <div class="calc-graphic-window" id="graphicWindow" role="img" aria-label="Graphic illustration">
+      <div id="graphicContent">
+        <!-- Injected dynamically by calculator.js -->
+      </div>
+    </div>
+
+    <!-- ==================================================================
+         MASTER MODE 1: ELECTRONICS & RESISTOR SUITE
+         ================================================================== -->
+    <section id="panelMasterElectronics" class="master-panel active" role="tabpanel" aria-labelledby="tabMasterElectronics">
+      
+      <!-- Sub-tabs for Electronics -->
+      <div class="sub-tabs-bar" role="tablist" aria-label="Electronics Sub-Tools">
+        <button type="button" id="subTabColor" class="sub-tab" role="tab" aria-selected="true" aria-controls="subPanelColor">
+          Resistor Code
+        </button>
+        <button type="button" id="subTabCapacitor" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelCapacitor">
+          Capacitor
+        </button>
+        <button type="button" id="subTabDiode" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelDiode">
+          Diode &amp; Zener
+        </button>
+        <button type="button" id="subTabTransistor" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelTransistor">
+          Transistor
+        </button>
+        <button type="button" id="subTabCircuit" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelCircuit">
+          Circuit &amp; LED Sim
+        </button>
+        <button type="button" id="subTabParallel" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelParallel">
+          Parallel
+        </button>
+        <button type="button" id="subTabSeries" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelSeries">
+          Series
+        </button>
+        <button type="button" id="subTabConductor" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelConductor">
+          Conductor
+        </button>
+        <button type="button" id="subTabReference" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelReference">
+          Reference Table
+        </button>
+      </div>
+
+      <!-- 1. Color Code -->
+      <div id="subPanelColor" class="sub-panel-box active" role="tabpanel" aria-labelledby="subTabColor">
+        <div class="band-selector-row" role="group" aria-label="Band count">
+          <button type="button" class="band-count-btn" data-bands="2" aria-pressed="false">2 Band</button>
+          <button type="button" class="band-count-btn" data-bands="3" aria-pressed="false">3 Band</button>
+          <button type="button" class="band-count-btn" data-bands="4" aria-pressed="true">4 Band</button>
+          <button type="button" class="band-count-btn" data-bands="5" aria-pressed="false">5 Band</button>
+          <button type="button" class="band-count-btn" data-bands="6" aria-pressed="false">6 Band</button>
+        </div>
+
+        <div class="band-dropdowns-grid" id="bandControlsGrid">
+          <!-- Injected dynamically -->
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalculateColor" class="btn-calc-main">Calculate Resistance &#9658;</button>
+          <button type="button" id="btnTestInCircuit" class="btn-calc-sub">⚡ Test in Circuit &#9658;</button>
+          <button type="button" id="btnResetColor" class="btn-calc-reset">Reset</button>
+        </div>
+      </div>
+
+      <!-- 2. Capacitor Code & Value Calculator -->
+      <div id="subPanelCapacitor" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabCapacitor">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="capPresetSelect">Popular EIA Code:</label>
+            <select id="capPresetSelect" class="calc-select-control" style="flex: 1;">
+              <option value="custom">Select a standard value...</option>
+              <option value="101">101 — 100 pF (0.1 nF)</option>
+              <option value="102">102 — 1,000 pF (1 nF / 0.001 µF)</option>
+              <option value="103">103 — 10,000 pF (10 nF / 0.01 µF)</option>
+              <option value="104" selected>104 — 100,000 pF (100 nF / 0.1 µF)</option>
+              <option value="105">105 — 1,000,000 pF (1,000 nF / 1 µF)</option>
+              <option value="220">220 — 22 pF</option>
+              <option value="222">222 — 2.2 nF (0.0022 µF)</option>
+              <option value="223">223 — 22 nF (0.022 µF)</option>
+              <option value="224">224 — 220 nF (0.22 µF)</option>
+              <option value="471">471 — 470 pF (0.47 nF)</option>
+              <option value="472">472 — 4.7 nF (0.0047 µF)</option>
+              <option value="473">473 — 47 nF (0.047 µF)</option>
+              <option value="474">474 — 470 nF (0.47 µF)</option>
+              <option value="475">475 — 4.7 µF</option>
+              <option value="106">106 — 10 µF</option>
+            </select>
+          </div>
+
+          <div class="sim-input-row">
+            <label for="capDigit1">3-Digit EIA Code:</label>
+            <div class="sim-input-group">
+              <select id="capDigit1" class="calc-select-control" style="width: 55px;" aria-label="1st Digit">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+              </select>
+              <select id="capDigit2" class="calc-select-control" style="width: 55px;" aria-label="2nd Digit">
+                <option value="0" selected>0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+              </select>
+              <select id="capMultiplier" class="calc-select-control" style="flex: 1;" aria-label="Multiplier">
+                <option value="0">&times;1 (0)</option>
+                <option value="1">&times;10 (1)</option>
+                <option value="2">&times;100 (2)</option>
+                <option value="3">&times;1k (3)</option>
+                <option value="4" selected>&times;10k (4)</option>
+                <option value="5">&times;100k (5)</option>
+                <option value="6">&times;1M (6)</option>
+                <option value="-1">&times;0.1 (8)</option>
+                <option value="-2">&times;0.01 (9)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-input-row">
+            <label for="capToleranceSelect">Tolerance &amp; Volt:</label>
+            <div class="sim-input-group">
+              <select id="capToleranceSelect" class="calc-select-control" style="flex: 1;" aria-label="Tolerance">
+                <option value="J|5">J: &plusmn;5% (Standard)</option>
+                <option value="K|10" selected>K: &plusmn;10% (Film / Ceramic)</option>
+                <option value="M|20">M: &plusmn;20% (Electrolytic)</option>
+                <option value="Z|80|-20">Z: +80% / -20%</option>
+                <option value="F|1">F: &plusmn;1% (Precision)</option>
+                <option value="G|2">G: &plusmn;2%</option>
+                <option value="D|0.5">D: &plusmn;0.5 pF</option>
+                <option value="C|0.25">C: &plusmn;0.25 pF</option>
+              </select>
+              <select id="capVoltageSelect" class="calc-select-control" style="width: 105px;" aria-label="Voltage">
+                <option value="1H|50" selected>1H (50V)</option>
+                <option value="2A|100">2A (100V)</option>
+                <option value="2D|200">2D (200V)</option>
+                <option value="2E|250">2E (250V)</option>
+                <option value="2J|630">2J (630V)</option>
+                <option value="3A|1000">3A (1kV)</option>
+                <option value="1E|25">1E (25V)</option>
+                <option value="1C|16">1C (16V)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-input-row">
+            <label for="capFreqHz">Circuit Reactance &amp; RC:</label>
+            <div class="sim-input-group">
+              <input type="number" id="capFreqHz" class="sim-text-field" value="1000" min="1" step="any" placeholder="Freq (Hz)">
+              <span style="font-size: 11px; align-self: center;">Hz</span>
+              <input type="number" id="capPairedR" class="sim-text-field" value="1000" min="1" step="any" placeholder="Resistor (Ω)">
+              <span style="font-size: 11px; align-self: center;">Ω</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalculateCap" class="btn-calc-main">Decode Capacitor &#9658;</button>
+          <button type="button" id="btnResetCap" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="capResultCard" class="result-summary-card">
+          <div class="result-header">Capacitor EIA Code: <strong id="capEiaCodeDisplay">104K (50V)</strong></div>
+          <div class="result-metrics-grid">
+            <div>Microfarads (µF): <strong id="capUfDisplay">0.1 µF</strong></div>
+            <div>Nanofarads (nF): <strong id="capNfDisplay">100 nF</strong></div>
+            <div>Picofarads (pF): <strong id="capPfDisplay">100,000 pF</strong></div>
+            <div>Tolerance Range: <strong id="capTolRangeDisplay">90.0 nF – 110.0 nF</strong></div>
+            <div>Reactance X<sub>C</sub> (1 kHz): <strong id="capReactanceDisplay">1,591.55 Ω</strong></div>
+            <div>RC Time Constant: <strong id="capTimeConstDisplay">0.100 ms (fc: 1.59 kHz)</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Diode & Zener Regulator Calculator -->
+      <div id="subPanelDiode" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabDiode">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="diodeModeSelect">Diode Mode:</label>
+            <select id="diodeModeSelect" class="calc-select-control" style="flex: 1;">
+              <option value="forward" selected>Forward Bias (Rectifier / Signal / LED)</option>
+              <option value="zener">Reverse Breakdown (Zener Voltage Regulator)</option>
+            </select>
+          </div>
+
+          <div class="sim-input-row">
+            <label for="diodePresetSelect">Diode Model / Part:</label>
+            <select id="diodePresetSelect" class="calc-select-control" style="flex: 1;">
+              <option value="1N4001|0.70|1000|1.0" selected>Silicon Rectifier (1N4001, Vf ~0.7V, 1A)</option>
+              <option value="1N4148|0.72|200|0.5">Small Signal Fast (1N4148, Vf ~0.72V, 200mA)</option>
+              <option value="1N5819|0.35|1000|1.0">Schottky Low-Drop (1N5819, Vf ~0.35V, 1A)</option>
+              <option value="1N34A|0.25|50|0.1">Germanium Diode (1N34A, Vf ~0.25V, 50mA)</option>
+              <option value="LED_RED|2.00|20|0.07">Red LED (Vf ~2.0V, max 20mA)</option>
+              <option value="LED_BLUE|3.20|25|0.10">Blue/White LED (Vf ~3.2V, max 25mA)</option>
+              <option value="ZENER_3V3|3.30|150|0.5">Zener 3.3V (BZX55C3V3, 0.5W)</option>
+              <option value="ZENER_5V1|5.10|100|0.5">Zener 5.1V (BZX55C5V1, 0.5W)</option>
+              <option value="ZENER_6V2|6.20|80|0.5">Zener 6.2V (BZX55C6V2, 0.5W)</option>
+              <option value="ZENER_9V1|9.10|55|0.5">Zener 9.1V (BZX55C9V1, 0.5W)</option>
+              <option value="ZENER_12V|12.00|40|0.5">Zener 12V (BZX55C12, 0.5W)</option>
+              <option value="ZENER_15V|15.00|33|0.5">Zener 15V (BZX55C15, 0.5W)</option>
+              <option value="custom">Custom Diode Parameters...</option>
+            </select>
+          </div>
+
+          <div class="sim-input-row">
+            <label for="diodeSourceVolts">Source Voltage (Vs):</label>
+            <input type="number" id="diodeSourceVolts" class="sim-text-field" value="5.0" step="any">
+          </div>
+
+          <div class="sim-input-row">
+            <label for="diodeVfVal" id="lblDiodeVf">Forward Drop (Vf):</label>
+            <input type="number" id="diodeVfVal" class="sim-text-field" value="0.70" step="any">
+          </div>
+
+          <div class="sim-input-row">
+            <label for="diodeSeriesResistor">Series Resistor (Rs):</label>
+            <div class="sim-input-group">
+              <input type="number" id="diodeSeriesResistor" class="sim-text-field" value="220" min="1" step="any">
+              <select id="diodeResistorUnit" class="calc-select-control" style="width: 60px;">
+                <option value="1" selected>Ω</option>
+                <option value="1000">kΩ</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-input-row" id="rowDiodeLoadCurrent" style="display: none;">
+            <label for="diodeLoadCurrent">Load Current (IL):</label>
+            <div class="sim-input-group">
+              <input type="number" id="diodeLoadCurrent" class="sim-text-field" value="10.0" min="0" step="any">
+              <span style="font-size: 11px; align-self: center;">mA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalculateDiode" class="btn-calc-main">Analyze Diode Circuit &#9658;</button>
+          <button type="button" id="btnResetDiode" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="diodeResultCard" class="result-summary-card">
+          <div class="result-header">Diode Status: <strong id="diodeStatusDisplay" style="color: #196f3d;">Forward Conducting</strong></div>
+          <div class="result-metrics-grid">
+            <div>Diode Voltage (V<sub>D</sub>): <strong id="diodeVoltDisplay">0.70 V</strong></div>
+            <div>Diode Current (I<sub>D</sub>): <strong id="diodeCurrentDisplay">19.55 mA</strong></div>
+            <div>Diode Power (P<sub>D</sub>): <strong id="diodePowerDisplay">13.68 mW</strong></div>
+            <div>Resistor Drop (V<sub>RS</sub>): <strong id="diodeRsVoltDisplay">4.30 V</strong></div>
+            <div>Resistor Power (P<sub>RS</sub>): <strong id="diodeRsPowerDisplay">84.05 mW</strong></div>
+            <div>Safety Verdict: <strong id="diodeSafetyDisplay">Safe (within limits)</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Transistor (BJT & MOSFET) Calculator -->
+      <div id="subPanelTransistor" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabTransistor">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="transistorModelSelect">Transistor Model:</label>
+            <select id="transistorModelSelect" class="calc-select-control" style="flex: 1;">
+              <option value="NPN|100|0.7|0.2|2N3904" selected>2N3904 (NPN, General Purpose, hFE ~100)</option>
+              <option value="NPN|150|0.7|0.2|2N2222">2N2222 (NPN, High Current Switch, hFE ~150)</option>
+              <option value="NPN|250|0.7|0.2|BC547">BC547 (NPN, Audio / Low Noise, hFE ~250)</option>
+              <option value="PNP|100|0.7|0.2|2N3906">2N3906 (PNP, General Purpose, hFE ~100)</option>
+              <option value="PNP|250|0.7|0.2|BC557">BC557 (PNP, Audio / Low Noise, hFE ~250)</option>
+              <option value="custom">Custom Transistor Parameters...</option>
+            </select>
+          </div>
+
+          <div class="sim-input-row">
+            <label for="transSupplyVcc">Supply Voltage (Vcc):</label>
+            <input type="number" id="transSupplyVcc" class="sim-text-field" value="10.0" step="any">
+          </div>
+
+          <div class="sim-input-row">
+            <label for="transBaseVin">Base Input (Vin):</label>
+            <input type="number" id="transBaseVin" class="sim-text-field" value="5.0" step="any">
+          </div>
+
+          <div class="sim-input-row">
+            <label for="transBaseRb">Base Resistor (Rb):</label>
+            <div class="sim-input-group">
+              <input type="number" id="transBaseRb" class="sim-text-field" value="10" min="0.01" step="any">
+              <select id="transBaseRbUnit" class="calc-select-control" style="width: 60px;">
+                <option value="1">Ω</option>
+                <option value="1000" selected>kΩ</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-input-row">
+            <label for="transCollectorRc">Collector / Load (Rc):</label>
+            <div class="sim-input-group">
+              <input type="number" id="transCollectorRc" class="sim-text-field" value="1.0" min="0.01" step="any">
+              <select id="transCollectorRcUnit" class="calc-select-control" style="width: 60px;">
+                <option value="1">Ω</option>
+                <option value="1000" selected>kΩ</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-input-row">
+            <label for="transBetaGain">DC Current Gain (hFE / β):</label>
+            <input type="number" id="transBetaGain" class="sim-text-field" value="100" min="1" max="1000" step="1">
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalculateTransistor" class="btn-calc-main">Analyze Transistor State &#9658;</button>
+          <button type="button" id="btnResetTransistor" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="transResultCard" class="result-summary-card">
+          <div class="result-header">Operating State: <strong id="transStateDisplay" style="color: #0055aa;">SATURATION (Switch ON)</strong></div>
+          <div class="result-metrics-grid">
+            <div>Base Current (I<sub>B</sub>): <strong id="transIbDisplay">430.0 µA</strong></div>
+            <div>Collector Current (I<sub>C</sub>): <strong id="transIcDisplay">9.80 mA</strong></div>
+            <div>V<sub>CE</sub> Voltage: <strong id="transVceDisplay">0.20 V</strong></div>
+            <div>Transistor Power (P<sub>D</sub>): <strong id="transPdDisplay">1.96 mW</strong></div>
+            <div>Load Resistor Power: <strong id="transPrcDisplay">96.04 mW</strong></div>
+            <div>Overdrive Factor: <strong id="transOverdriveDisplay">4.39× (Hard Saturation)</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Real-World Circuit & LED Sim -->
+      <div id="subPanelCircuit" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabCircuit">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="circuitResistorVal">Resistor Value:</label>
+            <div class="sim-input-group">
+              <input type="number" id="circuitResistorVal" class="sim-text-field" value="100" min="0.01" step="any">
+              <select id="circuitResistorUnit" class="calc-select-control" style="width: 55px;" aria-label="Unit">
+                <option value="1" selected>Ω</option>
+                <option value="1000">kΩ</option>
+                <option value="1000000">MΩ</option>
+              </select>
+              <select id="circuitResistorWatt" class="calc-select-control" style="flex: 1;" aria-label="Power Rating">
+                <option value="0.125">1/8 W (0.125W)</option>
+                <option value="0.25" selected>1/4 W (0.25W)</option>
+                <option value="0.5">1/2 W (0.50W)</option>
+                <option value="1.0">1 Watt (1.0W)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-input-row">
+            <label for="circuitSourceVolts">Battery Voltage:</label>
+            <div class="sim-input-group">
+              <input type="number" id="circuitSourceVolts" class="sim-text-field" value="5.0" step="any">
+              <select id="circuitVoltagePresets" class="calc-select-control" aria-label="Voltage Preset">
+                <option value="custom">Preset...</option>
+                <option value="3.3">3.3V (Logic)</option>
+                <option value="5.0" selected>5.0V (USB / Battery)</option>
+                <option value="9.0">9.0V (9V Battery)</option>
+                <option value="12.0">12.0V (Car / 12V DC)</option>
+                <option value="24.0">24.0V (Industrial)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-input-row">
+            <label for="circuitLoadSelect">Connected Load:</label>
+            <select id="circuitLoadSelect" class="calc-select-control" style="flex: 1;">
+              <option value="red_led" selected>Red LED (~2.0V, max 20mA)</option>
+              <option value="green_led">Green LED (~2.2V, max 20mA)</option>
+              <option value="yellow_led">Yellow LED (~2.1V, max 20mA)</option>
+              <option value="blue_white_led">Blue / White LED (~3.2V, max 25mA)</option>
+              <option value="direct_load">Direct Load (No LED / Pure resistor)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="simVerdictBox" class="sim-verdict-box warning">
+          <div class="sim-verdict-title" id="simVerdictTitle">⚠️ WRONG CONNECTION: Overcurrent Detected!</div>
+          <div class="sim-metrics-grid" id="simVerdictMetrics">
+            <div>Current: <strong>30.0 mA</strong></div>
+            <div>Drop: <strong>3.00 V</strong></div>
+            <div>Power: <strong>90.0 mW (36%)</strong></div>
+            <div>LED Max: <strong>20.0 mA</strong></div>
+          </div>
+          <div id="simVerdictDesc" style="margin-bottom: 4px;">
+            Connecting 100 Ω to a 5V battery with a Red LED causes 30.0 mA of current. Exceeds 20 mA safe limit!
+          </div>
+          <div id="simVerdictAdvice" style="font-weight: bold;">
+            👉 Recommended: Use a 150 Ω to 220 Ω resistor to run safely.
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnRunCircuitCheck" class="btn-calc-main">Re-Check Connection &#9658;</button>
+          <button type="button" id="btnResetCircuitSim" class="btn-calc-reset">Reset</button>
+        </div>
+      </div>
+
+      <!-- 3. Parallel -->
+      <div id="subPanelParallel" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabParallel">
+        <label for="parallelValuesText" style="font-size: 11px; font-weight: bold;">Enter values separated by commas:</label>
+        <textarea id="parallelValuesText" class="text-area-box">100, 10, 20, 30, 20, 20</textarea>
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcParallel" class="btn-calc-main">Calculate Parallel &#9658;</button>
+          <button type="button" id="btnClearParallel" class="btn-calc-reset">Clear</button>
+        </div>
+      </div>
+
+      <!-- 4. Series -->
+      <div id="subPanelSeries" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabSeries">
+        <label for="seriesValuesText" style="font-size: 11px; font-weight: bold;">Enter values separated by commas:</label>
+        <textarea id="seriesValuesText" class="text-area-box">100, 10, 20, 30, 20, 20</textarea>
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcSeries" class="btn-calc-main">Calculate Series &#9658;</button>
+          <button type="button" id="btnClearSeries" class="btn-calc-reset">Clear</button>
+        </div>
+      </div>
+
+      <!-- 5. Conductor -->
+      <div id="subPanelConductor" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabConductor">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="conductorLen">Length:</label>
+            <div class="sim-input-group">
+              <input type="number" id="conductorLen" class="sim-text-field" value="100" step="any">
+              <select id="conductorLenUnit" class="calc-select-control" style="width: 75px;">
+                <option value="1" selected>meters</option>
+                <option value="0.01">cm</option>
+                <option value="0.3048">feet</option>
+                <option value="0.0254">inches</option>
+              </select>
+            </div>
+          </div>
+          <div class="sim-input-row">
+            <label for="conductorDiam">Diameter:</label>
+            <div class="sim-input-group">
+              <input type="number" id="conductorDiam" class="sim-text-field" value="1.00" step="any">
+              <select id="conductorDiamUnit" class="calc-select-control" style="width: 75px;">
+                <option value="0.001" selected>mm</option>
+                <option value="0.01">cm</option>
+                <option value="0.0000254">mils</option>
+                <option value="0.0254">inches</option>
+              </select>
+            </div>
+          </div>
+          <div class="sim-input-row">
+            <label for="conductorMaterial">Material:</label>
+            <select id="conductorMaterial" class="calc-select-control" style="flex: 1;">
+              <option value="58000000" selected>Copper (58 MS/m)</option>
+              <option value="37700000">Aluminum (37.7 MS/m)</option>
+              <option value="63000000">Silver (63 MS/m)</option>
+              <option value="45200000">Gold (45.2 MS/m)</option>
+              <option value="9930000">Iron (9.9 MS/m)</option>
+              <option value="14300000">Brass (14.3 MS/m)</option>
+              <option value="1000000">Nichrome (1 MS/m)</option>
+            </select>
+          </div>
+        </div>
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcConductor" class="btn-calc-main">Calculate Conductor &#9658;</button>
+          <button type="button" id="btnClearConductor" class="btn-calc-reset">Reset</button>
+        </div>
+      </div>
+
+      <!-- 6. IEC Reference Table & Standard Formulas (Matching Calculator.net) -->
+      <div id="subPanelReference" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabReference">
+        <div class="ref-table-wrapper">
+          <table class="iec-ref-table">
+            <thead>
+              <tr>
+                <th scope="col">Color</th>
+                <th scope="col">Digit</th>
+                <th scope="col">Multiplier</th>
+                <th scope="col">Tolerance</th>
+                <th scope="col">Temp. Coeff</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="color-badge" style="background:#000;color:#fff;">Black</span></td><td>0</td><td>&times;1</td><td>&mdash;</td><td>250 ppm/K</td></tr>
+              <tr><td><span class="color-badge" style="background:#8b4513;color:#fff;">Brown</span></td><td>1</td><td>&times;10</td><td>&plusmn;1% (F)</td><td>100 ppm/K</td></tr>
+              <tr><td><span class="color-badge" style="background:#cc0000;color:#fff;">Red</span></td><td>2</td><td>&times;100</td><td>&plusmn;2% (G)</td><td>50 ppm/K</td></tr>
+              <tr><td><span class="color-badge" style="background:#ff8000;color:#000;">Orange</span></td><td>3</td><td>&times;1k</td><td>&plusmn;0.05%</td><td>15 ppm/K</td></tr>
+              <tr><td><span class="color-badge" style="background:#ffdd00;color:#000;">Yellow</span></td><td>4</td><td>&times;10k</td><td>&plusmn;0.02%</td><td>25 ppm/K</td></tr>
+              <tr><td><span class="color-badge" style="background:#008800;color:#fff;">Green</span></td><td>5</td><td>&times;100k</td><td>&plusmn;0.5% (D)</td><td>20 ppm/K</td></tr>
+              <tr><td><span class="color-badge" style="background:#0066cc;color:#fff;">Blue</span></td><td>6</td><td>&times;1M</td><td>&plusmn;0.25% (C)</td><td>10 ppm/K</td></tr>
+              <tr><td><span class="color-badge" style="background:#8800cc;color:#fff;">Violet</span></td><td>7</td><td>&times;10M</td><td>&plusmn;0.1% (B)</td><td>5 ppm/K</td></tr>
+              <tr><td><span class="color-badge" style="background:#888888;color:#fff;">Grey</span></td><td>8</td><td>&times;100M</td><td>&plusmn;0.05% (A)</td><td>1 ppm/K</td></tr>
+              <tr><td><span class="color-badge" style="background:#ffffff;color:#000;border:1px solid #ccc;">White</span></td><td>9</td><td>&times;1G</td><td>&mdash;</td><td>&mdash;</td></tr>
+              <tr><td><span class="color-badge" style="background:#cca033;color:#000;">Gold</span></td><td>&mdash;</td><td>&times;0.1</td><td>&plusmn;5% (J)</td><td>&mdash;</td></tr>
+              <tr><td><span class="color-badge" style="background:#cccccc;color:#000;">Silver</span></td><td>&mdash;</td><td>&times;0.01</td><td>&plusmn;10% (K)</td><td>&mdash;</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="ref-formula-strip">
+          <div><strong>Parallel:</strong> 1/R<sub>eq</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub> + ...</div>
+          <div><strong>Series:</strong> R<sub>eq</sub> = R<sub>1</sub> + R<sub>2</sub> + ...</div>
+          <div><strong>Conductor:</strong> R = &rho; &times; (L / A)</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================================================================
+         MASTER MODE 2: BASIC / NORMAL MATH CALCULATOR
+         ================================================================== -->
+    <section id="panelMasterBasic" class="master-panel" role="tabpanel" aria-labelledby="tabMasterBasic">
+      <div class="keypad-container">
+        
+        <!-- Memory Row -->
+        <div class="keypad-mode-bar">
+          <div class="memory-bar">
+            <button type="button" class="btn-mem" data-mem="mc">MC</button>
+            <button type="button" class="btn-mem" data-mem="mr">MR</button>
+            <button type="button" class="btn-mem" data-mem="m+">M+</button>
+            <button type="button" class="btn-mem" data-mem="m-">M−</button>
+          </div>
+          <span style="font-size: 10px; color: var(--text-muted); font-weight: bold;" id="basicMemIndicator"></span>
+        </div>
+
+        <!-- Basic 4x5 Keypad -->
+        <div class="keys-grid-basic">
+          <button type="button" class="calc-key clear" data-action="all-clear">C</button>
+          <button type="button" class="calc-key clear" data-action="clear-entry">CE</button>
+          <button type="button" class="calc-key op" data-action="backspace">⌫</button>
+          <button type="button" class="calc-key op" data-op="/">÷</button>
+
+          <button type="button" class="calc-key num" data-val="7">7</button>
+          <button type="button" class="calc-key num" data-val="8">8</button>
+          <button type="button" class="calc-key num" data-val="9">9</button>
+          <button type="button" class="calc-key op" data-op="*">×</button>
+
+          <button type="button" class="calc-key num" data-val="4">4</button>
+          <button type="button" class="calc-key num" data-val="5">5</button>
+          <button type="button" class="calc-key num" data-val="6">6</button>
+          <button type="button" class="calc-key op" data-op="-">−</button>
+
+          <button type="button" class="calc-key num" data-val="1">1</button>
+          <button type="button" class="calc-key num" data-val="2">2</button>
+          <button type="button" class="calc-key num" data-val="3">3</button>
+          <button type="button" class="calc-key op" data-op="+">+</button>
+
+          <button type="button" class="calc-key op" data-action="negate">±</button>
+          <button type="button" class="calc-key num" data-val="0">0</button>
+          <button type="button" class="calc-key num" data-val=".">.</button>
+          <button type="button" class="calc-key equals" data-action="equals">=</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         MASTER MODE 3: FULL SCIENTIFIC CALCULATOR
+         ================================================================== -->
+    <section id="panelMasterSci" class="master-panel" role="tabpanel" aria-labelledby="tabMasterSci">
+      <div class="keypad-container">
+        
+        <!-- DEG / RAD Switch & Memory -->
+        <div class="keypad-mode-bar">
+          <div class="deg-rad-switch" role="group" aria-label="Angle unit">
+            <button type="button" id="btnAngleDeg" class="deg-rad-btn active">DEG</button>
+            <button type="button" id="btnAngleRad" class="deg-rad-btn">RAD</button>
+          </div>
+          <div class="memory-bar">
+            <button type="button" class="btn-mem" data-mem="mc">MC</button>
+            <button type="button" class="btn-mem" data-mem="mr">MR</button>
+            <button type="button" class="btn-mem" data-mem="m+">M+</button>
+            <button type="button" class="btn-mem" data-mem="m-">M−</button>
+          </div>
+        </div>
+
+        <!-- 5-Column Scientific Grid -->
+        <div class="keys-grid-sci">
+          <!-- Row 1 -->
+          <button type="button" class="calc-key sci-fn" data-fn="sin">sin</button>
+          <button type="button" class="calc-key sci-fn" data-fn="cos">cos</button>
+          <button type="button" class="calc-key sci-fn" data-fn="tan">tan</button>
+          <button type="button" class="calc-key clear" data-action="all-clear">C</button>
+          <button type="button" class="calc-key op" data-action="backspace">⌫</button>
+
+          <!-- Row 2 -->
+          <button type="button" class="calc-key sci-fn" data-fn="asin">sin⁻¹</button>
+          <button type="button" class="calc-key sci-fn" data-fn="acos">cos⁻¹</button>
+          <button type="button" class="calc-key sci-fn" data-fn="atan">tan⁻¹</button>
+          <button type="button" class="calc-key sci-fn" data-fn="pi">π</button>
+          <button type="button" class="calc-key sci-fn" data-fn="e">e</button>
+
+          <!-- Row 3 -->
+          <button type="button" class="calc-key sci-fn" data-fn="sqr">x²</button>
+          <button type="button" class="calc-key sci-fn" data-op="^">xʸ</button>
+          <button type="button" class="calc-key sci-fn" data-fn="sqrt">√</button>
+          <button type="button" class="calc-key op" data-val="(">(</button>
+          <button type="button" class="calc-key op" data-val=")">)</button>
+
+          <!-- Row 4 -->
+          <button type="button" class="calc-key sci-fn" data-fn="ln">ln</button>
+          <button type="button" class="calc-key sci-fn" data-fn="log">log</button>
+          <button type="button" class="calc-key sci-fn" data-fn="fact">n!</button>
+          <button type="button" class="calc-key sci-fn" data-fn="inv">1/x</button>
+          <button type="button" class="calc-key op" data-op="/">÷</button>
+
+          <!-- Row 5 -->
+          <button type="button" class="calc-key num" data-val="7">7</button>
+          <button type="button" class="calc-key num" data-val="8">8</button>
+          <button type="button" class="calc-key num" data-val="9">9</button>
+          <button type="button" class="calc-key sci-fn" data-fn="pct">%</button>
+          <button type="button" class="calc-key op" data-op="*">×</button>
+
+          <!-- Row 6 -->
+          <button type="button" class="calc-key num" data-val="4">4</button>
+          <button type="button" class="calc-key num" data-val="5">5</button>
+          <button type="button" class="calc-key num" data-val="6">6</button>
+          <button type="button" class="calc-key sci-fn" data-fn="exp">EXP</button>
+          <button type="button" class="calc-key op" data-op="-">−</button>
+
+          <!-- Row 7 -->
+          <button type="button" class="calc-key num" data-val="1">1</button>
+          <button type="button" class="calc-key num" data-val="2">2</button>
+          <button type="button" class="calc-key num" data-val="3">3</button>
+          <button type="button" class="calc-key op" data-action="negate">±</button>
+          <button type="button" class="calc-key op" data-op="+">+</button>
+
+          <!-- Row 8 -->
+          <button type="button" class="calc-key sci-fn" data-action="ans">Ans</button>
+          <button type="button" class="calc-key num" data-val="0" style="grid-column: span 2;">0</button>
+          <button type="button" class="calc-key num" data-val=".">.</button>
+          <button type="button" class="calc-key equals" data-action="equals">=</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         MASTER MODE 4: PHYSICS FORMULA CALCULATOR
+         ================================================================== -->
+    <section id="panelMasterPhysics" class="master-panel" role="tabpanel" aria-labelledby="tabMasterPhysics">
+      <div class="physics-container">
+        
+        <!-- Formula Selector Card -->
+        <div class="physics-select-card">
+          <div class="physics-form-row">
+            <label for="physicsTopicSelect">Physics Domain:</label>
+            <select id="physicsTopicSelect" class="calc-select-control" style="flex: 1;">
+              <option value="kinematics" selected>Mechanics &amp; Motion</option>
+              <option value="energy_work">Energy, Work &amp; Power</option>
+              <option value="dynamics">Forces &amp; Gravity</option>
+              <option value="electricity">Electricity &amp; Electromagnetism</option>
+              <option value="waves_optics">Waves, Sound &amp; Light</option>
+              <option value="thermodynamics">Thermodynamics &amp; Heat</option>
+            </select>
+          </div>
+
+          <div class="physics-form-row">
+            <label for="physicsFormulaSelect">Specific Formula:</label>
+            <select id="physicsFormulaSelect" class="calc-select-control" style="flex: 1;">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+
+          <div class="physics-form-row">
+            <label for="physicsSolveFor">Solve For:</label>
+            <select id="physicsSolveFor" class="calc-select-control" style="flex: 1;">
+              <!-- Populated dynamically based on formula -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Dynamic Inputs Grid -->
+        <div id="physicsInputsArea" class="physics-inputs-grid">
+          <!-- Populated dynamically by calculator.js -->
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalculatePhysics" class="btn-calc-main">
+            Calculate Physics &#9658;
+          </button>
+          <button type="button" id="btnResetPhysics" class="btn-calc-reset">
+            Reset
+          </button>
+        </div>
+
+        <!-- Physics Solution Breakdown Card -->
+        <div id="physicsSolutionCard" class="physics-solution-card">
+          <div class="physics-solution-title" id="physicsSolutionTitle">Newton's Second Law of Motion</div>
+          <div class="physics-formula-display" id="physicsFormulaText">F = m &times; a</div>
+          <div id="physicsSolutionResult" style="font-size: 14px; font-weight: bold; color: #0b5345; margin: 4px 0;">
+            Force (F) = 50.00 N (kg&middot;m/s&sup2;)
+          </div>
+          <div class="physics-step-breakdown" id="physicsStepBreakdown">
+            Substitution: F = (10 kg) &times; (5 m/s&sup2;) = 50 N
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         MASTER MODE 5: FINANCE CALCULATOR SUITE
+         ================================================================== -->
+    <section id="panelMasterFinance" class="master-panel" role="tabpanel" aria-labelledby="tabMasterFinance">
+      <div class="sub-tabs-bar" role="tablist" aria-label="Finance Tools">
+        <button type="button" id="subTabFinanceLoan" class="sub-tab" role="tab" aria-selected="true" aria-controls="subPanelFinanceLoan">
+          Loan / Mortgage EMI
+        </button>
+        <button type="button" id="subTabFinanceCompound" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelFinanceCompound">
+          Compound Interest
+        </button>
+        <button type="button" id="subTabFinanceTip" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelFinanceTip">
+          Tip &amp; Split
+        </button>
+      </div>
+
+      <!-- 1. Loan / Mortgage EMI -->
+      <div id="subPanelFinanceLoan" class="sub-panel-box active" role="tabpanel" aria-labelledby="subTabFinanceLoan">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="loanPrincipal">Loan Amount ($):</label>
+            <input type="number" id="loanPrincipal" class="sim-text-field" value="250000" min="100" step="any">
+          </div>
+          <div class="sim-input-row">
+            <label for="loanRate">Interest Rate (%/yr):</label>
+            <input type="number" id="loanRate" class="sim-text-field" value="6.5" min="0.01" max="100" step="0.01">
+          </div>
+          <div class="sim-input-row">
+            <label for="loanTerm">Loan Term:</label>
+            <div class="sim-input-group">
+              <input type="number" id="loanTerm" class="sim-text-field" value="30" min="1" step="1">
+              <select id="loanTermUnit" class="calc-select-control" style="width: 90px;">
+                <option value="years" selected>Years</option>
+                <option value="months">Months</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcLoan" class="btn-calc-main">Calculate EMI &#9658;</button>
+          <button type="button" id="btnResetLoan" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="loanResultCard" class="result-summary-card">
+          <div class="result-header">Monthly EMI Payment: <strong id="loanEmiDisplay">$1,580.17</strong></div>
+          <div class="result-metrics-grid">
+            <div>Principal: <strong id="loanPrincDisplay">$250,000.00</strong></div>
+            <div>Total Interest: <strong id="loanTotalIntDisplay">$318,861.20</strong></div>
+            <div>Total Payment: <strong id="loanTotalPayDisplay">$568,861.20</strong></div>
+            <div>Interest Ratio: <strong id="loanRatioDisplay">56.1%</strong></div>
+          </div>
+          <div class="ratio-progress-bar">
+            <div id="loanPrincBar" style="width: 43.9%; background: #0055aa;" title="Principal"></div>
+            <div id="loanIntBar" style="width: 56.1%; background: #ea580c;" title="Interest"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Compound Interest -->
+      <div id="subPanelFinanceCompound" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabFinanceCompound">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="ciPrincipal">Initial Principal ($):</label>
+            <input type="number" id="ciPrincipal" class="sim-text-field" value="10000" min="1" step="any">
+          </div>
+          <div class="sim-input-row">
+            <label for="ciRate">Annual Rate (%):</label>
+            <input type="number" id="ciRate" class="sim-text-field" value="7.0" min="0.01" step="any">
+          </div>
+          <div class="sim-input-row">
+            <label for="ciYears">Investment Period (Years):</label>
+            <input type="number" id="ciYears" class="sim-text-field" value="10" min="0.1" step="any">
+          </div>
+          <div class="sim-input-row">
+            <label for="ciFrequency">Compounding:</label>
+            <select id="ciFrequency" class="calc-select-control" style="flex:1;">
+              <option value="1">Annually (1/yr)</option>
+              <option value="2">Semi-Annually (2/yr)</option>
+              <option value="4">Quarterly (4/yr)</option>
+              <option value="12" selected>Monthly (12/yr)</option>
+              <option value="365">Daily (365/yr)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcCompound" class="btn-calc-main">Calculate Growth &#9658;</button>
+          <button type="button" id="btnResetCompound" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="ciResultCard" class="result-summary-card">
+          <div class="result-header">Future Balance: <strong id="ciFutureDisplay">$20,096.61</strong></div>
+          <div class="result-metrics-grid">
+            <div>Principal: <strong id="ciPrincipalDisplay">$10,000.00</strong></div>
+            <div>Total Interest: <strong id="ciEarnedDisplay">$10,096.61</strong></div>
+            <div>Growth Multiple: <strong id="ciMultipleDisplay">2.01&times;</strong></div>
+            <div>Effective APY: <strong id="ciApyDisplay">7.23%</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Tip & Split -->
+      <div id="subPanelFinanceTip" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabFinanceTip">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="tipBillAmount">Bill Amount ($):</label>
+            <input type="number" id="tipBillAmount" class="sim-text-field" value="85.00" min="0.01" step="any">
+          </div>
+          <div class="sim-input-row">
+            <label for="tipPercent">Tip Percentage (%):</label>
+            <div class="sim-input-group">
+              <input type="number" id="tipPercent" class="sim-text-field" value="18" min="0" max="100" step="any">
+              <select id="tipPresets" class="calc-select-control" style="width: 100px;">
+                <option value="10">10%</option>
+                <option value="15">15%</option>
+                <option value="18" selected>18% (Std)</option>
+                <option value="20">20%</option>
+                <option value="25">25%</option>
+              </select>
+            </div>
+          </div>
+          <div class="sim-input-row">
+            <label for="tipSplitGuests">Split Between:</label>
+            <input type="number" id="tipSplitGuests" class="sim-text-field" value="3" min="1" max="100" step="1">
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcTip" class="btn-calc-main">Calculate Tip &#9658;</button>
+          <button type="button" id="btnResetTip" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="tipResultCard" class="result-summary-card">
+          <div class="result-header">Total Per Person: <strong id="tipTotalPerPersonDisplay">$33.43</strong></div>
+          <div class="result-metrics-grid">
+            <div>Tip Per Person: <strong id="tipPerPersonDisplay">$5.10</strong></div>
+            <div>Total Tip: <strong id="tipTotalDisplay">$15.30</strong></div>
+            <div>Total Bill: <strong id="tipGrandTotalDisplay">$100.30</strong></div>
+            <div>Split: <strong id="tipGuestsDisplay">3 guests</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         MASTER MODE 6: FITNESS & HEALTH CALCULATOR
+         ================================================================== -->
+    <section id="panelMasterFitness" class="master-panel" role="tabpanel" aria-labelledby="tabMasterFitness">
+      <div class="sub-tabs-bar" role="tablist" aria-label="Fitness Tools">
+        <button type="button" id="subTabFitnessBmi" class="sub-tab" role="tab" aria-selected="true" aria-controls="subPanelFitnessBmi">
+          BMI Calculator
+        </button>
+        <button type="button" id="subTabFitnessBmr" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelFitnessBmr">
+          BMR &amp; Daily Calories
+        </button>
+      </div>
+
+      <!-- 1. BMI -->
+      <div id="subPanelFitnessBmi" class="sub-panel-box active" role="tabpanel" aria-labelledby="subTabFitnessBmi">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="bmiUnitSystem">Unit System:</label>
+            <select id="bmiUnitSystem" class="calc-select-control" style="flex:1;">
+              <option value="metric" selected>Metric (kg, cm)</option>
+              <option value="us">US Units (lbs, ft, in)</option>
+            </select>
+          </div>
+
+          <div id="bmiMetricInputsArea">
+            <div class="sim-input-row">
+              <label for="bmiMetricHeight">Height (cm):</label>
+              <input type="number" id="bmiMetricHeight" class="sim-text-field" value="175" min="50" max="260" step="any">
+            </div>
+            <div class="sim-input-row">
+              <label for="bmiMetricWeight">Weight (kg):</label>
+              <input type="number" id="bmiMetricWeight" class="sim-text-field" value="68.5" min="20" max="350" step="any">
+            </div>
+          </div>
+
+          <div id="bmiUsInputsArea" style="display: none;">
+            <div class="sim-input-row">
+              <label for="bmiUsHeightFt">Height:</label>
+              <div class="sim-input-group">
+                <input type="number" id="bmiUsHeightFt" class="sim-text-field" value="5" min="1" max="8" step="1" placeholder="ft">
+                <span style="font-size: 11px; align-self: center;">ft</span>
+                <input type="number" id="bmiUsHeightIn" class="sim-text-field" value="9" min="0" max="11" step="any" placeholder="in">
+                <span style="font-size: 11px; align-self: center;">in</span>
+              </div>
+            </div>
+            <div class="sim-input-row">
+              <label for="bmiUsWeightLbs">Weight (lbs):</label>
+              <input type="number" id="bmiUsWeightLbs" class="sim-text-field" value="150" min="40" max="700" step="any">
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcBmi" class="btn-calc-main">Calculate BMI &#9658;</button>
+          <button type="button" id="btnResetBmi" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="bmiResultCard" class="result-summary-card">
+          <div class="result-header">BMI: <strong id="bmiValDisplay">22.4 kg/m&sup2;</strong> &bull; <span id="bmiCategoryDisplay" style="color: #196f3d; font-weight: bold;">Normal weight</span></div>
+          
+          <!-- Visual Category Gauge -->
+          <div class="bmi-gauge-bar">
+            <div class="bmi-zone under" title="Underweight (&lt;18.5)">Under</div>
+            <div class="bmi-zone normal active" title="Normal (18.5 - 24.9)">Normal</div>
+            <div class="bmi-zone over" title="Overweight (25 - 29.9)">Over</div>
+            <div class="bmi-zone obese" title="Obese (&ge;30)">Obese</div>
+          </div>
+
+          <div class="result-metrics-grid" style="margin-top: 6px;">
+            <div>Target Normal: <strong>18.5 – 24.9</strong></div>
+            <div>Healthy Weight: <strong id="bmiHealthyWeightDisplay">56.7 – 76.3 kg</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. BMR & Daily Calories -->
+      <div id="subPanelFitnessBmr" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabFitnessBmr">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="bmrGender">Biological Sex:</label>
+            <select id="bmrGender" class="calc-select-control" style="flex:1;">
+              <option value="male" selected>Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div class="sim-input-row">
+            <label for="bmrAge">Age (Years):</label>
+            <input type="number" id="bmrAge" class="sim-text-field" value="28" min="15" max="110" step="1">
+          </div>
+          <div class="sim-input-row">
+            <label for="bmrHeight">Height (cm):</label>
+            <input type="number" id="bmrHeight" class="sim-text-field" value="175" min="100" max="250" step="any">
+          </div>
+          <div class="sim-input-row">
+            <label for="bmrWeight">Weight (kg):</label>
+            <input type="number" id="bmrWeight" class="sim-text-field" value="70" min="30" max="300" step="any">
+          </div>
+          <div class="sim-input-row">
+            <label for="bmrActivity">Activity Level:</label>
+            <select id="bmrActivity" class="calc-select-control" style="flex:1;">
+              <option value="1.2">Sedentary (desk job, little exercise)</option>
+              <option value="1.375" selected>Lightly Active (exercise 1-3 days/wk)</option>
+              <option value="1.55">Moderately Active (exercise 3-5 days/wk)</option>
+              <option value="1.725">Very Active (heavy exercise 6-7 days/wk)</option>
+              <option value="1.9">Extra Active (athlete / physical job)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcBmr" class="btn-calc-main">Calculate Calories &#9658;</button>
+          <button type="button" id="btnResetBmr" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="bmrResultCard" class="result-summary-card">
+          <div class="result-header">Daily Maintenance: <strong id="bmrTdeeDisplay">2,286 kcal/day</strong></div>
+          <div class="result-metrics-grid">
+            <div>Basal Rate (BMR): <strong id="bmrBaseDisplay">1,663 kcal</strong></div>
+            <div>Mild Weight Loss: <strong id="bmrLossDisplay">1,786 kcal</strong></div>
+            <div>Weight Gain: <strong id="bmrGainDisplay">2,586 kcal</strong></div>
+            <div>Formula: <strong>Mifflin-St Jeor</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         MASTER MODE 7: UNIVERSAL UNIT CONVERTER
+         ================================================================== -->
+    <section id="panelMasterConverter" class="master-panel" role="tabpanel" aria-labelledby="tabMasterConverter">
+      <div class="sim-controls-form">
+        
+        <!-- Category Selector -->
+        <div class="sim-input-row">
+          <label for="converterCategorySelect">Conversion Category:</label>
+          <select id="converterCategorySelect" class="calc-select-control" style="flex:1;">
+            <option value="length" selected>📏 Length &amp; Distance</option>
+            <option value="mass">⚖️ Mass &amp; Weight</option>
+            <option value="temperature">🌡️ Temperature</option>
+            <option value="speed">🚀 Speed &amp; Velocity</option>
+            <option value="pressure">🧭 Pressure</option>
+            <option value="storage">💾 Digital Storage</option>
+            <option value="energy">⚡ Energy &amp; Power</option>
+          </select>
+        </div>
+
+        <!-- Two-Way Reactive Converter Box -->
+        <div class="converter-box">
+          <div class="conv-col">
+            <label for="convValFrom" style="font-size: 11px; font-weight: bold;">From:</label>
+            <input type="number" id="convValFrom" class="sim-text-field" value="1" step="any">
+            <select id="convUnitFrom" class="calc-select-control" style="margin-top: 4px;"></select>
+          </div>
+
+          <div class="conv-swap-col">
+            <button type="button" id="btnSwapUnits" class="btn-swap-units" title="Swap input and output units">⇄</button>
+          </div>
+
+          <div class="conv-col">
+            <label for="convValTo" style="font-size: 11px; font-weight: bold;">To:</label>
+            <input type="number" id="convValTo" class="sim-text-field" value="3.28084" step="any">
+            <select id="convUnitTo" class="calc-select-control" style="margin-top: 4px;"></select>
+          </div>
+        </div>
+
+        <div class="conv-rate-badge" id="convRateBadge">
+          1 meter (m) = 3.28084 feet (ft)
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         MASTER MODE 8: CHEMISTRY & FLUIDS SUITE
+         ================================================================== -->
+    <section id="panelMasterChemistry" class="master-panel" role="tabpanel" aria-labelledby="tabMasterChemistry">
+      <div class="sub-tabs-bar" role="tablist" aria-label="Chemistry Tools">
+        <button type="button" id="subTabChemDilution" class="sub-tab" role="tab" aria-selected="true" aria-controls="subPanelChemDilution">
+          Dilution (C1V1 = C2V2)
+        </button>
+        <button type="button" id="subTabChemPh" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelChemPh">
+          pH &amp; [H⁺] Solver
+        </button>
+        <button type="button" id="subTabChemMolar" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelChemMolar">
+          Molar Mass Lookup
+        </button>
+        <button type="button" id="subTabChemFluid" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelChemFluid">
+          Fluid Pressure (ρgh)
+        </button>
+      </div>
+
+      <!-- 1. Solution Dilution -->
+      <div id="subPanelChemDilution" class="sub-panel-box active" role="tabpanel" aria-labelledby="subTabChemDilution">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="chemDilutionSolveFor">Solve For:</label>
+            <select id="chemDilutionSolveFor" class="calc-select-control" style="flex:1;">
+              <option value="V2" selected>Final Volume (V₂)</option>
+              <option value="C2">Final Concentration (C₂)</option>
+              <option value="V1">Initial Volume (V₁)</option>
+              <option value="C1">Initial Concentration (C₁)</option>
+            </select>
+          </div>
+
+          <div class="sim-input-row" id="rowDilutionC1">
+            <label for="dilutionC1">Initial Conc. (C₁):</label>
+            <div class="sim-input-group">
+              <input type="number" id="dilutionC1" class="sim-text-field" value="2.0" step="any">
+              <select id="dilutionUnitC1" class="calc-select-control" style="width: 70px;">
+                <option value="M" selected>M (mol/L)</option>
+                <option value="mM">mM</option>
+                <option value="pct">% (w/v)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-input-row" id="rowDilutionV1">
+            <label for="dilutionV1">Initial Vol. (V₁):</label>
+            <div class="sim-input-group">
+              <input type="number" id="dilutionV1" class="sim-text-field" value="50" step="any">
+              <select id="dilutionUnitV1" class="calc-select-control" style="width: 70px;">
+                <option value="mL" selected>mL</option>
+                <option value="L">Liters</option>
+                <option value="uL">&mu;L</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-input-row" id="rowDilutionC2">
+            <label for="dilutionC2">Target Conc. (C₂):</label>
+            <div class="sim-input-group">
+              <input type="number" id="dilutionC2" class="sim-text-field" value="0.5" step="any">
+              <select id="dilutionUnitC2" class="calc-select-control" style="width: 70px;">
+                <option value="M" selected>M (mol/L)</option>
+                <option value="mM">mM</option>
+                <option value="pct">% (w/v)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-input-row" id="rowDilutionV2" style="display:none;">
+            <label for="dilutionV2">Target Vol. (V₂):</label>
+            <div class="sim-input-group">
+              <input type="number" id="dilutionV2" class="sim-text-field" value="200" step="any">
+              <select id="dilutionUnitV2" class="calc-select-control" style="width: 70px;">
+                <option value="mL" selected>mL</option>
+                <option value="L">Liters</option>
+                <option value="uL">&mu;L</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcDilution" class="btn-calc-main">Calculate Dilution &#9658;</button>
+          <button type="button" id="btnResetDilution" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="dilutionResultCard" class="result-summary-card">
+          <div class="result-header">Result: <strong id="dilutionResultDisplay">V₂ = 200.00 mL</strong></div>
+          <div class="result-metrics-grid">
+            <div>Solvent to Add: <strong id="dilutionSolventDisplay">150.00 mL</strong></div>
+            <div>Dilution Factor: <strong id="dilutionFactorDisplay">4.00&times;</strong></div>
+            <div>Initial Moles: <strong id="dilutionMolesDisplay">0.10 mol</strong></div>
+            <div>Conservation: <strong>C₁V₁ = C₂V₂</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. pH & [H+] -->
+      <div id="subPanelChemPh" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabChemPh">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="chemPhKnownParam">Known Input:</label>
+            <select id="chemPhKnownParam" class="calc-select-control" style="flex:1;">
+              <option value="pH" selected>pH value</option>
+              <option value="H">[H⁺] Concentration (M)</option>
+              <option value="pOH">pOH value</option>
+              <option value="OH">[OH⁻] Concentration (M)</option>
+            </select>
+          </div>
+          <div class="sim-input-row">
+            <label for="chemPhVal">Input Value:</label>
+            <input type="number" id="chemPhVal" class="sim-text-field" value="7.40" step="any">
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcPh" class="btn-calc-main">Solve pH Equilibrium &#9658;</button>
+          <button type="button" id="btnResetPh" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="chemPhResultCard" class="result-summary-card">
+          <div class="result-header">pH: <strong id="phDisplayVal">7.40</strong> &bull; <span id="phClassificationDisplay" style="color: #0066cc; font-weight: bold;">Slightly Alkaline (Blood pH)</span></div>
+          <div class="result-metrics-grid">
+            <div>pOH: <strong id="phDisplayPoh">6.60</strong></div>
+            <div>[H⁺]: <strong id="phDisplayH">3.98 &times; 10⁻⁸ M</strong></div>
+            <div>[OH⁻]: <strong id="phDisplayOh">2.51 &times; 10⁻⁷ M</strong></div>
+            <div>Neutral at: <strong>pH 7.00 (25°C)</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Molar Mass Reference -->
+      <div id="subPanelChemMolar" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabChemMolar">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="chemCompoundSelect">Common Substance:</label>
+            <select id="chemCompoundSelect" class="calc-select-control" style="flex:1;">
+              <option value="H2O|18.015|Water" selected>Water (H₂O) — 18.015 g/mol</option>
+              <option value="NaCl|58.443|Sodium Chloride">Salt (NaCl) — 58.44 g/mol</option>
+              <option value="C6H12O6|180.156|Glucose">Glucose (C₆H₁₂O₆) — 180.16 g/mol</option>
+              <option value="CO2|44.01|Carbon Dioxide">Carbon Dioxide (CO₂) — 44.01 g/mol</option>
+              <option value="H2SO4|98.079|Sulfuric Acid">Sulfuric Acid (H₂SO₄) — 98.08 g/mol</option>
+              <option value="HCl|36.461|Hydrochloric Acid">Hydrochloric Acid (HCl) — 36.46 g/mol</option>
+              <option value="NaOH|39.997|Sodium Hydroxide">Sodium Hydroxide (NaOH) — 40.00 g/mol</option>
+              <option value="C2H5OH|46.069|Ethanol">Ethanol (C₂H₅OH) — 46.07 g/mol</option>
+              <option value="NH3|17.031|Ammonia">Ammonia (NH₃) — 17.03 g/mol</option>
+              <option value="CH4|16.043|Methane">Methane (CH₄) — 16.04 g/mol</option>
+              <option value="C8H10N4O2|194.19|Caffeine">Caffeine (C₈H₁₀N₄O₂) — 194.19 g/mol</option>
+            </select>
+          </div>
+          <div class="sim-input-row">
+            <label for="chemMassGrams">Mass in Grams (g):</label>
+            <input type="number" id="chemMassGrams" class="sim-text-field" value="100.0" step="any">
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcMolar" class="btn-calc-main">Calculate Moles &#9658;</button>
+          <button type="button" id="btnResetMolar" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="chemMolarResultCard" class="result-summary-card">
+          <div class="result-header">Amount: <strong id="chemMolesDisplay">5.551 mol</strong></div>
+          <div class="result-metrics-grid">
+            <div>Molar Mass: <strong id="chemMwDisplay">18.015 g/mol</strong></div>
+            <div>Molecules: <strong id="chemMoleculesDisplay">3.34 &times; 10²⁴</strong></div>
+            <div>Formula: <strong id="chemFormulaDisplay">H₂O</strong></div>
+            <div>Avogadro Nₐ: <strong>6.022 &times; 10²³</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Fluid Hydrostatic Pressure -->
+      <div id="subPanelChemFluid" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabChemFluid">
+        <div class="sim-controls-form">
+          <div class="sim-input-row">
+            <label for="chemFluidDensity">Fluid:</label>
+            <select id="chemFluidDensity" class="calc-select-control" style="flex:1;">
+              <option value="1000" selected>Fresh Water (1,000 kg/m³)</option>
+              <option value="1025">Seawater (1,025 kg/m³)</option>
+              <option value="13600">Mercury (13,600 kg/m³)</option>
+              <option value="920">Vegetable Oil (920 kg/m³)</option>
+              <option value="789">Ethanol (789 kg/m³)</option>
+            </select>
+          </div>
+          <div class="sim-input-row">
+            <label for="chemFluidDepth">Depth / Height (m):</label>
+            <input type="number" id="chemFluidDepth" class="sim-text-field" value="10.0" min="0" step="any">
+          </div>
+          <div class="sim-input-row">
+            <label for="chemFluidGravity">Gravity (g):</label>
+            <input type="number" id="chemFluidGravity" class="sim-text-field" value="9.80665" step="any">
+          </div>
+        </div>
+
+        <div class="calc-actions-strip">
+          <button type="button" id="btnCalcFluid" class="btn-calc-main">Calculate Fluid Pressure &#9658;</button>
+          <button type="button" id="btnResetFluid" class="btn-calc-reset">Reset</button>
+        </div>
+
+        <div id="chemFluidResultCard" class="result-summary-card">
+          <div class="result-header">Hydrostatic Pressure: <strong id="fluidPressureKpaDisplay">98.07 kPa</strong></div>
+          <div class="result-metrics-grid">
+            <div>Atmospheres: <strong id="fluidAtmDisplay">0.968 atm</strong></div>
+            <div>PSI: <strong id="fluidPsiDisplay">14.22 psi</strong></div>
+            <div>Bar: <strong id="fluidBarDisplay">0.981 bar</strong></div>
+            <div>Pascals: <strong id="fluidPaDisplay">98,067 Pa</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Engineering & Science Safety Disclaimers -->
+    <div class="calc-dmm-notice" role="note">
+      <strong>⚠️ Engineering &amp; Science Notice:</strong> All values are theoretical reference calculations based on standard SI units. Always verify physical electronic components with a calibrated digital multimeter (DMM) before soldering or energizing live circuits.
+    </div>
+
+    <!-- Bottom Legal Bar (All Modals Embedded, No Page Reloads) -->
+    <footer class="calc-bottom-bar" role="contentinfo">
+      <div class="legal-links-row">
+        <button type="button" class="legal-modal-trigger" data-modal="modalPrivacy">privacy policy</button> &bull;
+        <button type="button" class="legal-modal-trigger" data-modal="modalTerms">terms of use</button> &bull;
+        <button type="button" class="legal-modal-trigger" data-modal="modalCookies">cookie policy</button> &bull;
+        <button type="button" class="legal-modal-trigger" data-modal="modalRefunds">refunds</button> &bull;
+        <button type="button" class="legal-modal-trigger" data-modal="modalContact">contact us</button>
+      </div>
+      <div class="calc-copy-line">
+        &copy; 2026 Universal Calculator &bull; Zero Trackers Verified &bull; Pure Client-Side Computing
+      </div>
+    </footer>
+
+  </main>
+
+
+  <!-- ======================================================================
+       ACCESSIBLE MODAL DIALOGS (EMBEDDED IN THE SAME APP)
+       ====================================================================== -->
+
+  <!-- Modal: Privacy Policy -->
+  <div id="modalPrivacy" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalPrivacyHeading">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 id="modalPrivacyHeading" class="modal-title">Privacy Policy (GDPR / CCPA)</h3>
+        <button type="button" class="btn-close-modal" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Effective Date:</strong> November 3, 2026</p>
+        <h4>1. Zero Tracking &amp; Privacy by Design</h4>
+        <p>This calculator operates with <strong>zero advertising cookies, zero third-party telemetry, and zero tracking pixels</strong> (no Google Analytics, no Meta Pixel). All calculations execute 100% locally on your computer.</p>
+        <h4>2. Data Minimization</h4>
+        <p>We do not store or transmit your calculator inputs. Contact inquiries submitted via our contact form are used exclusively to respond to your inquiry and purged thereafter.</p>
+        <h4>3. Local Storage Disclosures</h4>
+        <p>We store minimal functional keys in <code>localStorage</code> (e.g. cookie notice acknowledgment). No user profiles or browsing histories are created.</p>
+        <h4>4. User Rights</h4>
+        <p>Under EU GDPR (Articles 15-22) and California CCPA/CPRA, you have the right to request access, rectification, or deletion of any contact data submitted.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-calc-main btn-close-modal" style="padding: 4px 12px; font-size: 11px;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Terms of Use -->
+  <div id="modalTerms" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTermsHeading">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 id="modalTermsHeading" class="modal-title">Terms and Conditions of Use</h3>
+        <button type="button" class="btn-close-modal" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="calc-dmm-notice" style="margin: 0 0 8px 0;">
+          <strong>CRITICAL ELECTRICAL &amp; SCIENCE DISCLAIMER:</strong> All values generated by this calculator are theoretical and provided for educational and engineering reference only. Always measure physical components with a calibrated digital multimeter (DMM) before soldering or energizing live circuits.
+        </div>
+        <h4>1. Disclaimer of Warranties ("AS-IS")</h4>
+        <p>THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
+        <h4>2. Limitation of Liability</h4>
+        <p>Under no circumstances shall the website or its operators be liable for direct, indirect, incidental, or consequential damages resulting from circuit burnouts, equipment failure, electrical shock, fires, financial decisions, or physical injury.</p>
+        <h4>3. Standards Reference</h4>
+        <p>Conforms to international IEC 60062 / EIA-RS-279 and standard SI physical constants (NIST/CODATA).</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-calc-main btn-close-modal" style="padding: 4px 12px; font-size: 11px;">I Understand</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Cookie Policy -->
+  <div id="modalCookies" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalCookiesHeading">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 id="modalCookiesHeading" class="modal-title">Cookie &amp; Local Storage Policy</h3>
+        <button type="button" class="btn-close-modal" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4>1. Strictly Necessary Exemption (EU ePrivacy Directive)</h4>
+        <p>Under EU Directive 2002/58/EC Art. 5(3) and German TDDDG, purely functional local storage required to persist requested settings is exempt from prior consent blocking.</p>
+        <h4>2. Storage Keys Audit</h4>
+        <ul>
+          <li><code>rescalc_cookie_consent_v1</code>: Remembers cookie banner acknowledgment.</li>
+          <li><code>rescalc_user_prefs</code>: Saves active calculator settings.</li>
+        </ul>
+        <p>We do not set third-party or advertising cookies.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-calc-main btn-close-modal" style="padding: 4px 12px; font-size: 11px;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Refund Policy -->
+  <div id="modalRefunds" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalRefundsHeading">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 id="modalRefundsHeading" class="modal-title">Refund &amp; Free Service Policy</h3>
+        <button type="button" class="btn-close-modal" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4>1. 100% Free Public Reference Tool</h4>
+        <p>All calculators on this website are provided completely free of charge. No payment card details, subscriptions, or fees are collected.</p>
+        <h4>2. Commercial Framework</h4>
+        <p>In the event that optional premium engineering downloads or consulting services are offered in the future, customers receive a 30-day money-back guarantee and statutory EU 14-day cancellation rights.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-calc-main btn-close-modal" style="padding: 4px 12px; font-size: 11px;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Contact Us (With Explicit Consent Checkbox) -->
+  <div id="modalContact" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalContactHeading">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 id="modalContactHeading" class="modal-title">Contact &amp; Standards Inquiries</h3>
+        <button type="button" class="btn-close-modal" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="contactFormAlert" style="display: none; padding: 6px 8px; border-radius: 3px; font-size: 11px; margin-bottom: 8px;"></div>
+
+        <form id="contactModalForm" novalidate>
+          <div style="display: none !important;">
+            <input type="text" id="contactHoneypot" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div style="margin-bottom: 8px;">
+            <label for="contactFullName" style="display: block; font-weight: bold; margin-bottom: 2px;">Name *</label>
+            <input type="text" id="contactFullName" class="calc-select-control" placeholder="Jane Doe" required>
+          </div>
+
+          <div style="margin-bottom: 8px;">
+            <label for="contactEmailAddr" style="display: block; font-weight: bold; margin-bottom: 2px;">Email Address *</label>
+            <input type="email" id="contactEmailAddr" class="calc-select-control" placeholder="jane@example.com" required>
+          </div>
+
+          <div style="margin-bottom: 8px;">
+            <label for="contactMsgBody" style="display: block; font-weight: bold; margin-bottom: 2px;">Message *</label>
+            <textarea id="contactMsgBody" class="text-area-box" rows="3" placeholder="Provide feedback or report bug..." required></textarea>
+          </div>
+
+          <!-- Mandatory Explicit Consent Checkbox -->
+          <div style="display: flex; gap: 6px; align-items: flex-start; background: #eef4f8; padding: 6px; border-radius: 4px; margin-bottom: 10px; font-size: 10.5px;">
+            <input type="checkbox" id="contactConsentCheck" required style="margin-top: 2px;">
+            <label for="contactConsentCheck">
+              <strong>Explicit Consent:</strong> I agree that my provided information will be used solely to answer this inquiry as outlined in the Privacy Policy. *
+            </label>
+          </div>
+
+          <button type="submit" class="btn-calc-main" style="width: 100%;">
+            Send Inquiry Securely
+          </button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-calc-reset btn-close-modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cookie Consent Toast -->
+  <aside id="cookieNoticeToast" class="cookie-toast-banner" role="region" aria-label="Privacy Notice">
+    <div class="cookie-toast-flex">
+      <span><strong>Privacy:</strong> We use strictly functional storage. Zero advertising tracking.</span>
+      <button type="button" id="btnAcknowledgeCookie" class="btn-calc-main" style="padding: 2px 8px; font-size: 10.5px;">Got it</button>
+    </div>
+  </aside>
+
+  <script src="calculator.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
