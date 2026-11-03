@@ -1,81 +1,95 @@
-# Universal Calculator — Multi-Disciplinary Engineering, Science, Math & Finance Suite
+# ⚡ Universal Calculator
 
-A minimalist, high-precision, WCAG-accessible universal calculator web application covering Electronics, Basic Math, Advanced Scientific functions, Physics mechanics & heat, Finance EMI, BMI health, Unit Conversions, and Chemistry, paired with a legally audited compliance and risk-mitigation framework.
-
-Designed with clean, professional engineering aesthetics ("no vibe-coded fluff", zero tracking, high-contrast typography, and strict privacy-by-design) to protect site operators from legal liabilities, ADA accessibility lawsuits, and regulatory penalties.
-
----
-
-## ⚡ Features
-
-### 1. Resistor Calculator Engine
-- **2 to 6 Band Support:**
-  - **2 Bands:** Digit 1, Multiplier (20% tolerance or zero-ohm jumpers)
-  - **3 Bands:** Digit 1, Digit 2, Multiplier (standard 20% tolerance)
-  - **4 Bands:** Digit 1, Digit 2, Multiplier, Tolerance (standard 5% or 10%)
-  - **5 Bands:** Digit 1, Digit 2, Digit 3, Multiplier, Tolerance (precision 1% or 2%)
-  - **6 Bands:** Digit 1, Digit 2, Digit 3, Multiplier, Tolerance, Temperature Coefficient (ppm/K)
-- **Interactive SVG Graphic:** Real-time visual feedback rendering cylindrical ceramic/metal film resistor body with true color bands, metallic wire leads, and 3D sheen highlights. Interactive bands can be clicked directly to focus controls.
-- **Dual Mode Operation:**
-  - **Forward Calculation (Color → Resistance):** Computes nominal ohms ($\Omega, k\Omega, M\Omega, G\Omega$), absolute tolerance range ($R_{\min} - R_{\max}$), temperature coefficient, and EIA standard decade series matching (E12 / E24 / E96).
-  - **Reverse Calculation (Resistance → Color):** Converts target resistance values and tolerance into optimal IEC color bands.
-- **IEC 60062 Color Code Reference Table:** Complete reference for digits, multipliers, tolerance grades, and temperature coefficients.
-
-### 2. Legal, Regulatory & Risk Protection Suite
-- **Privacy Policy (`privacy-policy.html`):** Fully compliant with EU GDPR (Articles 12-22), UK GDPR, California CCPA/CPRA, and CalOPPA. Formally discloses zero tracking, data minimization, and user data rights.
-- **Terms & Conditions (`terms.html`):** Protects against physical/electrical liability. Contains critical engineering disclaimers ("AS-IS", theoretical reference only, instruction to verify values with a calibrated DMM before energizing circuits).
-- **Cookie & Local Storage Policy (`cookie-policy.html`):** Exhaustive technical audit of all `localStorage` keys used. Fully explains the EU ePrivacy Directive (Directive 2002/58/EC) strictly-necessary exemption.
-- **Cookie Consent Notice:** Non-intrusive banner informing visitors of functional local storage, with "Accept Necessary" controls and persistent access.
-- **Refund & Service Policy (`refund-policy.html`):** Clarifies that the utility is 100% free with no charges, while establishing a 30-day satisfaction guarantee and EU 14-day statutory withdrawal framework for any future commercial extensions.
-- **Accessible Contact Form with Consent (`contact.html`):** Form collects only essential fields (Name, Email, Message) with an explicit, unbundled GDPR consent checkbox and privacy-friendly honeypot spam protection (no tracking captchas).
-
-### 3. Accessibility & UX Compliance (WCAG 2.1 AA/AAA)
-- **Accessible Focus Indicators:** High-contrast 3px outline rings on all interactive elements via `:focus-visible`.
-- **Screen Reader Friendly:** Semantic HTML5, live calculation updates via `aria-live="polite"`, labels explicitly tied to inputs via `for`/`id`.
-- **Keyboard Navigation:** Full tab stops, arrow navigation, Enter/Space activation, and an accessible "Skip to main content" link.
-- **Zero Third-Party Tracking Embeds:** No Google Fonts or CDNs (uses native OS system fonts to prevent German GDPR IP-transfer liability), no external tracking pixels, no advertising networks.
-- **100% Original Assets:** Custom SVGs and clean CSS. Zero copyrighted stock photos or external graphics.
+> **Multi-Disciplinary Engineering, Science, Mathematics & Finance Suite**  
+> *A high-precision, 100% client-side web application built with vanilla HTML5, modern CSS3, and ES6 JavaScript. Zero tracking, zero telemetry, fully WCAG AA/AAA accessible, and hardened against OWASP vulnerabilities.*
 
 ---
 
-## 🚀 How to Run the Website
+## 🌐 Live Web Application Links
 
-Because this application is built with vanilla HTML5, CSS3, and ES6 JavaScript with zero dependencies:
+* 🚀 **Live on GitHub Pages:**  
+  👉 **[https://jestes2058-coder.github.io/Universal-Calculator/](https://jestes2058-coder.github.io/Universal-Calculator/)**
 
-### Quick Launch
-1. Double-click `index.html` to open directly in any modern browser (Chrome, Firefox, Safari, Edge).
-2. Or run a lightweight local web server using Python or Node.js:
-   ```bash
-   # Using Python
-   python -m http.server 8000
-   
-   # Using npx serve
-   npx serve .
-   ```
-3. Open `http://localhost:8000` in your web browser.
+* ⚡ **Live on Vercel:**  
+  👉 **[Open on Vercel](https://vercel.com/new/import?s=https%3A%2F%2Fgithub.com%2Fjestes2058-coder%2FUniversal-Calculator)** *(One-click instant import & deployment)*
+
+* 💻 **GitHub Repository:**  
+  👉 **[https://github.com/jestes2058-coder/Universal-Calculator](https://github.com/jestes2058-coder/Universal-Calculator)**
 
 ---
 
-## 📁 File Structure
+## 📱 Full-Screen Modern Web Architecture
 
+* **100% Responsive Edge-to-Edge Design:** Fills standard, widescreen, and ultrawide desktop monitors seamlessly without floating margins or tiny boxes.
+* **Large High-Precision Digital LCD:** Massive 52px calculation display with real-time multi-step formula lines and metric summaries.
+* **Zero External Runtime Dependencies:** Operates 100% offline inside any browser engine without requiring Node.js, databases, or cloud servers.
+* **Zero Telemetry & Privacy-by-Design:** No Google Analytics, no tracking cookies, no external fonts, no third-party CDNs. Full compliance with EU GDPR (Articles 12–22) and California CCPA/CPRA.
+
+---
+
+## 🛠️ Complete Feature Suite (8 Core Disciplines)
+
+### 1. ⚡ Electronics Suite
+* **Resistor Color Code (2 to 6 Bands):** Forward (Color → Resistance) and Reverse (Resistance → Color) calculations conforming to IEC 60062 / EIA-RS-279 with live scalable SVG resistor graphic.
+* **Capacitor Code Decoder:** Decode 3-digit EIA codes (e.g. `104` = 100 nF), ceramic/tantalum tolerance codes, and compute stored charge ($Q = CV$) and electrostatic energy ($E = \frac{1}{2}CV^2$).
+* **Diode & Zener Voltage Drop:** Models Silicon, Schottky, Germanium, and LEDs with forward current, dynamic resistance, and Zener reverse breakdown voltage regulation.
+* **Transistor (BJT & MOSFET) Bias:** Calculates collector/drain currents, base/gate bias, saturation state, transconductance, and thermal dissipation warnings.
+* **Circuit & LED Simulator:** Real-time LED series resistor calculations, current limiting, voltage rails, and component burnout protection warnings.
+* **Parallel & Series Solvers:** Compute equivalent resistance, conductance, and voltage division for complex multi-resistor networks.
+* **Conductor Resistivity:** Computes exact copper, aluminum, and wire gauge (AWG) resistance based on length, cross-sectional area, and temperature coefficients.
+* **IEC 60062 Reference Table:** Built-in searchable table of multiplier bands, tolerance ratings, and temperature coefficients.
+
+### 2. 🔢 Mathematics (Standard & Scientific)
+* **Unified Math Mode:** Seamless instant toggle between **Normal (Standard)** and **Scientific** keypads.
+* **Zero-Eval Mathematical Parser:** Built using a secure Shunting-Yard tokenized parser that satisfies strict Content Security Policies (`script-src 'self'`) without `eval()` or `Function()`.
+* **Scientific Capabilities:** Trigonometric functions ($\sin, \cos, \tan, \arcsin, \arccos, \arctan$ in DEG/RAD), logarithms ($\log_{10}, \ln$), powers ($x^y, x^2, \sqrt{x}$), factorials ($n!$), constants ($\pi, e$), and full memory register ($MC, MR, M+, M-$).
+
+### 3. ⚛️ Physics Suite
+* **Kinematics:** Constant acceleration formulas ($v = v_0 + at$, $d = v_0t + \frac{1}{2}at^2$, $v^2 = v_0^2 + 2ad$).
+* **Newton's 2nd Law & Momentum:** Force, mass, acceleration ($F = ma$), momentum ($p = mv$), and impulse calculations.
+* **Work & Kinetic Energy:** Work ($W = F \cdot d$), kinetic energy ($E_k = \frac{1}{2}mv^2$), and gravitational potential energy ($E_p = mgh$).
+* **Fluid Hydrostatic Pressure:** Computes fluid column pressure ($P = \rho gh$) in kPa, psi, and atmospheres.
+* **Ohm's & Joule's Law:** Full electrical power triangle ($V = IR$, $P = VI = I^2R = \frac{V^2}{R}$).
+* **Wave Mechanics:** Frequency, wavelength, and wave velocity ($v = f\lambda$).
+* **Thermal Specific Heat:** Heat energy transfer ($Q = mc\Delta T$).
+
+### 4. 💰 Financial Suite
+* **EMI Loan & Mortgage Calculator:** Calculates monthly installment, total interest paid, total payment, and principal-to-interest ratio progress visualization.
+
+### 5. 🏃 Fitness & Health Suite
+* **BMI (Body Mass Index) Calculator:** Metric and Imperial BMI with visual color-coded WHO/CDC health category indicator (Underweight, Normal, Overweight, Obese).
+
+### 6. 🔄 Unit Converter
+* **Two-Way Interactive Converter:** Supports Length, Mass/Weight, Volume, Temperature (Celsius, Fahrenheit, Kelvin), Pressure, Energy, Power, and Digital Data Storage.
+
+### 7. 🧪 Chemistry Suite
+* **Molar Mass Calculator:** Chemical formula weight analysis.
+* **Ideal Gas Law:** Computes pressure, volume, moles, or temperature ($PV = nRT$).
+* **Solution Molarity:** Calculates concentration, solute moles, and solution volume ($M = \frac{n}{V}$).
+
+---
+
+## 🔒 Security Hardening & Compliance
+
+* **Content Security Policy (CSP):** `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-ancestors 'none';`
+* **HTTP Security Headers:** Enforces `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, and `Permissions-Policy`.
+* **Zero Dynamic Code Execution:** Zero `eval()`, zero `Function()`, zero `innerHTML` string injection on user inputs (uses safe DOM tree node construction).
+* **Path Traversal Protection:** Hardened local `server.js` using canonical root resolution to prevent CWE-22 attacks.
+
+---
+
+## 🚀 How to Run Locally
+
+### Option 1: Direct File Launch (No software needed)
+Simply open `index.html` in any web browser (Chrome, Edge, Firefox, Safari).
+
+### Option 2: Local Hardened Node.js Server
+```bash
+node server.js
 ```
-├── index.html            # Main Resistor Calculator and Reference Chart
-├── privacy-policy.html   # GDPR / CCPA / CalOPPA Privacy Policy
-├── terms.html            # Terms of Use with Electrical Engineering Disclaimers
-├── cookie-policy.html    # Cookie and Technical Storage Audit Policy
-├── refund-policy.html    # Free Tool Disclosure & Commercial Refund Terms
-├── contact.html          # Accessible Contact Form with Explicit Consent
-├── styles.css            # Minimalist, high-contrast WCAG-compliant styling
-├── calculator.js         # IEC 60062 calculation engine & SVG generator
-├── app.js                # Cookie banner, contact form validation & navigation
-└── README.md             # Project documentation and specifications
-```
+Then visit: **`http://localhost:3000/`**
 
 ---
 
-## 📜 Standards Citation
-- **IEC 60062:** Marking codes for resistors and capacitors.
-- **EIA-RS-279:** Color code for resistor markings.
-- **WCAG 2.1:** Web Content Accessibility Guidelines (Level AA/AAA).
-- **GDPR (Regulation (EU) 2016/679) & CCPA/CPRA.**
-
+## 📄 License
+This project is open-source under the MIT License.
