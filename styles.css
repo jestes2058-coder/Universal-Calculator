@@ -1,28 +1,22 @@
 /* ==========================================================================
-   RESISTOR, MATH, SCIENTIFIC & PHYSICS CALCULATOR - STYLESHEET
-   Compact, normal calculator web page style (max-width: 580px).
-   Features:
-   - Resistor Color Code & Real-World Circuit Simulator
-   - Standard Basic Math Calculator
-   - Full Scientific Calculator (Trig, Log, Powers, Deg/Rad)
-   - Comprehensive Physics Calculator (Mechanics, Electricity, Waves, Heat)
-   - Legal & Compliance Modals (WCAG AA/AAA, Zero-Tracking)
+   UNIVERSAL CALCULATOR - MODERN FULL-SCREEN RESPONSIVE STYLESHEET
+   Spacious, clear, high-contrast, WCAG AA/AAA compliant web application.
    ========================================================================== */
 
 :root {
-  --bg-page: #eef2f6;
+  --bg-page: #f1f5f9;
   --calc-chassis: #ffffff;
-  --calc-border: #b8cde0;
-  --calc-shadow: 0 10px 28px rgba(0, 34, 68, 0.14), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --calc-border: #cbd5e1;
+  --calc-shadow: 0 16px 48px rgba(0, 34, 68, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
   
   --primary-navy: #003366;
   --primary-nav-bg: #002244;
-  --accent-green: #4b8522;
-  --accent-green-hover: #3d6e1b;
-  --accent-blue: #0055aa;
+  --accent-green: #2e7d32;
+  --accent-green-hover: #1b5e20;
+  --accent-blue: #0284c7;
   
   --lcd-bg: #f8fafc;
-  --lcd-border: #a0b5c8;
+  --lcd-border: #94a3b8;
   --lcd-text: #002244;
   --lcd-subtext: #475569;
   
@@ -33,25 +27,25 @@
   --btn-fn-bg: #dbeafe;
   --btn-fn-hover: #bfdbfe;
   
-  --text-main: #1e293b;
+  --text-main: #0f172a;
   --text-muted: #64748b;
-  --border-light: #d8e2ec;
+  --border-light: #e2e8f0;
   
-  --safe-bg: #eafaf1;
-  --safe-border: #2ecc71;
-  --safe-text: #196f3d;
+  --safe-bg: #ecfdf5;
+  --safe-border: #10b981;
+  --safe-text: #065f46;
   
-  --danger-bg: #fdedec;
-  --danger-border: #e74c3c;
-  --danger-text: #922b21;
+  --danger-bg: #fef2f2;
+  --danger-border: #ef4444;
+  --danger-text: #991b1b;
   
-  --warning-bg: #fcf8e3;
-  --warning-border: #faebcc;
-  --warning-text: #8a6d3b;
+  --warning-bg: #fffbeb;
+  --warning-border: #f59e0b;
+  --warning-text: #92400e;
 
-  --font-family: Arial, Helvetica, sans-serif;
-  --font-mono: Consolas, "Courier New", monospace;
-  --focus-ring: #0066cc;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --focus-ring: #0284c7;
 }
 
 /* --------------------------------------------------------------------------
@@ -71,90 +65,86 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 14px 10px;
-  line-height: 1.4;
-  font-size: 13px;
+  justify-content: flex-start;
+  padding: 24px 16px 40px;
+  line-height: 1.5;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
 }
 
 :focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 1px;
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 .skip-link {
   position: absolute;
-  top: -40px;
-  left: 10px;
+  top: -60px;
+  left: 16px;
   background: var(--primary-navy);
   color: #fff;
-  padding: 6px 12px;
+  padding: 8px 16px;
   z-index: 10000;
   font-weight: bold;
+  border-radius: 4px;
 }
 .skip-link:focus {
-  top: 5px;
+  top: 10px;
 }
 
 /* --------------------------------------------------------------------------
-   CALCULATOR DEVICE WRAPPER (COMPACT CHASSIS)
+   CALCULATOR DEVICE WRAPPER (FULL-SCREEN RESPONSIVE CHASSIS)
    -------------------------------------------------------------------------- */
 .calculator-device {
   width: 100%;
-  max-width: 660px;
+  max-width: 1200px;
   background-color: var(--calc-chassis);
   border: 1px solid var(--calc-border);
-  border-radius: 8px;
-  box-shadow: 0 4px 18px rgba(0, 34, 68, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 14px;
+  box-shadow: var(--calc-shadow);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 /* Calculator Top Bar */
 .calc-header-bar {
   background-color: var(--primary-navy);
   color: #ffffff;
-  padding: 10px 16px;
+  padding: 16px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .calc-title-box {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   flex-shrink: 0;
 }
 
 .calc-logo-img {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
-  border-radius: 4px;
+  border-radius: 6px;
   display: block;
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 1px;
-}
-
-.brand-logo-img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  border-radius: 4px;
-  display: block;
+  background-color: rgba(255, 255, 255, 0.12);
+  padding: 2px;
 }
 
 .calc-title {
-  font-size: 15px;
-  font-weight: bold;
-  letter-spacing: -0.3px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
 }
 
 .calc-header-tagline {
-  font-size: 11px;
+  font-size: 13.5px;
   color: #94a3b8;
   font-weight: 500;
 }
@@ -167,27 +157,24 @@ body {
   display: flex;
   border-bottom: 2px solid #001a33;
   overflow-x: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
-}
-
-.master-tabs-bar::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  padding: 0 12px;
+  gap: 4px;
 }
 
 .master-tab {
-  flex: 0 0 auto;
+  flex: 1 1 120px;
   background: none;
   border: none;
   color: #c0d0e0;
-  font-size: 11px;
-  font-weight: bold;
-  padding: 8px 10px;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 13px 16px;
   cursor: pointer;
   text-align: center;
   white-space: nowrap;
-  transition: all 0.15s;
+  transition: all 0.15s ease;
   border-bottom: 3px solid transparent;
+  border-radius: 6px 6px 0 0;
 }
 
 .master-tab:hover {
@@ -199,48 +186,45 @@ body {
   background-color: var(--calc-chassis);
   color: var(--primary-navy);
   border-bottom-color: var(--accent-green);
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.12);
 }
 
 /* Sub-Tabs for Electronics & Multi-Tools */
 .sub-tabs-bar {
-  background-color: #e2e8f0;
+  background-color: #f1f5f9;
   display: flex;
   overflow-x: auto;
   border-bottom: 1px solid var(--border-light);
-  padding: 3px;
-  gap: 3px;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
-}
-
-.sub-tabs-bar::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  padding: 10px 24px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .sub-tab {
   flex: 0 0 auto;
-  background: none;
-  border: none;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
   color: var(--text-muted);
-  font-size: 10.5px;
-  font-weight: bold;
-  padding: 5px 8px;
-  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 6px;
   cursor: pointer;
   text-align: center;
   white-space: nowrap;
+  transition: all 0.12s ease;
 }
 
 .sub-tab:hover {
-  background-color: #cbd5e1;
+  background-color: #e2e8f0;
   color: var(--text-main);
 }
 
 .sub-tab[aria-selected="true"] {
-  background-color: var(--calc-chassis);
-  color: var(--primary-navy);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background-color: var(--primary-navy);
+  color: #ffffff;
+  border-color: var(--primary-navy);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
 }
 
 /* --------------------------------------------------------------------------
@@ -248,33 +232,33 @@ body {
    -------------------------------------------------------------------------- */
 .calc-lcd-screen {
   background-color: var(--lcd-bg);
-  border: 1.5px solid var(--lcd-border);
-  border-radius: 8px;
-  margin: 10px 14px 8px;
-  padding: 9px 14px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+  border: 2px solid var(--lcd-border);
+  border-radius: 10px;
+  margin: 20px 28px 16px;
+  padding: 16px 24px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .lcd-top-row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
 }
 
 .lcd-tag {
-  font-size: 10px;
-  font-weight: bold;
+  font-size: 12.5px;
+  font-weight: 800;
   text-transform: uppercase;
   color: var(--lcd-subtext);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
 }
 
 .lcd-expression-line {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 16px;
   color: var(--lcd-subtext);
-  min-height: 15px;
+  min-height: 22px;
   text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -283,23 +267,24 @@ body {
 
 .lcd-main-digits {
   font-family: var(--font-mono);
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 34px;
+  font-weight: 800;
   color: var(--lcd-text);
-  line-height: 1.15;
+  line-height: 1.25;
   letter-spacing: -0.5px;
   word-break: break-all;
+  margin: 4px 0;
 }
 
 .lcd-sub-row {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
-  padding-top: 5px;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 8px;
   border-top: 1px dashed var(--lcd-border);
-  font-size: 10.5px;
+  font-size: 13px;
   font-family: var(--font-mono);
   color: var(--lcd-subtext);
 }
@@ -308,18 +293,20 @@ body {
    INTERACTIVE GRAPHIC VIEWPORT (RESISTOR / CIRCUIT SCHEMATIC)
    -------------------------------------------------------------------------- */
 .calc-graphic-window {
-  margin: 0 14px 8px;
+  margin: 0 28px 18px;
   background-color: #ffffff;
   border: 1px solid var(--border-light);
-  border-radius: 6px;
-  padding: 5px;
+  border-radius: 8px;
+  padding: 12px 20px;
   text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 
 .calc-graphic-window svg {
   width: 100%;
-  max-height: 85px;
+  max-height: 130px;
   display: block;
+  margin: 0 auto;
 }
 
 /* --------------------------------------------------------------------------
@@ -335,10 +322,10 @@ body {
 }
 
 .sub-panel-box {
-  padding: 0 14px 12px;
+  padding: 0 28px 24px;
   display: none;
   flex-direction: column;
-  gap: 9px;
+  gap: 14px;
 }
 
 .sub-panel-box.active {
@@ -352,10 +339,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 3px;
+  gap: 8px;
   background-color: var(--bg-page);
-  padding: 3px;
-  border-radius: 6px;
+  padding: 6px;
+  border-radius: 8px;
   border: 1px solid var(--border-light);
 }
 
@@ -363,87 +350,89 @@ body {
   flex: 1;
   background: none;
   border: none;
-  font-size: 10.5px;
-  font-weight: bold;
-  padding: 4px 2px;
-  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 6px;
   color: var(--text-muted);
   cursor: pointer;
+  transition: all 0.12s ease;
 }
 
 .band-count-btn[aria-pressed="true"] {
   background-color: var(--calc-chassis);
   color: var(--primary-navy);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .band-dropdowns-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px 8px;
-}
-
-@media (max-width: 440px) {
-  .band-dropdowns-grid {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px 16px;
 }
 
 .band-item-box {
   background-color: var(--lcd-bg);
   border: 1px solid var(--border-light);
-  border-radius: 5px;
-  padding: 4px 7px;
+  border-radius: 8px;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
 }
 
 .band-item-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 10.5px;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--primary-navy);
 }
 
 .color-swatch-pip {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
   border: 1px solid rgba(0,0,0,0.3);
 }
 
 .calc-select-control {
   width: 100%;
-  padding: 4px 6px;
-  font-size: 11px;
+  padding: 8px 10px;
+  font-size: 13.5px;
   font-weight: 600;
-  border: 1px solid #a0b5c8;
-  border-radius: 4px;
+  border: 1.5px solid #a0b5c8;
+  border-radius: 6px;
   background: #ffffff;
   color: var(--text-main);
   cursor: pointer;
+  height: 38px;
+  transition: border-color 0.15s ease;
+}
+.calc-select-control:focus {
+  border-color: var(--focus-ring);
 }
 
 .calc-actions-strip {
   display: flex;
-  gap: 6px;
-  margin-top: 2px;
+  gap: 12px;
+  margin-top: 6px;
+  flex-wrap: wrap;
 }
 
 .btn-calc-main {
   flex: 1;
   background-color: var(--accent-green);
   color: #ffffff;
-  border: 1px solid #3d6e1b;
-  border-radius: 4px;
-  padding: 6px 12px;
-  font-size: 11.5px;
-  font-weight: bold;
+  border: 1px solid #236327;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 13.5px;
+  font-weight: 700;
   cursor: pointer;
   text-align: center;
+  transition: background-color 0.15s ease;
 }
 .btn-calc-main:hover {
   background-color: var(--accent-green-hover);
@@ -453,69 +442,80 @@ body {
   background-color: #004080;
   color: #ffffff;
   border: 1px solid #002b55;
-  border-radius: 4px;
-  padding: 6px 10px;
-  font-size: 11px;
-  font-weight: bold;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 13.5px;
+  font-weight: 700;
   cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.btn-calc-sub:hover {
+  background-color: #003366;
 }
 
 .btn-calc-reset {
-  background-color: #6c757d;
+  background-color: #64748b;
   color: #ffffff;
-  border: 1px solid #545b62;
-  border-radius: 4px;
-  padding: 6px 10px;
-  font-size: 11px;
-  font-weight: bold;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 13.5px;
+  font-weight: 700;
   cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.btn-calc-reset:hover {
+  background-color: #475569;
 }
 
 /* Circuit Simulator Styling */
 .sim-controls-form {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
   background: var(--lcd-bg);
   border: 1px solid var(--border-light);
-  border-radius: 6px;
-  padding: 8px 10px;
+  border-radius: 8px;
+  padding: 14px 18px;
 }
 
 .sim-input-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .sim-input-row label {
-  font-size: 10.5px;
-  font-weight: bold;
+  font-size: 13.5px;
+  font-weight: 700;
   color: var(--primary-navy);
-  flex: 0 0 110px;
+  flex: 0 0 160px;
 }
 
 .sim-input-group {
   flex: 1;
   display: flex;
-  gap: 4px;
+  gap: 8px;
+  align-items: center;
 }
 
 .sim-text-field {
-  width: 75px;
-  padding: 3px 6px;
-  font-size: 11.5px;
+  width: 120px;
+  padding: 7px 10px;
+  font-size: 14px;
   font-family: var(--font-mono);
-  border: 1px solid #a0b5c8;
-  border-radius: 3px;
+  border: 1.5px solid #a0b5c8;
+  border-radius: 6px;
+  height: 38px;
 }
 
 .sim-verdict-box {
-  padding: 8px 10px;
-  border-radius: 4px;
-  font-size: 11px;
-  line-height: 1.4;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  line-height: 1.5;
 }
 
 .sim-verdict-box.safe {
@@ -537,80 +537,82 @@ body {
 }
 
 .sim-verdict-title {
-  font-size: 11.5px;
-  font-weight: bold;
-  margin-bottom: 3px;
+  font-size: 14.5px;
+  font-weight: 800;
+  margin-bottom: 6px;
 }
 
 .sim-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 3px 6px;
-  margin: 5px 0;
-  padding: 3px 6px;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 3px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 6px 12px;
+  margin: 8px 0;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 6px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12.5px;
 }
 
 .text-area-box {
   width: 100%;
-  height: 48px;
+  height: 60px;
   font-family: var(--font-mono);
-  font-size: 11.5px;
-  padding: 5px;
-  border: 1px solid #a0b5c8;
-  border-radius: 4px;
+  font-size: 13.5px;
+  padding: 8px 10px;
+  border: 1.5px solid #a0b5c8;
+  border-radius: 6px;
 }
 
 .sim-output-box {
   background-color: var(--safe-bg);
-  border: 1px solid var(--safe-border);
-  padding: 7px 9px;
-  border-radius: 4px;
-  font-size: 11px;
+  border: 1.5px solid var(--safe-border);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
 }
 
 .sim-output-val {
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 800;
   font-family: var(--font-mono);
-  color: #0b5345;
+  color: #065f46;
 }
 
 /* --------------------------------------------------------------------------
    PANEL 2: COMBINED STANDARD & SCIENTIFIC CALCULATOR
    -------------------------------------------------------------------------- */
 .calc-mode-switcher-container {
-  padding: 8px 14px 6px;
+  padding: 12px 28px 8px;
 }
 
 .calc-mode-toggle-group {
   display: flex;
   background: #e2e8f0;
-  border-radius: 6px;
-  padding: 3px;
-  gap: 4px;
+  border-radius: 8px;
+  padding: 4px;
+  gap: 6px;
   border: 1px solid #cbd5e1;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 .calc-mode-toggle-btn {
   flex: 1;
-  padding: 6px 12px;
-  font-size: 11.5px;
+  padding: 10px 18px;
+  font-size: 14px;
   font-weight: 700;
   font-family: var(--font-family);
   border: none;
   background: transparent;
   color: var(--text-muted);
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .calc-mode-toggle-btn:hover {
@@ -620,38 +622,41 @@ body {
 .calc-mode-toggle-btn.active {
   background: #ffffff;
   color: var(--primary-navy);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
 }
 
 .keypad-container {
-  padding: 0 14px 14px;
+  padding: 0 28px 24px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .keypad-mode-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .deg-rad-switch {
   display: inline-flex;
   background: var(--bg-page);
   border: 1px solid var(--border-light);
-  border-radius: 4px;
-  padding: 1px;
+  border-radius: 6px;
+  padding: 2px;
 }
 
 .deg-rad-btn {
   background: none;
   border: none;
-  padding: 3px 8px;
-  font-size: 10px;
-  font-weight: bold;
-  border-radius: 3px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 4px;
   cursor: pointer;
   color: var(--text-muted);
 }
@@ -663,17 +668,17 @@ body {
 
 .memory-bar {
   display: flex;
-  gap: 4px;
+  gap: 6px;
 }
 
 .btn-mem {
   background: #f1f5f9;
   border: 1px solid #cbd5e1;
-  border-radius: 3px;
-  font-size: 10px;
-  font-weight: bold;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--primary-navy);
-  padding: 2px 7px;
+  padding: 4px 10px;
   cursor: pointer;
 }
 .btn-mem:hover { background: #e2e8f0; }
@@ -682,30 +687,34 @@ body {
 .keys-grid-basic {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
+  gap: 10px;
 }
 
 .keys-grid-sci {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 5px;
+  gap: 8px;
 }
 
 .calc-key {
   font-family: var(--font-family);
-  font-size: 13px;
-  font-weight: bold;
-  padding: 10px 4px;
-  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 14px 6px;
+  min-height: 52px;
+  border-radius: 8px;
   border: 1px solid #cbd5e1;
   cursor: pointer;
   user-select: none;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.08s ease;
 }
 
 .calc-key:active {
-  transform: translateY(1px);
+  transform: translateY(1.5px);
 }
 
 /* Button variants */
@@ -718,14 +727,16 @@ body {
 .calc-key.op {
   background-color: var(--btn-op-bg);
   color: #003366;
+  font-weight: 800;
 }
 .calc-key.op:hover { background-color: var(--btn-op-hover); }
 
 .calc-key.sci-fn {
   background-color: var(--btn-fn-bg);
   color: #004080;
-  font-size: 11px;
-  padding: 8px 3px;
+  font-size: 14px;
+  padding: 12px 4px;
+  min-height: 48px;
 }
 .calc-key.sci-fn:hover { background-color: var(--btn-fn-hover); }
 
@@ -733,13 +744,15 @@ body {
   background-color: #fee2e2;
   color: #991b1b;
   border-color: #fca5a5;
+  font-weight: 800;
 }
 .calc-key.clear:hover { background-color: #fecaca; }
 
 .calc-key.equals {
   background-color: var(--accent-green);
   color: #ffffff;
-  border-color: #3d6e1b;
+  border-color: #236327;
+  font-weight: 800;
 }
 .calc-key.equals:hover { background-color: var(--accent-green-hover); }
 
@@ -747,135 +760,129 @@ body {
    PANEL 4: PHYSICS CALCULATOR STYLING
    -------------------------------------------------------------------------- */
 .physics-container {
-  padding: 0 14px 14px;
+  padding: 0 28px 24px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .physics-select-card {
   background: var(--lcd-bg);
   border: 1px solid var(--border-light);
-  border-radius: 6px;
-  padding: 8px 10px;
+  border-radius: 8px;
+  padding: 12px 16px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .physics-form-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
 }
 
 .physics-form-row label {
-  font-size: 11px;
-  font-weight: bold;
+  font-size: 13.5px;
+  font-weight: 700;
   color: var(--primary-navy);
-  flex: 0 0 100px;
+  flex: 0 0 140px;
 }
 
 .physics-inputs-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px 10px;
-  margin-top: 4px;
-}
-
-@media (max-width: 440px) {
-  .physics-inputs-grid {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px 16px;
+  margin-top: 6px;
 }
 
 .physics-input-cell {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .physics-input-cell label {
-  font-size: 10.5px;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 700;
   color: #334155;
 }
 
 .physics-input-group {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .physics-unit-tag {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-muted);
   font-family: var(--font-mono);
-  font-weight: bold;
-  min-width: 30px;
+  font-weight: 700;
+  min-width: 34px;
 }
 
 /* Physics Solution Card */
 .physics-solution-card {
   background: var(--safe-bg);
   border: 1.5px solid var(--safe-border);
-  border-radius: 6px;
-  padding: 8px 10px;
-  font-size: 11px;
-  line-height: 1.45;
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 13.5px;
+  line-height: 1.5;
 }
 
 .physics-solution-title {
-  font-weight: bold;
+  font-weight: 800;
   color: var(--safe-text);
-  font-size: 12px;
-  margin-bottom: 4px;
+  font-size: 15px;
+  margin-bottom: 6px;
 }
 
 .physics-formula-display {
   font-family: var(--font-mono);
-  font-size: 12.5px;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 4px 8px;
-  border-radius: 4px;
-  margin: 4px 0;
+  font-size: 14.5px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin: 6px 0;
   color: #0f172a;
 }
 
 .physics-step-breakdown {
-  font-size: 10.5px;
-  color: #273746;
-  margin-top: 4px;
+  font-size: 13px;
+  color: #1e293b;
+  margin-top: 6px;
 }
 
 /* --------------------------------------------------------------------------
    IEC 60062 REFERENCE TABLE & STANDARDS (ELECTRONICS SUB-TOOL)
    -------------------------------------------------------------------------- */
 .ref-table-wrapper {
-  max-height: 220px;
+  max-height: 340px;
   overflow-y: auto;
   border: 1px solid var(--border-light);
-  border-radius: 4px;
-  margin-bottom: 8px;
+  border-radius: 6px;
+  margin-bottom: 12px;
   background: #ffffff;
 }
 
 .iec-ref-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .iec-ref-table th, .iec-ref-table td {
-  padding: 4px 6px;
+  padding: 8px 12px;
   border-bottom: 1px solid #eef2f6;
   text-align: left;
 }
 
 .iec-ref-table th {
   background-color: #f1f5f9;
-  font-weight: bold;
+  font-weight: 700;
   position: sticky;
   top: 0;
   z-index: 2;
@@ -884,21 +891,21 @@ body {
 
 .color-badge {
   display: inline-block;
-  padding: 1px 6px;
-  border-radius: 3px;
-  font-weight: bold;
-  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 12px;
 }
 
 .ref-formula-strip {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  font-size: 11px;
+  gap: 4px;
+  font-size: 13px;
   background-color: #f8fafc;
   border: 1px solid var(--border-light);
-  border-radius: 4px;
-  padding: 6px 8px;
+  border-radius: 6px;
+  padding: 10px 14px;
 }
 
 /* --------------------------------------------------------------------------
@@ -907,33 +914,33 @@ body {
 .result-summary-card {
   background-color: #f8fafc;
   border: 1.5px solid var(--calc-border);
-  border-radius: 6px;
-  padding: 9px 12px;
-  margin-top: 10px;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-top: 12px;
 }
 
 .result-header {
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 15px;
+  font-weight: 800;
   color: var(--primary-navy);
-  margin-bottom: 6px;
-  padding-bottom: 4px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
   border-bottom: 1px dashed #cbd5e1;
 }
 
 .result-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px 12px;
-  font-size: 11px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px 16px;
+  font-size: 13.5px;
 }
 
 .ratio-progress-bar {
   display: flex;
-  height: 8px;
-  border-radius: 4px;
+  height: 10px;
+  border-radius: 5px;
   overflow: hidden;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 /* --------------------------------------------------------------------------
@@ -941,14 +948,14 @@ body {
    -------------------------------------------------------------------------- */
 .bmi-gauge-bar {
   display: flex;
-  height: 20px;
-  border-radius: 4px;
+  height: 26px;
+  border-radius: 6px;
   overflow: hidden;
-  margin: 6px 0;
-  font-size: 9.5px;
-  font-weight: bold;
+  margin: 8px 0;
+  font-size: 11.5px;
+  font-weight: 700;
   text-align: center;
-  line-height: 20px;
+  line-height: 26px;
 }
 
 .bmi-zone.under { background-color: #60a5fa; color: #fff; flex: 18.5; }
@@ -958,7 +965,7 @@ body {
 
 .bmi-zone.active {
   box-shadow: inset 0 0 0 2px #000;
-  font-size: 10.5px;
+  font-size: 12.5px;
 }
 
 /* --------------------------------------------------------------------------
@@ -967,12 +974,14 @@ body {
 .converter-box {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 8px 0;
+  gap: 14px;
+  margin: 12px 0;
+  flex-wrap: wrap;
 }
 
 .conv-col {
   flex: 1;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
 }
@@ -987,15 +996,15 @@ body {
   background: #e2e8f0;
   border: 1px solid var(--calc-border);
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 16px;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s;
+  transition: all 0.15s ease;
 }
 
 .btn-swap-units:hover {
@@ -1007,39 +1016,38 @@ body {
 .conv-rate-badge {
   background: #f1f5f9;
   border: 1px solid #cbd5e1;
-  border-radius: 4px;
-  padding: 6px 10px;
-  font-size: 11px;
-  font-weight: bold;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 13.5px;
+  font-weight: 700;
   color: var(--primary-navy);
   text-align: center;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 /* --------------------------------------------------------------------------
    FOOTER & LEGAL MODALS
    -------------------------------------------------------------------------- */
-
 .calc-bottom-bar {
   background-color: var(--bg-page);
   border-top: 1px solid var(--border-light);
-  padding: 8px 12px;
+  padding: 12px 20px;
   text-align: center;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .legal-links-row {
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 
 .legal-links-row button {
   background: none;
   border: none;
   color: var(--accent-blue);
-  font-size: 10.5px;
+  font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
-  padding: 0 3px;
+  padding: 0 4px;
   text-decoration: underline;
 }
 .legal-links-row button:hover {
@@ -1048,18 +1056,18 @@ body {
 
 .calc-copy-line {
   color: var(--text-muted);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 /* Modal Windows */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.65);
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 16px;
   z-index: 99999;
 }
 
@@ -1070,59 +1078,59 @@ body {
 .modal-window {
   background: #ffffff;
   border: 2px solid var(--primary-navy);
-  border-radius: 8px;
+  border-radius: 10px;
   width: 100%;
-  max-width: 540px;
+  max-width: 640px;
   max-height: 85vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
 }
 
 .modal-header {
   background-color: var(--primary-navy);
   color: #ffffff;
-  padding: 8px 12px;
+  padding: 12px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .modal-title {
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 800;
 }
 
 .btn-close-modal {
   background: none;
   border: none;
   color: #ffffff;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
   cursor: pointer;
   line-height: 1;
 }
 
 .modal-body {
-  padding: 12px 14px;
+  padding: 16px 20px;
   overflow-y: auto;
-  font-size: 11.5px;
-  line-height: 1.5;
-  color: #333333;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #1e293b;
 }
 
 .modal-body h4 {
-  font-size: 12px;
+  font-size: 14.5px;
   color: var(--primary-navy);
-  margin: 10px 0 3px;
+  margin: 12px 0 4px;
 }
 
 .modal-body p {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .modal-footer {
-  padding: 6px 12px;
+  padding: 10px 18px;
   background-color: var(--bg-page);
   border-top: 1px solid var(--border-light);
   text-align: right;
@@ -1131,26 +1139,26 @@ body {
 /* Cookie Toast Notice */
 .cookie-toast-banner {
   position: fixed;
-  bottom: 8px;
-  left: 12px;
-  right: 12px;
-  max-width: 460px;
+  bottom: 14px;
+  left: 16px;
+  right: 16px;
+  max-width: 560px;
   margin: 0 auto;
   background: #ffffff;
   border: 1.5px solid var(--primary-navy);
-  border-radius: 6px;
-  padding: 6px 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 10px 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
   display: none;
   z-index: 9999;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .cookie-toast-flex {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
 }
 
 .sr-only {
@@ -1162,4 +1170,39 @@ body {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DESIGN BREAKPOINTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  body {
+    padding: 10px 6px 30px;
+  }
+  .calculator-device {
+    border-radius: 8px;
+  }
+  .calc-header-bar {
+    padding: 12px 16px;
+  }
+  .calc-lcd-screen {
+    margin: 12px 14px;
+    padding: 12px 16px;
+  }
+  .lcd-main-digits {
+    font-size: 26px;
+  }
+  .calc-graphic-window {
+    margin: 0 14px 12px;
+  }
+  .sub-panel-box, .physics-container, .keypad-container {
+    padding: 0 14px 16px;
+  }
+  .master-tab {
+    font-size: 12.5px;
+    padding: 10px 12px;
+  }
+  .sub-tabs-bar {
+    padding: 8px 12px;
+  }
 }
