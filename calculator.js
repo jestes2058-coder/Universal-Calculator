@@ -2940,53 +2940,6 @@
       });
     }
 
-    // Quick Calculator Jumper
-    const quickCalcSelect = document.getElementById('quickCalcSelect');
-    if (quickCalcSelect) {
-      quickCalcSelect.addEventListener('change', () => {
-        const val = quickCalcSelect.value;
-        if (!val) return;
-        const parts = val.split(':');
-        const master = parts[0];
-        const sub = parts[1];
-
-        if (masterTabs[master]) {
-          switchMasterTab(master);
-          if (sub) {
-            if (master === 'tabMasterMath') {
-              if (sub === 'scientific') switchCalcSubMode('scientific');
-              else switchCalcSubMode('normal');
-            } else if (master === 'tabMasterElectronics' && subElectronicsTabs[sub]) {
-              switchSubElectronicsTab(sub);
-            } else if (master === 'tabMasterPhysics') {
-              if (physicsTopicSelect) {
-                physicsTopicSelect.value = sub;
-                updatePhysicsFormulas();
-              }
-            } else if (master === 'tabMasterFinance') {
-              if (sub === 'loan') switchSubFinanceTab('subTabFinanceLoan');
-              else if (sub === 'compound') switchSubFinanceTab('subTabFinanceCompound');
-              else if (sub === 'tip') switchSubFinanceTab('subTabFinanceTip');
-            } else if (master === 'tabMasterFitness') {
-              if (sub === 'bmi') switchSubFitnessTab('subTabFitnessBmi');
-              else if (sub === 'bmr') switchSubFitnessTab('subTabFitnessBmr');
-            } else if (master === 'tabMasterConverter') {
-              const converterCategorySelect = document.getElementById('converterCategorySelect');
-              if (converterCategorySelect) {
-                converterCategorySelect.value = sub;
-                populateConverterUnits();
-              }
-            } else if (master === 'tabMasterChemistry') {
-              if (sub === 'dilution') switchSubChemTab('subTabChemDilution');
-              else if (sub === 'ph') switchSubChemTab('subTabChemPh');
-              else if (sub === 'molar') switchSubChemTab('subTabChemMolar');
-              else if (sub === 'pressure') switchSubChemTab('subTabChemFluid');
-            }
-          }
-        }
-        quickCalcSelect.value = '';
-      });
-    }
 
     // Finance sub-tabs & buttons
     Object.keys(subFinanceTabs).forEach(k => {

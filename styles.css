@@ -101,11 +101,11 @@ body {
    -------------------------------------------------------------------------- */
 .calculator-device {
   width: 100%;
-  max-width: 580px;
+  max-width: 660px;
   background-color: var(--calc-chassis);
-  border: 2px solid var(--calc-border);
-  border-radius: 12px;
-  box-shadow: var(--calc-shadow);
+  border: 1px solid var(--calc-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 34, 68, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -115,7 +115,7 @@ body {
 .calc-header-bar {
   background-color: var(--primary-navy);
   color: #ffffff;
-  padding: 8px 12px;
+  padding: 10px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -153,25 +153,10 @@ body {
   letter-spacing: -0.3px;
 }
 
-.quick-jump-box {
-  display: flex;
-  align-items: center;
-}
-
-.quick-jump-select {
-  background-color: #002244;
-  color: #cce0ff;
-  border: 1px solid #004488;
-  border-radius: 4px;
+.calc-header-tagline {
   font-size: 11px;
-  padding: 4px 6px;
-  max-width: 175px;
-  cursor: pointer;
-}
-
-.quick-jump-select:focus {
-  outline: 2px solid #3399ff;
-  background-color: #001a33;
+  color: #94a3b8;
+  font-weight: 500;
 }
 
 /* --------------------------------------------------------------------------
@@ -1034,16 +1019,6 @@ body {
 /* --------------------------------------------------------------------------
    FOOTER & LEGAL MODALS
    -------------------------------------------------------------------------- */
-.calc-dmm-notice {
-  margin: 0 14px 8px;
-  padding: 5px 8px;
-  background-color: var(--warning-bg);
-  border-left: 3px solid var(--warning-text);
-  border-radius: 3px;
-  font-size: 10.5px;
-  color: #713f12;
-  line-height: 1.35;
-}
 
 .calc-bottom-bar {
   background-color: var(--bg-page);

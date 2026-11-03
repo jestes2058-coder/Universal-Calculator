@@ -18,66 +18,14 @@
        ====================================================================== -->
   <main class="calculator-device" id="calculatorApp" role="main" aria-label="Universal Engineering, Science, Math &amp; Finance Calculator">
     
-    <!-- Top Header Bar with Quick Jump Selector -->
+    <!-- Top Header Bar -->
     <header class="calc-header-bar">
       <div class="calc-title-box">
         <img src="logo/logo.png" alt="Universal Calculator Logo" class="calc-logo-img">
         <span class="calc-title">Universal Calculator</span>
       </div>
-      
-      <!-- Quick Jump Selector matching all-in-one catalog -->
-      <div class="quick-jump-box">
-        <label for="quickCalcSelect" class="sr-only">Jump to calculator</label>
-        <select id="quickCalcSelect" class="quick-jump-select" title="Jump directly to any calculator">
-          <option value="">⚡ Jump to tool...</option>
-          <optgroup label="⚡ Electronics">
-            <option value="tabMasterElectronics:subTabColor">Resistor Color Code (2-6 Band)</option>
-            <option value="tabMasterElectronics:subTabCapacitor">Capacitor Code &amp; Value</option>
-            <option value="tabMasterElectronics:subTabDiode">Diode &amp; Zener Regulator</option>
-            <option value="tabMasterElectronics:subTabTransistor">Transistor (BJT / FET) Biasing</option>
-            <option value="tabMasterElectronics:subTabCircuit">Circuit &amp; LED Safety Simulator</option>
-            <option value="tabMasterElectronics:subTabParallel">Resistors in Parallel</option>
-            <option value="tabMasterElectronics:subTabSeries">Resistors in Series</option>
-            <option value="tabMasterElectronics:subTabConductor">Conductor Resistance</option>
-            <option value="tabMasterElectronics:subTabReference">IEC 60062 Color Table</option>
-          </optgroup>
-          <optgroup label="🔢 Mathematics">
-            <option value="tabMasterMath:normal">Normal Calculator (Standard 4x5)</option>
-            <option value="tabMasterMath:scientific">Scientific Calculator (Trig, Log, Rad/Deg)</option>
-          </optgroup>
-          <optgroup label="⚛️ Physics Lab">
-            <option value="tabMasterPhysics:kinematics">Mechanics &amp; Motion</option>
-            <option value="tabMasterPhysics:energy_work">Energy, Work &amp; Power</option>
-            <option value="tabMasterPhysics:dynamics">Forces &amp; Universal Gravity</option>
-            <option value="tabMasterPhysics:electricity">Electricity &amp; Ohm's Law</option>
-            <option value="tabMasterPhysics:waves_optics">Waves, Sound &amp; Optics</option>
-            <option value="tabMasterPhysics:thermodynamics">Thermodynamics &amp; Heat</option>
-          </optgroup>
-          <optgroup label="💰 Finance">
-            <option value="tabMasterFinance:loan">Loan &amp; Mortgage EMI</option>
-            <option value="tabMasterFinance:compound">Compound Interest</option>
-            <option value="tabMasterFinance:tip">Tip &amp; Split Calculator</option>
-          </optgroup>
-          <optgroup label="🏃 Fitness &amp; Health">
-            <option value="tabMasterFitness:bmi">BMI (Body Mass Index)</option>
-            <option value="tabMasterFitness:bmr">BMR &amp; Daily Calories</option>
-          </optgroup>
-          <optgroup label="🔄 Universal Unit Converter">
-            <option value="tabMasterConverter:length">Length Converter</option>
-            <option value="tabMasterConverter:mass">Mass &amp; Weight Converter</option>
-            <option value="tabMasterConverter:temp">Temperature Converter</option>
-            <option value="tabMasterConverter:speed">Speed Converter</option>
-            <option value="tabMasterConverter:pressure">Pressure Converter</option>
-            <option value="tabMasterConverter:storage">Digital Storage</option>
-            <option value="tabMasterConverter:energy">Energy &amp; Power</option>
-          </optgroup>
-          <optgroup label="🧪 Chemistry &amp; Fluids">
-            <option value="tabMasterChemistry:dilution">Solution Dilution (C1V1 = C2V2)</option>
-            <option value="tabMasterChemistry:ph">pH &amp; Hydronium Concentration</option>
-            <option value="tabMasterChemistry:molar">Molar Mass Reference</option>
-            <option value="tabMasterChemistry:pressure">Fluid Hydrostatic Pressure</option>
-          </optgroup>
-        </select>
+      <div class="calc-header-tagline">
+        Free Online Engineering &amp; Math Tools
       </div>
     </header>
 
@@ -1352,10 +1300,6 @@
       </div>
     </section>
 
-    <!-- Engineering & Science Safety Disclaimers -->
-    <div class="calc-dmm-notice" role="note">
-      <strong>⚠️ Engineering &amp; Science Notice:</strong> All values are theoretical reference calculations based on standard SI units. Always verify physical electronic components with a calibrated digital multimeter (DMM) before soldering or energizing live circuits.
-    </div>
 
     <!-- Bottom Legal Bar (All Modals Embedded, No Page Reloads) -->
     <footer class="calc-bottom-bar" role="contentinfo">
