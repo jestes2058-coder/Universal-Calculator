@@ -122,11 +122,12 @@ const server = http.createServer((req, res) => {
       }
 
       const mimeType = MIME[ext] || 'application/octet-stream';
+      const isDynamicDevFile = (ext === '.html' || ext === '.js' || ext === '.css');
       const headers = {
         ...SECURITY_HEADERS,
         'Content-Type': mimeType,
         'Content-Length': stats.size,
-        'Cache-Control': ext === '.html' ? 'no-cache, must-revalidate' : 'public, max-age=86400, immutable'
+        'Cache-Control': isDynamicDevFile ? 'no-cache, no-store, must-revalidate' : 'public, max-age=86400'
       };
 
       if (req.method === 'HEAD') {
