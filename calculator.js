@@ -22,14 +22,37 @@
 
   const masterTabs = {
     tabMasterElectronics: { btn: document.getElementById('tabMasterElectronics'), panel: document.getElementById('panelMasterElectronics') },
-    tabMasterBasic: { btn: document.getElementById('tabMasterBasic'), panel: document.getElementById('panelMasterBasic') },
-    tabMasterSci: { btn: document.getElementById('tabMasterSci'), panel: document.getElementById('panelMasterSci') },
+    tabMasterCalc: { btn: document.getElementById('tabMasterCalc'), panel: document.getElementById('panelMasterCalc') },
     tabMasterPhysics: { btn: document.getElementById('tabMasterPhysics'), panel: document.getElementById('panelMasterPhysics') },
     tabMasterFinance: { btn: document.getElementById('tabMasterFinance'), panel: document.getElementById('panelMasterFinance') },
     tabMasterFitness: { btn: document.getElementById('tabMasterFitness'), panel: document.getElementById('panelMasterFitness') },
     tabMasterConverter: { btn: document.getElementById('tabMasterConverter'), panel: document.getElementById('panelMasterConverter') },
     tabMasterChemistry: { btn: document.getElementById('tabMasterChemistry'), panel: document.getElementById('panelMasterChemistry') }
   };
+
+  let activeCalcSubMode = 'standard'; // 'standard' or 'scientific'
+
+  function switchCalcSubMode(mode) {
+    activeCalcSubMode = mode;
+    const btnBasic = document.getElementById('btnToggleBasicMode');
+    const btnSci = document.getElementById('btnToggleSciMode');
+    const keypadStandard = document.getElementById('calcKeypadStandard');
+    const keypadSci = document.getElementById('calcKeypadScientific');
+
+    if (mode === 'standard') {
+      if (btnBasic) { btnBasic.classList.add('active'); btnBasic.setAttribute('aria-pressed', 'true'); }
+      if (btnSci) { btnSci.classList.remove('active'); btnSci.setAttribute('aria-pressed', 'false'); }
+      if (keypadStandard) keypadStandard.style.display = 'block';
+      if (keypadSci) keypadSci.style.display = 'none';
+      renderMathDisplay();
+    } else {
+      if (btnSci) { btnSci.classList.add('active'); btnSci.setAttribute('aria-pressed', 'true'); }
+      if (btnBasic) { btnBasic.classList.remove('active'); btnBasic.setAttribute('aria-pressed', 'false'); }
+      if (keypadStandard) keypadStandard.style.display = 'none';
+      if (keypadSci) keypadSci.style.display = 'block';
+      renderSciDisplay();
+    }
+  }
 
   const subElectronicsTabs = {
     subTabColor: { btn: document.getElementById('subTabColor'), panel: document.getElementById('subPanelColor') },
@@ -84,12 +107,9 @@
     if (targetId === 'tabMasterElectronics') {
       graphicWindow.style.display = 'block';
       switchSubElectronicsTab(activeSubElectronics);
-    } else if (targetId === 'tabMasterBasic') {
+    } else if (targetId === 'tabMasterCalc') {
       graphicWindow.style.display = 'none';
-      renderMathDisplay();
-    } else if (targetId === 'tabMasterSci') {
-      graphicWindow.style.display = 'none';
-      renderSciDisplay();
+      switchCalcSubMode(activeCalcSubMode);
     } else if (targetId === 'tabMasterPhysics') {
       graphicWindow.style.display = 'none';
       runPhysicsCalculation();
@@ -1443,8 +1463,10 @@
   }
 
   function updateActiveMathDisplay() {
-    if (activeMaster === 'tabMasterBasic') renderMathDisplay();
-    if (activeMaster === 'tabMasterSci') renderSciDisplay();
+    if (activeMaster === 'tabMasterCalc') {
+      if (activeCalcSubMode === 'standard') renderMathDisplay();
+      else renderSciDisplay();
+    }
   }
 
   // --------------------------------------------------------------------------
@@ -2851,6 +2873,10 @@
       });
     }
 
+    // Calculator Standard / Scientific Mode Switcher
+    document.getElementById('btnToggleBasicMode')?.addEventListener('click', () => switchCalcSubMode('standard'));
+    document.getElementById('btnToggleSciMode')?.addEventListener('click', () => switchCalcSubMode('scientific'));
+
     // Basic & Scientific Keypads
     document.querySelectorAll('.calc-key').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -2927,7 +2953,10 @@
         if (masterTabs[master]) {
           switchMasterTab(master);
           if (sub) {
-            if (master === 'tabMasterElectronics' && subElectronicsTabs[sub]) {
+            if (master === 'tabMasterCalc') {
+              if (sub === 'scientific') switchCalcSubMode('scientific');
+              else switchCalcSubMode('standard');
+            } else if (master === 'tabMasterElectronics' && subElectronicsTabs[sub]) {
               switchSubElectronicsTab(sub);
             } else if (master === 'tabMasterPhysics') {
               if (physicsTopicSelect) {
@@ -3169,7 +3198,7 @@
         return; // Don't intercept when user is typing in forms!
       }
 
-      if (activeMaster === 'tabMasterBasic' || activeMaster === 'tabMasterSci') {
+      if (activeMaster === 'tabMasterCalc') {
         if (e.key >= '0' && e.key <= '9') appendDigit(e.key);
         else if (e.key === '.') appendDigit('.');
         else if (['+', '-', '*', '/'].includes(e.key)) appendOperator(e.key);

@@ -595,8 +595,49 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   PANELS 2 & 3: BASIC & SCIENTIFIC CALCULATOR KEYPADS
+   PANEL 2: COMBINED STANDARD & SCIENTIFIC CALCULATOR
    -------------------------------------------------------------------------- */
+.calc-mode-switcher-container {
+  padding: 8px 14px 6px;
+}
+
+.calc-mode-toggle-group {
+  display: flex;
+  background: #e2e8f0;
+  border-radius: 6px;
+  padding: 3px;
+  gap: 4px;
+  border: 1px solid #cbd5e1;
+}
+
+.calc-mode-toggle-btn {
+  flex: 1;
+  padding: 6px 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+  font-family: var(--font-family);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.calc-mode-toggle-btn:hover {
+  color: var(--primary-navy);
+}
+
+.calc-mode-toggle-btn.active {
+  background: #ffffff;
+  color: var(--primary-navy);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
 .keypad-container {
   padding: 0 14px 14px;
   display: flex;

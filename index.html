@@ -42,8 +42,7 @@
             <option value="tabMasterElectronics:subTabReference">IEC 60062 Color Table</option>
           </optgroup>
           <optgroup label="🔢 Mathematics">
-            <option value="tabMasterBasic">Basic Math &amp; Memory (4x5 Keypad)</option>
-            <option value="tabMasterSci">Scientific Calculator (Trig, Log, Rad/Deg)</option>
+            <option value="tabMasterCalc">Calculator (Standard &amp; Scientific)</option>
           </optgroup>
           <optgroup label="⚛️ Physics Lab">
             <option value="tabMasterPhysics:kinematics">Mechanics &amp; Motion</option>
@@ -86,11 +85,8 @@
       <button type="button" id="tabMasterElectronics" class="master-tab" role="tab" aria-selected="true" aria-controls="panelMasterElectronics">
         ⚡ Electronics
       </button>
-      <button type="button" id="tabMasterBasic" class="master-tab" role="tab" aria-selected="false" aria-controls="panelMasterBasic">
-        🔢 Math
-      </button>
-      <button type="button" id="tabMasterSci" class="master-tab" role="tab" aria-selected="false" aria-controls="panelMasterSci">
-        🔬 Scientific
+      <button type="button" id="tabMasterCalc" class="master-tab" role="tab" aria-selected="false" aria-controls="panelMasterCalc">
+        🔢 Calculator
       </button>
       <button type="button" id="tabMasterPhysics" class="master-tab" role="tab" aria-selected="false" aria-controls="panelMasterPhysics">
         ⚛️ Physics
@@ -630,11 +626,23 @@
     </section>
 
     <!-- ==================================================================
-         MASTER MODE 2: BASIC / NORMAL MATH CALCULATOR
+         MASTER MODE 2: COMBINED STANDARD & SCIENTIFIC CALCULATOR
          ================================================================== -->
-    <section id="panelMasterBasic" class="master-panel" role="tabpanel" aria-labelledby="tabMasterBasic">
-      <div class="keypad-container">
-        
+    <section id="panelMasterCalc" class="master-panel" role="tabpanel" aria-labelledby="tabMasterCalc">
+      <!-- Mode Switcher Pill Bar (Standard vs Scientific) -->
+      <div class="calc-mode-switcher-container">
+        <div class="calc-mode-toggle-group" role="group" aria-label="Calculator Mode Switcher">
+          <button type="button" id="btnToggleBasicMode" class="calc-mode-toggle-btn active" aria-pressed="true">
+            <span>🔢 Standard</span>
+          </button>
+          <button type="button" id="btnToggleSciMode" class="calc-mode-toggle-btn" aria-pressed="false">
+            <span>🔬 Scientific</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 1. Standard Keypad Sub-Container -->
+      <div id="calcKeypadStandard" class="keypad-container">
         <!-- Memory Row -->
         <div class="keypad-mode-bar">
           <div class="memory-bar">
@@ -674,14 +682,9 @@
           <button type="button" class="calc-key equals" data-action="equals">=</button>
         </div>
       </div>
-    </section>
 
-    <!-- ==================================================================
-         MASTER MODE 3: FULL SCIENTIFIC CALCULATOR
-         ================================================================== -->
-    <section id="panelMasterSci" class="master-panel" role="tabpanel" aria-labelledby="tabMasterSci">
-      <div class="keypad-container">
-        
+      <!-- 2. Scientific Keypad Sub-Container -->
+      <div id="calcKeypadScientific" class="keypad-container" style="display: none;">
         <!-- DEG / RAD Switch & Memory -->
         <div class="keypad-mode-bar">
           <div class="deg-rad-switch" role="group" aria-label="Angle unit">
