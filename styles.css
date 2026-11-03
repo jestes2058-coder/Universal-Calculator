@@ -1,18 +1,18 @@
 /* ==========================================================================
-   UNIVERSAL CALCULATOR - FULL-WIDTH MODERN WEB APPLICATION STYLESHEET
-   Spacious, clear, high-contrast, WCAG AA/AAA compliant web application.
+   UNIVERSAL CALCULATOR - 100% FULL-SCREEN EDGE-TO-EDGE MODERN WEB APPLICATION
+   Designed for desktop, laptop, tablet, and mobile screens.
+   Zero floating card margins - fills the entire browser window naturally.
    ========================================================================== */
 
 :root {
-  --bg-page: #f1f5f9;
+  --bg-page: #ffffff;
   --calc-chassis: #ffffff;
-  --calc-border: #cbd5e1;
-  --calc-shadow: 0 20px 60px rgba(0, 34, 68, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --calc-border: #e2e8f0;
   
-  --primary-navy: #003366;
-  --primary-nav-bg: #002244;
-  --accent-green: #2e7d32;
-  --accent-green-hover: #1b5e20;
+  --primary-navy: #002b55;
+  --primary-nav-bg: #001a33;
+  --accent-green: #256d29;
+  --accent-green-hover: #1b531f;
   --accent-blue: #0284c7;
   
   --lcd-bg: #f8fafc;
@@ -49,7 +49,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   BASE & RESET
+   BASE & RESET (TRUE 100% FULL SCREEN)
    -------------------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -57,19 +57,22 @@
   padding: 0;
 }
 
-body {
-  font-family: var(--font-family);
-  background-color: var(--bg-page);
-  color: var(--text-main);
+html, body {
+  width: 100%;
   min-height: 100vh;
   margin: 0;
-  padding: 0 0 60px 0;
-  line-height: 1.6;
+  padding: 0;
+  background-color: #ffffff;
+  color: var(--text-main);
+  font-family: var(--font-family);
   font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  -webkit-font-smoothing: antialiased;
 }
 
 :focus-visible {
@@ -93,37 +96,40 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   CALCULATOR DEVICE WRAPPER (FULL-WIDTH MODERN CHASSIS)
+   CALCULATOR DEVICE (FULL-SCREEN FLUID CONTAINER)
    -------------------------------------------------------------------------- */
 .calculator-device {
-  width: 96%;
-  max-width: 1400px;
-  background-color: var(--calc-chassis);
-  border: 1px solid var(--calc-border);
-  border-radius: 16px;
-  box-shadow: var(--calc-shadow);
-  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
-  margin: 24px auto 0;
+  margin: 0;
+  padding: 0;
 }
 
-/* Calculator Top Bar */
+/* --------------------------------------------------------------------------
+   TOP HEADER BAR (EDGE TO EDGE)
+   -------------------------------------------------------------------------- */
 .calc-header-bar {
   background-color: var(--primary-navy);
   color: #ffffff;
-  padding: 20px 36px;
+  padding: 20px 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
 .calc-title-box {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   flex-shrink: 0;
 }
 
@@ -133,8 +139,8 @@ body {
   object-fit: contain;
   border-radius: 8px;
   display: block;
-  background-color: rgba(255, 255, 255, 0.14);
-  padding: 3px;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 4px;
 }
 
 .calc-title {
@@ -144,36 +150,37 @@ body {
 }
 
 .calc-header-tagline {
-  font-size: 15px;
+  font-size: 16px;
   color: #cbd5e1;
   font-weight: 500;
 }
 
 /* --------------------------------------------------------------------------
-   MASTER CATEGORY SELECTOR TABS (8 UNIVERSAL DISCIPLINES)
+   MASTER CATEGORY SELECTOR TABS (EDGE TO EDGE)
    -------------------------------------------------------------------------- */
 .master-tabs-bar {
   background-color: var(--primary-nav-bg);
   display: flex;
-  border-bottom: 3px solid #001a33;
+  width: 100%;
+  border-bottom: 3px solid #001122;
   overflow-x: auto;
-  padding: 4px 16px 0;
+  padding: 0 32px;
   gap: 6px;
 }
 
 .master-tab {
-  flex: 1 1 130px;
+  flex: 1 1 140px;
   background: none;
   border: none;
   color: #c0d0e0;
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 700;
-  padding: 15px 18px;
+  padding: 16px 22px;
   cursor: pointer;
   text-align: center;
   white-space: nowrap;
   transition: all 0.15s ease;
-  border-bottom: 3px solid transparent;
+  border-bottom: 4px solid transparent;
   border-radius: 8px 8px 0 0;
 }
 
@@ -183,7 +190,7 @@ body {
 }
 
 .master-tab[aria-selected="true"] {
-  background-color: var(--calc-chassis);
+  background-color: #ffffff;
   color: var(--primary-navy);
   border-bottom-color: var(--accent-green);
   box-shadow: 0 -2px 10px rgba(0,0,0,0.12);
@@ -193,10 +200,11 @@ body {
 .sub-tabs-bar {
   background-color: #f1f5f9;
   display: flex;
+  width: 100%;
   overflow-x: auto;
   border-bottom: 2px solid var(--border-light);
-  padding: 12px 36px;
-  gap: 10px;
+  padding: 14px 48px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -205,9 +213,9 @@ body {
   background: #ffffff;
   border: 1.5px solid #cbd5e1;
   color: var(--text-muted);
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 700;
-  padding: 10px 18px;
+  padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
   text-align: center;
@@ -228,14 +236,14 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   DIGITAL LCD READOUT SCREEN (ADAPTS TO ALL CALCULATORS)
+   DIGITAL LCD READOUT SCREEN (EXTRA-LARGE HIGH-PRECISION DISPLAY)
    -------------------------------------------------------------------------- */
 .calc-lcd-screen {
   background-color: var(--lcd-bg);
   border: 2.5px solid var(--lcd-border);
   border-radius: 14px;
-  margin: 24px 36px 20px;
-  padding: 22px 32px;
+  margin: 24px 48px 20px;
+  padding: 24px 36px;
   box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -247,7 +255,7 @@ body {
 }
 
 .lcd-tag {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   text-transform: uppercase;
   color: var(--lcd-subtext);
@@ -256,9 +264,9 @@ body {
 
 .lcd-expression-line {
   font-family: var(--font-mono);
-  font-size: 20px;
+  font-size: 22px;
   color: var(--lcd-subtext);
-  min-height: 28px;
+  min-height: 30px;
   text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -267,24 +275,24 @@ body {
 
 .lcd-main-digits {
   font-family: var(--font-mono);
-  font-size: 46px;
+  font-size: 52px;
   font-weight: 800;
   color: var(--lcd-text);
   line-height: 1.2;
   letter-spacing: -0.5px;
   word-break: break-all;
-  margin: 8px 0;
+  margin: 10px 0;
 }
 
 .lcd-sub-row {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1.5px dashed var(--lcd-border);
-  font-size: 15px;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 2px dashed var(--lcd-border);
+  font-size: 16px;
   font-family: var(--font-mono);
   color: var(--lcd-subtext);
 }
@@ -293,19 +301,19 @@ body {
    INTERACTIVE GRAPHIC VIEWPORT (RESISTOR / CIRCUIT SCHEMATIC)
    -------------------------------------------------------------------------- */
 .calc-graphic-window {
-  margin: 0 36px 24px;
+  margin: 0 48px 24px;
   background-color: #ffffff;
   border: 2px solid var(--border-light);
   border-radius: 12px;
-  padding: 20px 32px;
+  padding: 24px 36px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .calc-graphic-window svg {
   width: 100%;
-  max-width: 960px;
-  max-height: 180px;
+  max-width: 1080px;
+  max-height: 220px;
   display: block;
   margin: 0 auto;
 }
@@ -323,10 +331,10 @@ body {
 }
 
 .sub-panel-box {
-  padding: 0 36px 36px;
+  padding: 0 48px 48px;
   display: none;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
 }
 
 .sub-panel-box.active {
@@ -340,10 +348,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  background-color: var(--bg-page);
-  padding: 8px;
-  border-radius: 10px;
+  gap: 12px;
+  background-color: #f1f5f9;
+  padding: 10px;
+  border-radius: 12px;
   border: 1.5px solid var(--border-light);
 }
 
@@ -351,9 +359,9 @@ body {
   flex: 1;
   background: none;
   border: none;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
-  padding: 12px 18px;
+  padding: 14px 22px;
   border-radius: 8px;
   color: var(--text-muted);
   cursor: pointer;
@@ -361,54 +369,54 @@ body {
 }
 
 .band-count-btn[aria-pressed="true"] {
-  background-color: var(--calc-chassis);
+  background-color: #ffffff;
   color: var(--primary-navy);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
 
 .band-dropdowns-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px 24px;
 }
 
 .band-item-box {
   background-color: var(--lcd-bg);
-  border: 1.5px solid var(--border-light);
-  border-radius: 10px;
-  padding: 12px 16px;
+  border: 2px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .band-item-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--primary-navy);
 }
 
 .color-swatch-pip {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
   border: 1.5px solid rgba(0,0,0,0.3);
 }
 
 .calc-select-control {
   width: 100%;
-  padding: 10px 14px;
-  font-size: 15px;
+  padding: 12px 16px;
+  font-size: 16px;
   font-weight: 600;
   border: 2px solid #a0b5c8;
   border-radius: 8px;
   background: #ffffff;
   color: var(--text-main);
   cursor: pointer;
-  height: 48px;
+  height: 52px;
   transition: border-color 0.15s ease;
 }
 .calc-select-control:focus {
@@ -417,8 +425,8 @@ body {
 
 .calc-actions-strip {
   display: flex;
-  gap: 16px;
-  margin-top: 10px;
+  gap: 18px;
+  margin-top: 14px;
   flex-wrap: wrap;
 }
 
@@ -426,14 +434,14 @@ body {
   flex: 1;
   background-color: var(--accent-green);
   color: #ffffff;
-  border: 1px solid #236327;
-  border-radius: 8px;
-  padding: 12px 22px;
-  font-size: 15px;
+  border: 1px solid #1b531f;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   text-align: center;
-  min-height: 48px;
+  min-height: 52px;
   transition: background-color 0.15s ease;
 }
 .btn-calc-main:hover {
@@ -444,12 +452,12 @@ body {
   background-color: #004080;
   color: #ffffff;
   border: 1px solid #002b55;
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-size: 15px;
+  border-radius: 10px;
+  padding: 14px 24px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  min-height: 48px;
+  min-height: 52px;
   transition: background-color 0.15s ease;
 }
 .btn-calc-sub:hover {
@@ -460,12 +468,12 @@ body {
   background-color: #64748b;
   color: #ffffff;
   border: 1px solid #475569;
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-size: 15px;
+  border-radius: 10px;
+  padding: 14px 24px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  min-height: 48px;
+  min-height: 52px;
   transition: background-color 0.15s ease;
 }
 .btn-calc-reset:hover {
@@ -476,49 +484,49 @@ body {
 .sim-controls-form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   background: var(--lcd-bg);
-  border: 1.5px solid var(--border-light);
-  border-radius: 12px;
-  padding: 20px 24px;
+  border: 2px solid var(--border-light);
+  border-radius: 14px;
+  padding: 24px 30px;
 }
 
 .sim-input-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
 .sim-input-row label {
-  font-size: 15.5px;
+  font-size: 16.5px;
   font-weight: 700;
   color: var(--primary-navy);
-  flex: 0 0 180px;
+  flex: 0 0 200px;
 }
 
 .sim-input-group {
   flex: 1;
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
 }
 
 .sim-text-field {
-  width: 140px;
-  padding: 10px 14px;
-  font-size: 16px;
+  width: 160px;
+  padding: 12px 16px;
+  font-size: 17px;
   font-family: var(--font-mono);
   border: 2px solid #a0b5c8;
   border-radius: 8px;
-  height: 46px;
+  height: 50px;
 }
 
 .sim-verdict-box {
-  padding: 18px 24px;
-  border-radius: 10px;
-  font-size: 15.5px;
+  padding: 20px 26px;
+  border-radius: 12px;
+  font-size: 16.5px;
   line-height: 1.6;
 }
 
@@ -541,43 +549,43 @@ body {
 }
 
 .sim-verdict-title {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 800;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .sim-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 10px 16px;
-  margin: 10px 0;
-  padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.88);
-  border-radius: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px 18px;
+  margin: 12px 0;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .text-area-box {
   width: 100%;
-  height: 72px;
+  height: 80px;
   font-family: var(--font-mono);
-  font-size: 15px;
-  padding: 10px 14px;
+  font-size: 16px;
+  padding: 12px 16px;
   border: 2px solid #a0b5c8;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 .sim-output-box {
   background-color: var(--safe-bg);
   border: 2px solid var(--safe-border);
-  padding: 16px 20px;
-  border-radius: 10px;
-  font-size: 15.5px;
+  padding: 18px 24px;
+  border-radius: 12px;
+  font-size: 16.5px;
 }
 
 .sim-output-val {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 800;
   font-family: var(--font-mono);
   color: #065f46;
@@ -587,36 +595,36 @@ body {
    PANEL 2: COMBINED STANDARD & SCIENTIFIC CALCULATOR
    -------------------------------------------------------------------------- */
 .calc-mode-switcher-container {
-  padding: 16px 36px 12px;
+  padding: 20px 48px 16px;
 }
 
 .calc-mode-toggle-group {
   display: flex;
   background: #e2e8f0;
-  border-radius: 10px;
-  padding: 6px;
-  gap: 8px;
-  border: 1.5px solid #cbd5e1;
-  max-width: 540px;
+  border-radius: 12px;
+  padding: 8px;
+  gap: 10px;
+  border: 2px solid #cbd5e1;
+  max-width: 600px;
   margin: 0 auto;
 }
 
 .calc-mode-toggle-btn {
   flex: 1;
-  padding: 12px 24px;
-  font-size: 16px;
+  padding: 14px 28px;
+  font-size: 17px;
   font-weight: 700;
   font-family: var(--font-family);
   border: none;
   background: transparent;
   color: var(--text-muted);
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .calc-mode-toggle-btn:hover {
@@ -626,15 +634,15 @@ body {
 .calc-mode-toggle-btn.active {
   background: #ffffff;
   color: var(--primary-navy);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.14);
 }
 
 .keypad-container {
-  padding: 0 36px 36px;
+  padding: 0 48px 48px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  max-width: 760px;
+  gap: 16px;
+  max-width: 840px;
   margin: 0 auto;
   width: 100%;
 }
@@ -643,24 +651,24 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .deg-rad-switch {
   display: inline-flex;
-  background: var(--bg-page);
-  border: 1.5px solid var(--border-light);
-  border-radius: 8px;
-  padding: 3px;
+  background: #e2e8f0;
+  border: 2px solid var(--border-light);
+  border-radius: 10px;
+  padding: 4px;
 }
 
 .deg-rad-btn {
   background: none;
   border: none;
-  padding: 6px 16px;
-  font-size: 13.5px;
+  padding: 8px 20px;
+  font-size: 14.5px;
   font-weight: 700;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   color: var(--text-muted);
 }
@@ -672,17 +680,17 @@ body {
 
 .memory-bar {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .btn-mem {
   background: #f1f5f9;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 13.5px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--primary-navy);
-  padding: 6px 14px;
+  padding: 8px 16px;
   cursor: pointer;
 }
 .btn-mem:hover { background: #e2e8f0; }
@@ -691,23 +699,23 @@ body {
 .keys-grid-basic {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  gap: 14px;
 }
 
 .keys-grid-sci {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: 12px;
 }
 
 .calc-key {
   font-family: var(--font-family);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 800;
-  padding: 16px 8px;
-  min-height: 60px;
-  border-radius: 10px;
-  border: 1.5px solid #cbd5e1;
+  padding: 18px 8px;
+  min-height: 66px;
+  border-radius: 12px;
+  border: 2px solid #cbd5e1;
   cursor: pointer;
   user-select: none;
   text-align: center;
@@ -738,9 +746,9 @@ body {
 .calc-key.sci-fn {
   background-color: var(--btn-fn-bg);
   color: #004080;
-  font-size: 16px;
-  padding: 14px 6px;
-  min-height: 54px;
+  font-size: 17px;
+  padding: 16px 8px;
+  min-height: 58px;
 }
 .calc-key.sci-fn:hover { background-color: var(--btn-fn-hover); }
 
@@ -755,7 +763,7 @@ body {
 .calc-key.equals {
   background-color: var(--accent-green);
   color: #ffffff;
-  border-color: #236327;
+  border-color: #1b531f;
   font-weight: 800;
 }
 .calc-key.equals:hover { background-color: var(--accent-green-hover); }
@@ -764,41 +772,41 @@ body {
    PANEL 4: PHYSICS CALCULATOR STYLING
    -------------------------------------------------------------------------- */
 .physics-container {
-  padding: 0 36px 36px;
+  padding: 0 48px 48px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .physics-select-card {
   background: var(--lcd-bg);
-  border: 1.5px solid var(--border-light);
-  border-radius: 12px;
-  padding: 18px 24px;
+  border: 2px solid var(--border-light);
+  border-radius: 14px;
+  padding: 22px 28px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .physics-form-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 18px;
 }
 
 .physics-form-row label {
-  font-size: 15.5px;
+  font-size: 16.5px;
   font-weight: 700;
   color: var(--primary-navy);
-  flex: 0 0 160px;
+  flex: 0 0 180px;
 }
 
 .physics-inputs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 14px 20px;
-  margin-top: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px 24px;
+  margin-top: 10px;
 }
 
 .physics-input-cell {
@@ -808,7 +816,7 @@ body {
 }
 
 .physics-input-cell label {
-  font-size: 14.5px;
+  font-size: 15.5px;
   font-weight: 700;
   color: #334155;
 }
@@ -816,70 +824,70 @@ body {
 .physics-input-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .physics-unit-tag {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-weight: 700;
-  min-width: 40px;
+  min-width: 44px;
 }
 
 /* Physics Solution Card */
 .physics-solution-card {
   background: var(--safe-bg);
   border: 2px solid var(--safe-border);
-  border-radius: 12px;
-  padding: 20px 26px;
-  font-size: 15.5px;
+  border-radius: 14px;
+  padding: 24px 30px;
+  font-size: 16.5px;
   line-height: 1.6;
 }
 
 .physics-solution-title {
   font-weight: 800;
   color: var(--safe-text);
-  font-size: 18px;
-  margin-bottom: 8px;
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
 .physics-formula-display {
   font-family: var(--font-mono);
-  font-size: 17px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 10px 16px;
-  border-radius: 8px;
-  margin: 8px 0;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 12px 18px;
+  border-radius: 10px;
+  margin: 10px 0;
   color: #0f172a;
 }
 
 .physics-step-breakdown {
-  font-size: 15px;
+  font-size: 16px;
   color: #1e293b;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 /* --------------------------------------------------------------------------
    IEC 60062 REFERENCE TABLE & STANDARDS (ELECTRONICS SUB-TOOL)
    -------------------------------------------------------------------------- */
 .ref-table-wrapper {
-  max-height: 420px;
+  max-height: 480px;
   overflow-y: auto;
-  border: 1.5px solid var(--border-light);
-  border-radius: 10px;
-  margin-bottom: 16px;
+  border: 2px solid var(--border-light);
+  border-radius: 12px;
+  margin-bottom: 20px;
   background: #ffffff;
 }
 
 .iec-ref-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14.5px;
+  font-size: 15.5px;
 }
 
 .iec-ref-table th, .iec-ref-table td {
-  padding: 10px 16px;
+  padding: 12px 18px;
   border-bottom: 1px solid #eef2f6;
   text-align: left;
 }
@@ -895,21 +903,21 @@ body {
 
 .color-badge {
   display: inline-block;
-  padding: 3px 10px;
+  padding: 4px 12px;
   border-radius: 6px;
   font-weight: 700;
-  font-size: 13.5px;
+  font-size: 14px;
 }
 
 .ref-formula-strip {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 14.5px;
+  gap: 8px;
+  font-size: 15.5px;
   background-color: #f8fafc;
-  border: 1.5px solid var(--border-light);
-  border-radius: 8px;
-  padding: 12px 18px;
+  border: 2px solid var(--border-light);
+  border-radius: 10px;
+  padding: 14px 20px;
 }
 
 /* --------------------------------------------------------------------------
@@ -918,33 +926,33 @@ body {
 .result-summary-card {
   background-color: #f8fafc;
   border: 2px solid var(--calc-border);
-  border-radius: 12px;
-  padding: 20px 26px;
-  margin-top: 16px;
+  border-radius: 14px;
+  padding: 24px 30px;
+  margin-top: 20px;
 }
 
 .result-header {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
   color: var(--primary-navy);
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1.5px dashed #cbd5e1;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed #cbd5e1;
 }
 
 .result-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 12px 20px;
-  font-size: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px 24px;
+  font-size: 16px;
 }
 
 .ratio-progress-bar {
   display: flex;
-  height: 12px;
-  border-radius: 6px;
+  height: 14px;
+  border-radius: 7px;
   overflow: hidden;
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
 /* --------------------------------------------------------------------------
@@ -952,14 +960,14 @@ body {
    -------------------------------------------------------------------------- */
 .bmi-gauge-bar {
   display: flex;
-  height: 32px;
-  border-radius: 8px;
+  height: 36px;
+  border-radius: 10px;
   overflow: hidden;
-  margin: 10px 0;
-  font-size: 13px;
+  margin: 12px 0;
+  font-size: 14px;
   font-weight: 700;
   text-align: center;
-  line-height: 32px;
+  line-height: 36px;
 }
 
 .bmi-zone.under { background-color: #60a5fa; color: #fff; flex: 18.5; }
@@ -969,7 +977,7 @@ body {
 
 .bmi-zone.active {
   box-shadow: inset 0 0 0 3px #000;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 /* --------------------------------------------------------------------------
@@ -978,14 +986,14 @@ body {
 .converter-box {
   display: flex;
   align-items: center;
-  gap: 18px;
-  margin: 16px 0;
+  gap: 20px;
+  margin: 20px 0;
   flex-wrap: wrap;
 }
 
 .conv-col {
   flex: 1;
-  min-width: 240px;
+  min-width: 260px;
   display: flex;
   flex-direction: column;
 }
@@ -993,16 +1001,16 @@ body {
 .conv-swap-col {
   display: flex;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 24px;
 }
 
 .btn-swap-units {
   background: #e2e8f0;
-  border: 1.5px solid var(--calc-border);
+  border: 2px solid var(--calc-border);
   border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  font-size: 22px;
+  width: 52px;
+  height: 52px;
+  font-size: 24px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -1019,39 +1027,40 @@ body {
 
 .conv-rate-badge {
   background: #f1f5f9;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 10px 18px;
-  font-size: 15px;
+  border: 2px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--primary-navy);
   text-align: center;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
 /* --------------------------------------------------------------------------
    FOOTER & LEGAL MODALS
    -------------------------------------------------------------------------- */
 .calc-bottom-bar {
-  background-color: var(--bg-page);
-  border-top: 1.5px solid var(--border-light);
-  padding: 16px 28px;
+  background-color: #f8fafc;
+  border-top: 2px solid var(--border-light);
+  padding: 24px 48px;
   text-align: center;
-  font-size: 14px;
+  font-size: 15px;
+  margin-top: auto;
 }
 
 .legal-links-row {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .legal-links-row button {
   background: none;
   border: none;
   color: var(--accent-blue);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  padding: 0 6px;
+  padding: 0 8px;
   text-decoration: underline;
 }
 .legal-links-row button:hover {
@@ -1060,18 +1069,18 @@ body {
 
 .calc-copy-line {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* Modal Windows */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.7);
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 24px;
   z-index: 99999;
 }
 
@@ -1082,26 +1091,26 @@ body {
 .modal-window {
   background: #ffffff;
   border: 2px solid var(--primary-navy);
-  border-radius: 12px;
+  border-radius: 14px;
   width: 100%;
-  max-width: 720px;
+  max-width: 800px;
   max-height: 85vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
 }
 
 .modal-header {
   background-color: var(--primary-navy);
   color: #ffffff;
-  padding: 16px 22px;
+  padding: 18px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .modal-title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
 }
 
@@ -1109,33 +1118,33 @@ body {
   background: none;
   border: none;
   color: #ffffff;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: bold;
   cursor: pointer;
   line-height: 1;
 }
 
 .modal-body {
-  padding: 20px 24px;
+  padding: 24px 28px;
   overflow-y: auto;
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.6;
   color: #1e293b;
 }
 
 .modal-body h4 {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--primary-navy);
-  margin: 14px 0 6px;
+  margin: 16px 0 8px;
 }
 
 .modal-body p {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .modal-footer {
-  padding: 14px 22px;
-  background-color: var(--bg-page);
+  padding: 16px 24px;
+  background-color: #f8fafc;
   border-top: 1.5px solid var(--border-light);
   text-align: right;
 }
@@ -1143,26 +1152,26 @@ body {
 /* Cookie Toast Notice */
 .cookie-toast-banner {
   position: fixed;
-  bottom: 18px;
-  left: 20px;
-  right: 20px;
-  max-width: 620px;
+  bottom: 20px;
+  left: 24px;
+  right: 24px;
+  max-width: 680px;
   margin: 0 auto;
   background: #ffffff;
-  border: 2px solid var(--primary-navy);
-  border-radius: 10px;
-  padding: 14px 20px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  border: 2.5px solid var(--primary-navy);
+  border-radius: 12px;
+  padding: 16px 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.22);
   display: none;
   z-index: 9999;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .cookie-toast-flex {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 18px;
 }
 
 .sr-only {
@@ -1180,33 +1189,31 @@ body {
    RESPONSIVE DESIGN BREAKPOINTS
    -------------------------------------------------------------------------- */
 @media (max-width: 900px) {
-  .calculator-device {
-    width: 98%;
-    margin: 12px auto 0;
-    border-radius: 10px;
-  }
   .calc-header-bar {
-    padding: 14px 20px;
-  }
-  .calc-lcd-screen {
-    margin: 16px 18px;
     padding: 16px 20px;
   }
-  .lcd-main-digits {
-    font-size: 32px;
-  }
-  .calc-graphic-window {
-    margin: 0 18px 16px;
-    padding: 14px;
-  }
-  .sub-panel-box, .physics-container, .keypad-container {
-    padding: 0 18px 20px;
-  }
-  .master-tab {
-    font-size: 13.5px;
-    padding: 12px 14px;
+  .master-tabs-bar {
+    padding: 0 12px;
   }
   .sub-tabs-bar {
-    padding: 10px 18px;
+    padding: 12px 20px;
+  }
+  .calc-lcd-screen {
+    margin: 16px 20px;
+    padding: 18px 20px;
+  }
+  .lcd-main-digits {
+    font-size: 36px;
+  }
+  .calc-graphic-window {
+    margin: 0 20px 18px;
+    padding: 16px;
+  }
+  .sub-panel-box, .physics-container, .keypad-container {
+    padding: 0 20px 24px;
+  }
+  .master-tab {
+    font-size: 14px;
+    padding: 12px 14px;
   }
 }
