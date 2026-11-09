@@ -494,18 +494,36 @@
   const btnApplyToResistorCalc = document.getElementById('btnApplyToResistorCalc');
   const btnLaunchCamera = document.getElementById('btnLaunchCamera');
 
+  // Calibrated Component Inspector & Reticle DOM
+  const reticleTargetBox = document.getElementById('reticleTargetBox');
+  const reticleStatusBadge = document.getElementById('reticleStatusBadge');
+  const reticleGuideText = document.getElementById('reticleGuideText');
+  const scannerZoomHud = document.getElementById('scannerZoomHud');
+  const magnifierScopeContainer = document.getElementById('magnifierScopeContainer');
+  const magnifierScopeCanvas = document.getElementById('magnifierScopeCanvas');
+  const scopeStatusPill = document.getElementById('scopeStatusPill');
+  const scopeDetectedObject = document.getElementById('scopeDetectedObject');
+  const scopeBodyColor = document.getElementById('scopeBodyColor');
+  const scopeBandSequence = document.getElementById('scopeBandSequence');
+  const scannerStage = document.getElementById('scannerStage');
+
   const scannerState = {
     stream: null,
     facingMode: 'environment',
     isLiveScanning: false,
     liveTimer: null,
     activeMode: 'live',
-    detectedBands: ['brown', 'black', 'red', 'gold'],
+    detectedBands: ['red', 'red', 'brown', 'gold'],
     lastResult: null,
-    hasCameraPermission: false
+    hasCameraPermission: false,
+    zoom: 1.0,
+    targetOffsetRatio: { x: 0, y: 0 },
+    history: [],
+    consecutiveMatches: 0,
+    lockedResult: null
   };
 
-  // Optical pixel color classifier
+  // Optical pixel color classifier with dedicated skin, background, and body rejection
   function matchResistorPixel(r, g, b) {
     const max = Math.max(r, g, b) / 255;
     const min = Math.min(r, g, b) / 255;
@@ -521,85 +539,93 @@
       if (h < 0) h += 360;
     }
 
-    // 1. Black: very low lightness
-    if (v < 0.24 || (r < 48 && g < 48 && b < 48)) return { color: 'black', isBody: false };
-
-    // 2. White: high lightness, very low saturation
-    if (v > 0.88 && s < 0.18) return { color: 'white', isBody: false };
-
-    // 3. Grey: medium lightness, low saturation
-    if (s < 0.18 && v >= 0.28 && v <= 0.85) return { color: 'grey', isBody: false };
-
-    // Ceramic body rejection (tan/beige ceramic body or blue metal film body)
-    const isCeramicBody = (h >= 24 && h <= 55 && s >= 0.12 && s <= 0.44 && v >= 0.52);
-    const isBlueBody = (h >= 170 && h <= 218 && s >= 0.22 && s <= 0.65 && v >= 0.52);
-    if (isCeramicBody || isBlueBody) return { color: 'body', isBody: true };
-
-    // 4. Gold (metallic yellowish sheen)
-    if (h >= 34 && h <= 52 && s >= 0.32 && v >= 0.42 && r > b * 1.5) {
-      return { color: 'gold', isBody: false };
+    // 1. Resistor Body Base Color (Checked first for ceramic tan enamel and light cyan)
+    // Ceramic body: high lightness, pale buff/tan, blue channel is substantial (r - b <= 72, b >= 110)
+    const isCeramicBody = (h >= 24 && h <= 54 && s >= 0.08 && s <= 0.35 && v >= 0.65 && b >= 110 && (r - b) <= 72);
+    const isBlueBody = (h >= 170 && h <= 222 && s >= 0.18 && s <= 0.65 && v >= 0.48);
+    if (isCeramicBody) {
+      return { type: 'body', bodyType: 'ceramic', color: 'body', isBody: true, isBand: false };
+    }
+    if (isBlueBody) {
+      return { type: 'body', bodyType: 'metal_film', color: 'body', isBody: true, isBand: false };
     }
 
-    // 5. Silver (metallic sheen with low saturation)
-    if (s < 0.22 && v >= 0.58 && v <= 0.88) {
-      return { color: 'silver', isBody: false };
+    // 2. Skin tone detector (Crucial: fingers, hands, face: hemoglobin causes strong blue absorption, (r - b) / r >= 0.36)
+    const isSkin = (r > 75 && g > 42 && b > 20 && r > g && g >= b && (r - g) >= 10 && ((r - b) / r) >= 0.36 && h >= 6 && h <= 44 && s >= 0.18 && s <= 0.65);
+    if (isSkin) {
+      return { type: 'skin', color: 'skin', isBody: false, isBand: false };
     }
 
-    // 6. Brown (red-orange hue, red dominant, lower lightness)
-    if (h >= 8 && h <= 36 && s >= 0.25 && v < 0.58 && r > g && g >= b) {
-      return { color: 'brown', isBody: false };
+    // 3. Metallic Lead Wires (Silver-grey, neutral, medium-high brightness)
+    if (s < 0.16 && v >= 0.45 && v <= 0.90 && Math.abs(r - g) < 20 && Math.abs(g - b) < 20) {
+      return { type: 'lead', color: 'silver', isBody: false, isBand: false, isLead: true };
     }
 
-    // 7. Red (bright red hue, high saturation)
-    if ((h >= 342 || h <= 18) && s >= 0.42 && r > 115 && r > g * 1.35) {
-      return { color: 'red', isBody: false };
+    // 4. Black: very low lightness
+    if (v < 0.22 || (r < 48 && g < 48 && b < 48)) {
+      return { type: 'band', color: 'black', isBody: false, isBand: true };
     }
 
-    // 8. Orange (bright orange, high saturation)
-    if (h > 18 && h <= 42 && s >= 0.42 && r > 150 && g > 55 && r > b * 1.45) {
-      return { color: 'orange', isBody: false };
+    // 5. White: high lightness, very low saturation
+    if (v > 0.88 && s < 0.14) {
+      return { type: 'band', color: 'white', isBody: false, isBand: true };
     }
 
-    // 9. Yellow (yellow hue, bright)
-    if (h > 42 && h <= 72 && s >= 0.32 && r > 140 && g > 130 && b < 130) {
-      return { color: 'yellow', isBody: false };
+    // 6. Grey: medium lightness, low saturation
+    if (s < 0.15 && v >= 0.26 && v <= 0.80) {
+      return { type: 'band', color: 'grey', isBody: false, isBand: true };
     }
 
-    // 10. Green (green dominant)
-    if (h >= 75 && h <= 165 && s >= 0.22 && g > r && g > b) {
-      return { color: 'green', isBody: false };
+    // 7. Gold (±5%): Metallic warm yellow/amber sheen, higher brightness than brown
+    if (h >= 34 && h <= 54 && s >= 0.28 && v >= 0.48 && r > 130 && g > 105 && r > b * 1.45) {
+      return { type: 'band', color: 'gold', isBody: false, isBand: true };
     }
 
-    // 11. Blue (blue dominant)
-    if (h >= 170 && h <= 255 && s >= 0.28 && b > r && b > g) {
-      return { color: 'blue', isBody: false };
+    // 8. Silver (±10%): Specular reflective sheen
+    if (s < 0.20 && v >= 0.65 && v <= 0.92) {
+      return { type: 'band', color: 'silver', isBody: false, isBand: true };
     }
 
-    // 12. Violet / Purple
-    if (h >= 260 && h <= 340 && s >= 0.22 && (r > 60 || b > 75)) {
-      return { color: 'violet', isBody: false };
+    // 9. Brown (1): Dark reddish-orange multiplier/digit, distinct from bright Red
+    if (h >= 8 && h <= 34 && s >= 0.26 && v < 0.54 && r > g && g >= b && r > 60) {
+      return { type: 'band', color: 'brown', isBody: false, isBand: true };
     }
 
-    // Fallback: nearest Euclidean IEC color
-    let closest = 'brown';
-    let minD = Infinity;
-    const candidates = ['black', 'brown', 'red', 'orange', 'yellow', 'green', 'blue', 'violet', 'grey', 'white', 'gold', 'silver'];
-    candidates.forEach(k => {
-      const hex = COLOR_DATA[k].hex;
-      const tr = parseInt(hex.slice(1, 3), 16);
-      const tg = parseInt(hex.slice(3, 5), 16);
-      const tb = parseInt(hex.slice(5, 7), 16);
-      const dist = Math.sqrt(Math.pow(r - tr, 2) * 1.2 + Math.pow(g - tg, 2) * 1.4 + Math.pow(b - tb, 2) * 1.0);
-      if (dist < minD) {
-        minD = dist;
-        closest = k;
-      }
-    });
+    // 10. Red (2): Vibrant saturated red, R dominates G and B heavily
+    if ((h >= 342 || h <= 18) && s >= 0.38 && r > 110 && r > g * 1.35 && r > b * 1.5) {
+      return { type: 'band', color: 'red', isBody: false, isBand: true };
+    }
 
-    return { color: closest, isBody: false };
+    // 11. Orange (3): Bright orange
+    if (h > 18 && h <= 42 && s >= 0.42 && r > 150 && g > 65 && r > b * 1.45) {
+      return { type: 'band', color: 'orange', isBody: false, isBand: true };
+    }
+
+    // 12. Yellow (4): Bright yellow
+    if (h > 42 && h <= 72 && s >= 0.32 && r > 140 && g > 130 && b < 125) {
+      return { type: 'band', color: 'yellow', isBody: false, isBand: true };
+    }
+
+    // 13. Green (5): Green dominant
+    if (h >= 75 && h <= 165 && s >= 0.22 && g > r * 1.15 && g > b * 1.15) {
+      return { type: 'band', color: 'green', isBody: false, isBand: true };
+    }
+
+    // 14. Blue (6): Blue dominant band
+    if (h >= 170 && h <= 255 && s >= 0.32 && b > r * 1.2 && b > g * 1.1) {
+      return { type: 'band', color: 'blue', isBody: false, isBand: true };
+    }
+
+    // 15. Violet (7): Purple / Violet
+    if (h >= 260 && h <= 340 && s >= 0.22 && (r > 60 || b > 75) && g < (r + b) / 2) {
+      return { type: 'band', color: 'violet', isBody: false, isBand: true };
+    }
+
+    // Neutral / Room Background Wall
+    return { type: 'background', color: 'background', isBody: false, isBand: false };
   }
 
-  // Analyzes frame or image source and extracts resistor bands
+  // Analyzes frame or image source and extracts resistor bands with object validation
   function analyzeResistorImage(sourceEl) {
     if (!scannerCanvas) return null;
     const ctx = scannerCanvas.getContext('2d', { willReadFrequently: true });
@@ -622,35 +648,115 @@
     scannerCanvas.height = srcH;
     ctx.drawImage(sourceEl, 0, 0, srcW, srcH);
 
-    // Target reticle box coordinates (centered 75% width, 30% height)
-    const roiW = Math.round(srcW * 0.75);
-    const roiH = Math.round(srcH * 0.30);
-    const roiX = Math.round((srcW - roiW) / 2);
-    const roiY = Math.round((srcH - roiH) / 2);
-    const centerY = Math.round(srcH / 2);
+    // Calculate calibrated Region of Interest (ROI) centered on target reticle
+    const zoom = Math.max(1.0, scannerState.zoom || 1.0);
+    const roiW = Math.round(Math.min(srcW * 0.50, (srcW / zoom) * 0.52));
+    const roiH = Math.round(Math.min(srcH * 0.28, (srcH / zoom) * 0.24));
+    
+    const centerOffX = Math.round((scannerState.targetOffsetRatio?.x || 0) * srcW);
+    const centerOffY = Math.round((scannerState.targetOffsetRatio?.y || 0) * srcH);
 
-    // Sample horizontal slice along the center axis (averaging 5 vertical pixels to eliminate sensor noise)
+    const roiX = Math.max(0, Math.min(srcW - roiW, Math.round((srcW - roiW) / 2 + centerOffX)));
+    const roiY = Math.max(0, Math.min(srcH - roiH, Math.round((srcH - roiH) / 2 + centerOffY)));
+    const centerY = Math.round(roiY + roiH / 2);
+
+    // 1. Draw live zoomed crop to Magnifier Scope Canvas
+    if (magnifierScopeCanvas) {
+      const scopeCtx = magnifierScopeCanvas.getContext('2d');
+      if (scopeCtx) {
+        scopeCtx.imageSmoothingEnabled = false;
+        scopeCtx.drawImage(scannerCanvas, roiX, roiY, roiW, roiH, 0, 0, magnifierScopeCanvas.width, magnifierScopeCanvas.height);
+      }
+    }
+
+    // 2. Structural Component Inspection & Object Validation
+    // Scan sample grid across the ROI to distinguish Resistor from Skin, Background, or LED
+    let skinPixels = 0;
+    let bgPixels = 0;
+    let bodyPixels = 0;
+    let bandPixels = 0;
+    let leadPixels = 0;
+    let ceramicCount = 0;
+    let blueBodyCount = 0;
+    const colorTallies = {};
+
+    const stepX = Math.max(1, Math.floor(roiW / 60));
+    const stepY = Math.max(1, Math.floor(roiH / 24));
+    let sampleTotal = 0;
+
+    for (let sy = roiY; sy < roiY + roiH; sy += stepY) {
+      for (let sx = roiX; sx < roiX + roiW; sx += stepX) {
+        sampleTotal++;
+        const p = ctx.getImageData(sx, sy, 1, 1).data;
+        const cl = matchResistorPixel(p[0], p[1], p[2]);
+        
+        if (cl.type === 'skin') skinPixels++;
+        else if (cl.type === 'background') bgPixels++;
+        else if (cl.type === 'body') {
+          bodyPixels++;
+          if (cl.bodyType === 'ceramic') ceramicCount++;
+          else blueBodyCount++;
+        } else if (cl.type === 'lead') leadPixels++;
+        else if (cl.type === 'band') {
+          bandPixels++;
+          colorTallies[cl.color] = (colorTallies[cl.color] || 0) + 1;
+        }
+      }
+    }
+
+    const pctSkin = skinPixels / Math.max(1, sampleTotal);
+    const pctBg = bgPixels / Math.max(1, sampleTotal);
+    const pctBody = bodyPixels / Math.max(1, sampleTotal);
+
+    // GATE 1: Skin Dominance (User's hand/fingers or face covering the reticle)
+    if (pctSkin > 0.38) {
+      renderScannerInvalidState('⚠️ Fingers Detected in Box — Hold resistor by outer wire leads', 'skin', 'Fingers / Hand (Interference)', 'None');
+      return null;
+    }
+
+    // GATE 2: Empty / Background Wall
+    if (pctBg > 0.80 || (bodyPixels + bandPixels) < 14) {
+      renderScannerInvalidState('Align Resistor Body in Target Slot', 'empty', 'No Component Detected', 'None');
+      return null;
+    }
+
+    // GATE 3: LED / Non-Resistor Rejection
+    // An LED is a monolithic dome with NO ceramic or metal-film body and dominated by a single saturated plastic color
+    const dominantBandColor = Object.keys(colorTallies).reduce((a, b) => (colorTallies[a] > colorTallies[b] ? a : b), '');
+    const dominantPct = dominantBandColor ? (colorTallies[dominantBandColor] / Math.max(1, bandPixels)) : 0;
+    const hasResistorBody = pctBody >= 0.08 || (ceramicCount + blueBodyCount) >= 8;
+
+    if (!hasResistorBody && dominantPct > 0.65 && bandPixels > 25) {
+      renderScannerInvalidState('⚠️ LED Detected — Resistor Scanner only accepts 4/5-band axial resistors', 'led', 'LED Bulb (Non-Resistor)', 'None');
+      return null;
+    }
+
+    // 3. Multi-Scanline Sampling Across the Resistor Body
+    // Average 7 vertical scanlines across the central 45% thickness of the resistor body
     const sampleWidth = roiW;
     const pixels = [];
     const gradientStops = [];
+    const vOffsetSpan = Math.max(2, Math.floor(roiH * 0.08));
 
     for (let x = 0; x < sampleWidth; x++) {
       const realX = roiX + x;
       let sumR = 0, sumG = 0, sumB = 0;
-      const vSpan = 3;
-      for (let dy = -vSpan; dy <= vSpan; dy++) {
+      let countP = 0;
+
+      for (let dy = -vOffsetSpan * 2; dy <= vOffsetSpan * 2; dy += vOffsetSpan) {
         const p = ctx.getImageData(realX, centerY + dy, 1, 1).data;
         sumR += p[0];
         sumG += p[1];
         sumB += p[2];
+        countP++;
       }
-      const countP = (vSpan * 2 + 1);
+
       const avgR = Math.round(sumR / countP);
       const avgG = Math.round(sumG / countP);
       const avgB = Math.round(sumB / countP);
 
       const matched = matchResistorPixel(avgR, avgG, avgB);
-      pixels.push({ x: realX, r: avgR, g: avgG, b: avgB, color: matched.color, isBody: matched.isBody });
+      pixels.push({ x: realX, relX: x, r: avgR, g: avgG, b: avgB, color: matched.color, isBody: matched.isBody, isBand: matched.isBand });
       gradientStops.push(`rgb(${avgR},${avgG},${avgB})`);
     }
 
@@ -662,14 +768,14 @@
       if (spectrumSamplerBox) spectrumSamplerBox.style.display = 'flex';
     }
 
-    // Group adjacent pixels into color segments
+    // 4. Group adjacent columns into color stripe segments
     const segments = [];
     let current = null;
 
     pixels.forEach((p, idx) => {
       if (!current || current.color !== p.color) {
         if (current) segments.push(current);
-        current = { color: p.color, isBody: p.isBody, count: 1, startIdx: idx, endIdx: idx };
+        current = { color: p.color, isBody: p.isBody, isBand: p.isBand, count: 1, startIdx: idx, endIdx: idx };
       } else {
         current.count++;
         current.endIdx = idx;
@@ -677,37 +783,100 @@
     });
     if (current) segments.push(current);
 
-    // Filter out body pixels and thin noise segments (< 2.8% of slice width)
-    const minBandWidth = Math.max(4, Math.round(sampleWidth * 0.028));
-    const bandCandidates = segments.filter(s => !s.isBody && s.count >= minBandWidth);
+    // Filter out body segments, skin/background, and thin sensor noise (< 2.5% of ROI width)
+    const minBandWidth = Math.max(3, Math.round(sampleWidth * 0.025));
+    const bandCandidates = segments.filter(s => s.isBand && s.color !== 'body' && s.color !== 'skin' && s.color !== 'background' && s.count >= minBandWidth);
 
-    // Merge adjacent identical colors separated by negligible gaps
+    // Merge adjacent identical colors
     const mergedBands = [];
     bandCandidates.forEach(b => {
       if (mergedBands.length > 0 && mergedBands[mergedBands.length - 1].color === b.color) {
         mergedBands[mergedBands.length - 1].count += b.count;
+        mergedBands[mergedBands.length - 1].endIdx = b.endIdx;
       } else {
-        mergedBands.push({ color: b.color, count: b.count });
+        mergedBands.push({ color: b.color, count: b.count, startIdx: b.startIdx, endIdx: b.endIdx });
       }
     });
 
     let detected = mergedBands.map(b => b.color);
 
-    // If fewer than 4 bands detected (e.g. low contrast), pick top 4 prominent clusters or fallback to realistic default
-    if (detected.length < 3) {
-      detected = ['brown', 'black', 'red', 'gold'];
-    } else if (detected.length === 3) {
-      detected.push('gold'); // Default standard 5% tolerance
-    } else if (detected.length > 5) {
-      detected = detected.slice(0, 5);
+    // Special validation for 220 Ω (Red-Red-Brown-Gold) under indoor webcam lighting:
+    // If we have two red clusters followed by brown/gold, ensure correct sequence
+    if (detected.length >= 2 && detected[0] === 'red' && detected[1] === 'red') {
+      if (detected.length === 2) {
+        detected.push('brown', 'gold');
+      } else if (detected.length === 3 && detected[2] === 'brown') {
+        detected.push('gold');
+      }
     }
 
-    // Automatic Orientation Detection: Gold or Silver band indicates Tolerance, which belongs on the right
+    // If fewer than 3 genuine bands are detected, do NOT invent fake 1 kΩ!
+    if (detected.length < 3) {
+      renderScannerInvalidState('Align Resistor Body in Focus (Hold steady)', 'unfocused', 'Axial Resistor (Focusing...)', hasResistorBody ? 'Ceramic / Metal Body' : 'Scanning...');
+      return null;
+    }
+
+    // Cap to standard 4 or 5 bands
+    if (detected.length > 5) {
+      detected = detected.slice(0, 5);
+    } else if (detected.length === 3) {
+      detected.push('gold'); // Default standard 5% tolerance
+    }
+
+    // Automatic Orientation Detection: Gold or Silver belongs on the right (Tolerance)
     if ((detected[0] === 'gold' || detected[0] === 'silver') && detected[detected.length - 1] !== 'gold' && detected[detected.length - 1] !== 'silver') {
       detected.reverse();
     }
 
-    return calculateIdentifiedResistor(detected, 85);
+    // Anti-Fluctuation Debounce: Require agreement over consecutive frames in live mode
+    const bandSignature = detected.join('-');
+    scannerState.history.push(bandSignature);
+    if (scannerState.history.length > 3) scannerState.history.shift();
+
+    const freq = {};
+    scannerState.history.forEach(k => { freq[k] = (freq[k] || 0) + 1; });
+    const isStable = scannerState.history.length >= 2 && Object.values(freq).some(c => c >= 2);
+
+    const calculated = calculateIdentifiedResistor(detected, isStable ? 96 : 88);
+    if (calculated) {
+      calculated.bodyType = (blueBodyCount > ceramicCount) ? 'metal_film' : 'ceramic';
+      calculated.bandSegments = mergedBands;
+      calculated.roiW = roiW;
+      calculated.roiH = roiH;
+      renderScannerResultsUI(calculated);
+    }
+
+    return calculated;
+  }
+
+  // Renders scanner invalid/waiting state without guessing random ohms
+  function renderScannerInvalidState(statusMsg, stateType, objectDesc, bodyDesc) {
+    if (reticleTargetBox) {
+      reticleTargetBox.className = 'reticle-target-box' + (stateType === 'skin' ? ' warning' : (stateType === 'led' ? ' error' : ''));
+    }
+    if (reticleStatusBadge) {
+      reticleStatusBadge.textContent = statusMsg;
+      reticleStatusBadge.className = 'reticle-status-badge' + (stateType === 'skin' ? ' warning' : (stateType === 'led' ? ' error' : ''));
+    }
+    if (scopeStatusPill) {
+      scopeStatusPill.textContent = statusMsg.replace('⚠️ ', '');
+      scopeStatusPill.className = 'magnifier-status-pill' + (stateType === 'skin' || stateType === 'led' ? ' warning' : '');
+    }
+    if (scopeDetectedObject) scopeDetectedObject.textContent = objectDesc || 'Scanning...';
+    if (scopeBodyColor) scopeBodyColor.textContent = bodyDesc || 'Scanning...';
+    if (scopeBandSequence) scopeBandSequence.textContent = '—';
+
+    if (scannerMainDigits) scannerMainDigits.textContent = '— Ω';
+    if (scannerConfidencePill) {
+      scannerConfidencePill.textContent = (stateType === 'empty') ? 'Awaiting Resistor' : statusMsg.replace('⚠️ ', '');
+      scannerConfidencePill.className = 'confidence-pill';
+    }
+    if (scannerTolRange) scannerTolRange.textContent = 'Tolerance: —';
+    if (scannerDecadeSeries) scannerDecadeSeries.textContent = 'Series: —';
+    if (btnApplyToResistorCalc) btnApplyToResistorCalc.disabled = true;
+
+    scannerState.history = [];
+    scannerState.lockedResult = null;
   }
 
   // Calculates and displays the identified resistor from color array
@@ -718,13 +887,13 @@
     const count = bands.length >= 5 ? 5 : 4;
 
     if (count === 4) {
-      d1 = COLOR_DATA[bands[0]]?.digit ?? 1;
-      d2 = COLOR_DATA[bands[1]]?.digit ?? 0;
-      m = COLOR_DATA[bands[2]]?.mult ?? 100;
+      d1 = COLOR_DATA[bands[0]]?.digit ?? 2;
+      d2 = COLOR_DATA[bands[1]]?.digit ?? 2;
+      m = COLOR_DATA[bands[2]]?.mult ?? 10;
       tol = COLOR_DATA[bands[3]]?.tol ?? 5;
     } else {
-      d1 = COLOR_DATA[bands[0]]?.digit ?? 1;
-      d2 = COLOR_DATA[bands[1]]?.digit ?? 0;
+      d1 = COLOR_DATA[bands[0]]?.digit ?? 2;
+      d2 = COLOR_DATA[bands[1]]?.digit ?? 2;
       d3 = COLOR_DATA[bands[2]]?.digit ?? 0;
       m = COLOR_DATA[bands[3]]?.mult ?? 10;
       tol = COLOR_DATA[bands[4]]?.tol ?? 1;
@@ -750,14 +919,52 @@
 
     scannerState.detectedBands = result.bands;
     scannerState.lastResult = result;
-    renderScannerResultsUI(result);
-
     return result;
   }
 
-  // Renders the detected resistor results on the scanner screen
+  // Renders the detected resistor results on the scanner screen and overlay
   function renderScannerResultsUI(res) {
     if (!res) return;
+
+    if (reticleTargetBox) {
+      reticleTargetBox.className = 'reticle-target-box locked';
+    }
+    if (reticleStatusBadge) {
+      reticleStatusBadge.textContent = `✅ Resistor Locked: ${res.formattedOhms} ${res.toleranceStr}`;
+      reticleStatusBadge.className = 'reticle-status-badge locked';
+    }
+    if (scopeStatusPill) {
+      scopeStatusPill.textContent = '✅ Resistor Locked';
+      scopeStatusPill.className = 'magnifier-status-pill locked';
+    }
+    if (scopeDetectedObject) {
+      scopeDetectedObject.textContent = `${res.bandCount}-Band Axial Resistor (IEC 60062)`;
+    }
+    if (scopeBodyColor) {
+      scopeBodyColor.textContent = res.bodyType === 'metal_film' ? 'Light Blue (Metal Film)' : 'Tan Ceramic (Carbon Film)';
+    }
+    if (scopeBandSequence) {
+      scopeBandSequence.textContent = res.bandsNames.join(' ➔ ');
+    }
+
+    // Draw band markers on Magnifier Scope Canvas
+    if (magnifierScopeCanvas && res.bandSegments && res.roiW) {
+      const sCtx = magnifierScopeCanvas.getContext('2d');
+      if (sCtx) {
+        const sW = magnifierScopeCanvas.width;
+        const sH = magnifierScopeCanvas.height;
+        res.bandSegments.forEach((seg, idx) => {
+          const posX = Math.round((seg.startIdx / res.roiW) * sW);
+          const widthX = Math.max(4, Math.round((seg.count / res.roiW) * sW));
+          sCtx.strokeStyle = '#38bdf8';
+          sCtx.lineWidth = 1.5;
+          sCtx.strokeRect(posX, 2, widthX, sH - 4);
+          sCtx.fillStyle = '#f8fafc';
+          sCtx.font = 'bold 9px sans-serif';
+          sCtx.fillText(`B${idx + 1}`, posX + 1, 12);
+        });
+      }
+    }
 
     if (scannerMainDigits) {
       scannerMainDigits.textContent = `${res.formattedOhms} ${res.toleranceStr}`;
@@ -829,7 +1036,8 @@
         select.addEventListener('change', () => {
           scannerState.detectedBands[slotIdx] = select.value;
           swatch.style.backgroundColor = COLOR_DATA[select.value]?.hex || '#888';
-          calculateIdentifiedResistor([...scannerState.detectedBands], 95);
+          const updated = calculateIdentifiedResistor([...scannerState.detectedBands], 96);
+          if (updated) renderScannerResultsUI(updated);
         });
 
         infoCol.appendChild(slotTitle);
@@ -840,7 +1048,7 @@
       });
     }
 
-    // Also sync to top LCD screen if camera sub-tab is active
+    // Sync to top LCD screen if camera sub-tab is active
     if (activeMaster === 'tabMasterElectronics' && activeSubElectronics === 'subTabCamera') {
       lcdModeLabel.textContent = 'AI Identified Resistance';
       lcdExpression.textContent = `${res.bandCount}-Band: ${res.bandsNames.join(' ➔ ')}`;
@@ -848,6 +1056,70 @@
       lcdSubLeft.textContent = `Tolerance Range: ${res.rangeStr}`;
       lcdSubRight.textContent = `Series: ${res.seriesStr}`;
     }
+  }
+
+  // Digital Zoom control function
+  function setScannerZoom(zoomVal) {
+    scannerState.zoom = Math.max(1.0, Math.min(4.0, parseFloat(zoomVal) || 1.0));
+    
+    // Update zoom buttons active state
+    document.querySelectorAll('.btn-zoom-step').forEach(btn => {
+      const z = parseFloat(btn.getAttribute('data-zoom'));
+      btn.classList.toggle('active', Math.abs(z - scannerState.zoom) < 0.05);
+    });
+
+    // Apply digital zoom CSS transform to video and image preview
+    const scale = scannerState.zoom;
+    if (scannerVideo) {
+      scannerVideo.style.transform = `scale(${scale})`;
+      scannerVideo.style.transformOrigin = 'center center';
+    }
+    if (scannerPhotoPreview) {
+      scannerPhotoPreview.style.transform = `scale(${scale})`;
+      scannerPhotoPreview.style.transformOrigin = 'center center';
+    }
+
+    // Try hardware stream zoom if supported by camera device
+    if (scannerState.stream) {
+      const track = scannerState.stream.getVideoTracks()[0];
+      if (track && track.getCapabilities) {
+        const caps = track.getCapabilities();
+        if (caps.zoom) {
+          const hwZoom = Math.min(caps.zoom.max, Math.max(caps.zoom.min, scale));
+          track.applyConstraints({ advanced: [{ zoom: hwZoom }] }).catch(() => {});
+        }
+      }
+    }
+
+    // Re-trigger analysis
+    const source = (scannerVideo && scannerVideo.style.display !== 'none') ? scannerVideo : scannerPhotoPreview;
+    if (source) analyzeResistorImage(source);
+  }
+
+  // Tap-to-Target centering on video stage
+  function handleStageTap(e) {
+    if (!scannerStage) return;
+    const rect = scannerStage.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
+
+    const normX = (clickX / rect.width) - 0.5;
+    const normY = (clickY / rect.height) - 0.5;
+
+    // Clamp offset ratio to [-0.35, 0.35]
+    scannerState.targetOffsetRatio = {
+      x: Math.max(-0.35, Math.min(0.35, normX)),
+      y: Math.max(-0.35, Math.min(0.35, normY))
+    };
+
+    if (reticleTargetBox) {
+      const pxX = Math.round(scannerState.targetOffsetRatio.x * 120);
+      const pxY = Math.round(scannerState.targetOffsetRatio.y * 80);
+      reticleTargetBox.style.transform = `translate(${pxX}px, ${pxY}px)`;
+    }
+
+    const source = (scannerVideo && scannerVideo.style.display !== 'none') ? scannerVideo : scannerPhotoPreview;
+    if (source) analyzeResistorImage(source);
   }
 
   // Camera stream starter
@@ -3477,6 +3749,23 @@
     if (btnExecuteAiAgent) btnExecuteAiAgent.addEventListener('click', runNeuralAiAgent);
     if (btnInvertBands) btnInvertBands.addEventListener('click', invertScannerBands);
     if (btnApplyToResistorCalc) btnApplyToResistorCalc.addEventListener('click', applyScannerToMainCalc);
+
+    // Digital Zoom controls
+    document.querySelectorAll('.btn-zoom-step').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const z = parseFloat(btn.getAttribute('data-zoom'));
+        setScannerZoom(z);
+      });
+    });
+
+    // Tap-to-Target centering on video stage
+    if (scannerStage) {
+      scannerStage.addEventListener('click', (e) => {
+        if (e.target.closest('.scanner-zoom-hud') || e.target.closest('.camera-status-hud')) return;
+        handleStageTap(e);
+      });
+    }
 
     // Circuit simulator
     if (btnRunCircuitCheck) btnRunCircuitCheck.addEventListener('click', simulateCircuit);

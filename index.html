@@ -169,11 +169,22 @@
 
             <!-- Holographic / HUD Aiming Reticle -->
             <div class="scanner-reticle-overlay" id="scannerReticle">
-              <div class="reticle-target-box">
+              <div class="reticle-target-box" id="reticleTargetBox">
                 <div class="reticle-corner tl"></div>
                 <div class="reticle-corner tr"></div>
                 <div class="reticle-corner bl"></div>
                 <div class="reticle-corner br"></div>
+
+                <!-- Axial Resistor Alignment Silhouette -->
+                <div class="reticle-lead-line left"></div>
+                <div class="reticle-capsule-silhouette">
+                  <span class="capsule-notch n1" title="Band 1"></span>
+                  <span class="capsule-notch n2" title="Band 2"></span>
+                  <span class="capsule-notch n3" title="Band 3 / Mult"></span>
+                  <span class="capsule-notch n4" title="Tolerance"></span>
+                </div>
+                <div class="reticle-lead-line right"></div>
+
                 <div class="reticle-scan-laser" id="scannerLaser"></div>
                 <div class="reticle-axis-line"></div>
                 <div class="reticle-band-markers">
@@ -181,10 +192,20 @@
                   <span class="reticle-mark">Band 2</span>
                   <span class="reticle-mark">Band 3</span>
                   <span class="reticle-mark">Multiplier</span>
-                  <span class="reticle-mark">Tolerance</span>
+                  <span class="reticle-mark">Tol</span>
                 </div>
-                <div class="reticle-guide-text" id="reticleGuideText">Align Resistor Body Horizontally in Target Box</div>
+                <div class="reticle-guide-text" id="reticleGuideText">Align Resistor in Target Slot (Tap Video to Center)</div>
+                <div class="reticle-status-badge" id="reticleStatusBadge">Awaiting Alignment</div>
               </div>
+            </div>
+
+            <!-- Digital Zoom HUD -->
+            <div class="scanner-zoom-hud" id="scannerZoomHud" role="toolbar" aria-label="Camera Zoom">
+              <span class="zoom-title">🔍 Zoom:</span>
+              <button type="button" class="btn-zoom-step active" data-zoom="1">1×</button>
+              <button type="button" class="btn-zoom-step" data-zoom="1.5">1.5×</button>
+              <button type="button" class="btn-zoom-step" data-zoom="2">2×</button>
+              <button type="button" class="btn-zoom-step" data-zoom="3">3×</button>
             </div>
 
             <!-- Live Status HUD Badge -->
@@ -215,6 +236,25 @@
             <button type="button" id="btnTriggerPhotoUpload" class="btn-calc-sub">
               📁 Upload Resistor Image
             </button>
+          </div>
+
+          <!-- Magnified Component Inspector (Live Target Crop & Diagnostic Metrics) -->
+          <div class="magnifier-scope-container" id="magnifierScopeContainer">
+            <div class="magnifier-scope-header">
+              <div class="magnifier-scope-title-group">
+                <span class="magnifier-icon">🔬</span>
+                <strong>Precision Component Inspector (Zoomed Reticle Crop):</strong>
+              </div>
+              <span class="magnifier-status-pill" id="scopeStatusPill">Aligning Resistor...</span>
+            </div>
+            <div class="magnifier-scope-body">
+              <canvas id="magnifierScopeCanvas" width="340" height="85" aria-label="Magnified component crop"></canvas>
+              <div class="magnifier-scope-metrics">
+                <div class="scope-metric-row"><strong>Object Detected:</strong> <span id="scopeDetectedObject">Scanning...</span></div>
+                <div class="scope-metric-row"><strong>Resistor Body:</strong> <span id="scopeBodyColor">Scanning...</span></div>
+                <div class="scope-metric-row"><strong>Band Sequence:</strong> <span id="scopeBandSequence">—</span></div>
+              </div>
+            </div>
           </div>
 
           <!-- Neural AI Agent Panel (Gemini Vision / Vision Heuristics) -->
