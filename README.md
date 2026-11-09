@@ -30,6 +30,7 @@
 ## 🛠️ Complete Feature Suite (8 Core Disciplines)
 
 ### 1. ⚡ Electronics Suite
+* **📷 AI Resistor Camera & Vision Scanner:** Point your webcam or smartphone camera at any physical through-hole resistor to identify its color bands and compute its resistance on the spot. Features live auto-scanning, HUD targeting reticle, optical pixel slice color clustering, interactive band fine-tuning, photo upload support, and an optional Neural AI Vision Agent for deep multimodal image reasoning.
 * **Resistor Color Code (2 to 6 Bands):** Forward (Color → Resistance) and Reverse (Resistance → Color) calculations conforming to IEC 60062 / EIA-RS-279 with live scalable SVG resistor graphic.
 * **Capacitor Code Decoder:** Decode 3-digit EIA codes (e.g. `104` = 100 nF), ceramic/tantalum tolerance codes, and compute stored charge ($Q = CV$) and electrostatic energy ($E = \frac{1}{2}CV^2$).
 * **Diode & Zener Voltage Drop:** Models Silicon, Schottky, Germanium, and LEDs with forward current, dynamic resistance, and Zener reverse breakdown voltage regulation.

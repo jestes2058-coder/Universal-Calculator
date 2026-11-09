@@ -6,7 +6,7 @@
   <title>Universal Calculator</title>
   <meta name="description" content="Universal Calculator: All-in-one compact web calculator for Electronics, Basic Math, Scientific, Physics, Finance, BMI Fitness, Unit Conversions, and Chemistry.">
   <link rel="icon" type="image/png" href="logo/logo.png">
-  <link rel="stylesheet" href="styles.css?v=4.1">
+  <link rel="stylesheet" href="styles.css?v=5.0">
 </head>
 <body>
 
@@ -84,6 +84,9 @@
         <button type="button" id="subTabColor" class="sub-tab" role="tab" aria-selected="true" aria-controls="subPanelColor">
           Resistor Code
         </button>
+        <button type="button" id="subTabCamera" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelCamera">
+          📷 AI Resistor Scanner
+        </button>
         <button type="button" id="subTabCapacitor" class="sub-tab" role="tab" aria-selected="false" aria-controls="subPanelCapacitor">
           Capacitor
         </button>
@@ -126,8 +129,158 @@
 
         <div class="calc-actions-strip">
           <button type="button" id="btnTestInCircuit" class="btn-calc-sub">⚡ Test in Circuit &#9658;</button>
+          <button type="button" id="btnLaunchCamera" class="btn-calc-main" style="flex: 1.2;">📷 Open AI Resistor Scanner &#9658;</button>
           <button type="button" id="btnResetColor" class="btn-calc-reset">Reset Bands</button>
         </div>
+      </div>
+
+      <!-- 1B. AI Camera Resistor Scanner -->
+      <div id="subPanelCamera" class="sub-panel-box" role="tabpanel" aria-labelledby="subTabCamera">
+        
+        <!-- Scanner Top Bar & Mode Switcher -->
+        <div class="scanner-top-strip">
+          <div class="scanner-mode-switch" role="group" aria-label="Scanner Mode">
+            <button type="button" id="btnScannerModeLive" class="scanner-mode-tab active" aria-pressed="true">🎥 Live Camera Scanner</button>
+            <button type="button" id="btnScannerModeUpload" class="scanner-mode-tab" aria-pressed="false">📁 Photo Upload</button>
+            <button type="button" id="btnScannerModeAiAgent" class="scanner-mode-tab" aria-pressed="false">🤖 Neural AI Vision Agent</button>
+          </div>
+
+          <!-- Quick Samples -->
+          <div class="scanner-preset-chips" role="group" aria-label="Quick Samples">
+            <span class="preset-label">Test Samples:</span>
+            <button type="button" class="btn-preset-resistor" data-sample="10k" title="Test 10 kΩ 4-Band Resistor">10 kΩ (Br-Bl-Or-Au)</button>
+            <button type="button" class="btn-preset-resistor" data-sample="1k" title="Test 1 kΩ 4-Band Resistor">1 kΩ (Br-Bl-Rd-Au)</button>
+            <button type="button" class="btn-preset-resistor" data-sample="220" title="Test 220 Ω 4-Band Resistor">220 Ω (Rd-Rd-Br-Au)</button>
+            <button type="button" class="btn-preset-resistor" data-sample="4k7" title="Test 4.7 kΩ 4-Band Resistor">4.7 kΩ (Yl-Vi-Rd-Au)</button>
+          </div>
+        </div>
+
+        <!-- Scanner Viewport Stage Card -->
+        <div class="scanner-viewport-card">
+          <div class="scanner-stage-container" id="scannerStage">
+            <!-- Live Camera Video -->
+            <video id="scannerVideo" playsinline autoplay muted aria-label="Camera Video Feed"></video>
+
+            <!-- Snapshot / Uploaded Image Preview -->
+            <img id="scannerPhotoPreview" alt="Resistor scan preview" style="display: none;">
+
+            <!-- AR / Processing Canvas -->
+            <canvas id="scannerCanvas" style="display: none;"></canvas>
+
+            <!-- Holographic / HUD Aiming Reticle -->
+            <div class="scanner-reticle-overlay" id="scannerReticle">
+              <div class="reticle-target-box">
+                <div class="reticle-corner tl"></div>
+                <div class="reticle-corner tr"></div>
+                <div class="reticle-corner bl"></div>
+                <div class="reticle-corner br"></div>
+                <div class="reticle-scan-laser" id="scannerLaser"></div>
+                <div class="reticle-axis-line"></div>
+                <div class="reticle-band-markers">
+                  <span class="reticle-mark">Band 1</span>
+                  <span class="reticle-mark">Band 2</span>
+                  <span class="reticle-mark">Band 3</span>
+                  <span class="reticle-mark">Multiplier</span>
+                  <span class="reticle-mark">Tolerance</span>
+                </div>
+                <div class="reticle-guide-text" id="reticleGuideText">Align Resistor Body Horizontally in Target Box</div>
+              </div>
+            </div>
+
+            <!-- Live Status HUD Badge -->
+            <div class="camera-status-hud" id="cameraStatusHud">
+              <span class="status-indicator-dot off" id="cameraIndicatorDot"></span>
+              <span id="cameraStatusLabel">Camera Ready</span>
+            </div>
+          </div>
+
+          <!-- Scanner Action Toolbar -->
+          <div class="scanner-toolbar">
+            <button type="button" id="btnStartCamera" class="btn-calc-main" style="min-width: 160px;">
+              🎥 Start Camera
+            </button>
+            <button type="button" id="btnSnapAnalyze" class="btn-calc-sub" disabled>
+              📸 Scan &amp; Identify
+            </button>
+            <button type="button" id="btnLiveAutoDetect" class="btn-calc-sub" disabled>
+              ⚡ Live Auto-Scan: Off
+            </button>
+            <button type="button" id="btnFlipCameraFacing" class="btn-calc-sub" style="display: none;" title="Switch between Front and Back Camera">
+              🔄 Switch Camera
+            </button>
+            <button type="button" id="btnStopCamera" class="btn-calc-reset" disabled>
+              ⏹ Stop Camera
+            </button>
+            <input type="file" id="scannerFileInput" accept="image/*" style="display: none;">
+            <button type="button" id="btnTriggerPhotoUpload" class="btn-calc-sub">
+              📁 Upload Resistor Image
+            </button>
+          </div>
+
+          <!-- Neural AI Agent Panel (Gemini Vision / Vision Heuristics) -->
+          <div id="aiAgentNeuralBox" class="ai-agent-card" style="display: none;">
+            <div class="ai-agent-heading">
+              <div class="ai-agent-badge">🤖 Neural AI Vision Agent</div>
+              <div class="ai-agent-meta">Deep Visual Reasoning &amp; Structural Resistor Recognition</div>
+            </div>
+            <p class="ai-agent-info">
+              The built-in Optical Vision Engine analyzes color bands instantly on your device. For complex scenarios (damaged bands, ambient glare, 5-band precision, or SMD resistors), activate the Neural AI Agent:
+            </p>
+            <div class="ai-agent-controls-row">
+              <input type="password" id="geminiApiKeyInput" class="sim-text-field" style="flex: 1;" placeholder="Optional Google Gemini API Key (or click below to use Built-in Vision Agent)">
+              <button type="button" id="btnExecuteAiAgent" class="btn-calc-main" style="flex: 0 0 auto;">
+                🧠 Analyze with Neural AI Agent
+              </button>
+            </div>
+            <div id="aiAgentResponseBox" class="ai-agent-verdict-box" style="display: none;"></div>
+          </div>
+
+          <!-- Live On-The-Spot Results Card -->
+          <div class="scanner-results-card" id="scannerResultsCard">
+            <div class="scanner-results-header">
+              <div class="scanner-results-title-group">
+                <span class="results-tag">IDENTIFIED RESISTOR OUTPUT</span>
+                <span class="confidence-pill" id="scannerConfidencePill">Awaiting Scan</span>
+              </div>
+              <div class="scanner-results-actions">
+                <button type="button" id="btnInvertBands" class="btn-calc-sub" title="Flip Left-to-Right Band Order">
+                  ⇄ Invert Bands
+                </button>
+                <button type="button" id="btnApplyToResistorCalc" class="btn-calc-main" disabled>
+                  📥 Apply to Resistor Calculator &#9658;
+                </button>
+              </div>
+            </div>
+
+            <!-- Big Main Resistance Value -->
+            <div class="scanner-lcd-preview">
+              <div class="scanner-main-digits" id="scannerMainDigits">— Ω</div>
+              <div class="scanner-sub-breakdown" id="scannerSubBreakdown">
+                <span id="scannerTolRange">Tolerance: —</span>
+                <span id="scannerDecadeSeries">Series: —</span>
+                <span id="scannerBandCountDisplay">4-Band IEC Resistor</span>
+              </div>
+            </div>
+
+            <!-- Interactive Detected Bands Ribbon -->
+            <div class="detected-bands-wrapper">
+              <div class="detected-bands-title">
+                <span>Detected Color Bands (Click any band to fine-tune):</span>
+              </div>
+              <div class="detected-bands-grid" id="detectedBandsGrid">
+                <!-- Dynamically populated with interactive swatch and selector for each band -->
+              </div>
+            </div>
+
+            <!-- Visual Color Spectrum Sampler -->
+            <div class="spectrum-sampler-box" id="spectrumSamplerBox" style="display: none;">
+              <span class="spectrum-title">Optical Pixel Slice Profile:</span>
+              <div class="spectrum-gradient-line" id="spectrumGradientLine"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
       </div>
 
       <!-- 2. Capacitor Code & Value Calculator -->
@@ -1468,7 +1621,7 @@
     </div>
   </aside>
 
-  <script src="calculator.js?v=4.1"></script>
-  <script src="app.js?v=4.1"></script>
+  <script src="calculator.js?v=5.0"></script>
+  <script src="app.js?v=5.0"></script>
 </body>
 </html>

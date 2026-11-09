@@ -47,9 +47,9 @@ const SECURITY_HEADERS = {
   // Strict Referrer control
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   // Content Security Policy: Strict self, disallows unsafe-eval
-  'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
-  // Restrict browser features & hardware
-  'Permissions-Policy': 'geolocation=(), camera=(), microphone=(), payment=(), usb=(), display-capture=()',
+  'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://generativelanguage.googleapis.com; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
+  // Restrict browser features & hardware (camera enabled for AI Resistor Scanner)
+  'Permissions-Policy': 'geolocation=(), camera=(self), microphone=(), payment=(), usb=(), display-capture=()',
   // Isolation headers
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'same-origin',
