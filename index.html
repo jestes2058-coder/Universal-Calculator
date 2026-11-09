@@ -199,13 +199,14 @@
               </div>
             </div>
 
-            <!-- Digital Zoom HUD -->
-            <div class="scanner-zoom-hud" id="scannerZoomHud" role="toolbar" aria-label="Camera Zoom">
+            <!-- Digital Zoom & Mirror HUD -->
+            <div class="scanner-zoom-hud" id="scannerZoomHud" role="toolbar" aria-label="Camera Zoom and Mirror">
               <span class="zoom-title">🔍 Zoom:</span>
               <button type="button" class="btn-zoom-step active" data-zoom="1">1×</button>
               <button type="button" class="btn-zoom-step" data-zoom="1.5">1.5×</button>
               <button type="button" class="btn-zoom-step" data-zoom="2">2×</button>
               <button type="button" class="btn-zoom-step" data-zoom="3">3×</button>
+              <button type="button" id="btnHudMirror" class="btn-zoom-step active" style="margin-left: 6px;" title="Flip Camera Horizontally (Mirror View)">🪞 Mirror: ON</button>
             </div>
 
             <!-- Live Status HUD Badge -->
@@ -225,6 +226,9 @@
             </button>
             <button type="button" id="btnLiveAutoDetect" class="btn-calc-sub" disabled>
               ⚡ Live Auto-Scan: Off
+            </button>
+            <button type="button" id="btnToggleMirror" class="btn-calc-sub" title="Flip camera horizontally (Mirror view)">
+              🪞 Mirror: ON
             </button>
             <button type="button" id="btnFlipCameraFacing" class="btn-calc-sub" style="display: none;" title="Switch between Front and Back Camera">
               🔄 Switch Camera

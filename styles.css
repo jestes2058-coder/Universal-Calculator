@@ -464,6 +464,12 @@ body {
   background-color: #003366;
 }
 
+.btn-calc-sub.active {
+  background-color: #0369a1;
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
 .btn-calc-reset {
   background-color: #64748b;
   color: #ffffff;
@@ -1288,6 +1294,7 @@ body {
   height: 100%;
   object-fit: contain;
   display: block;
+  transition: transform 0.2s ease;
 }
 
 .scanner-reticle-overlay {

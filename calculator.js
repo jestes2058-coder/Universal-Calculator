@@ -470,6 +470,8 @@
   const btnSnapAnalyze = document.getElementById('btnSnapAnalyze');
   const btnLiveAutoDetect = document.getElementById('btnLiveAutoDetect');
   const btnFlipCameraFacing = document.getElementById('btnFlipCameraFacing');
+  const btnToggleMirror = document.getElementById('btnToggleMirror');
+  const btnHudMirror = document.getElementById('btnHudMirror');
   const btnStopCamera = document.getElementById('btnStopCamera');
   const scannerFileInput = document.getElementById('scannerFileInput');
   const btnTriggerPhotoUpload = document.getElementById('btnTriggerPhotoUpload');
@@ -509,7 +511,8 @@
 
   const scannerState = {
     stream: null,
-    facingMode: 'environment',
+    facingMode: 'user',
+    isMirrored: true,
     isLiveScanning: false,
     liveTimer: null,
     activeMode: 'live',
@@ -646,7 +649,14 @@
 
     scannerCanvas.width = srcW;
     scannerCanvas.height = srcH;
+
+    ctx.save();
+    if (scannerState.isMirrored && (sourceEl instanceof HTMLVideoElement || (typeof HTMLVideoElement !== 'undefined' && sourceEl instanceof HTMLVideoElement))) {
+      ctx.translate(srcW, 0);
+      ctx.scale(-1, 1);
+    }
     ctx.drawImage(sourceEl, 0, 0, srcW, srcH);
+    ctx.restore();
 
     // Calculate calibrated Region of Interest (ROI) centered on target reticle
     const zoom = Math.max(1.0, scannerState.zoom || 1.0);
@@ -1058,20 +1068,13 @@
     }
   }
 
-  // Digital Zoom control function
-  function setScannerZoom(zoomVal) {
-    scannerState.zoom = Math.max(1.0, Math.min(4.0, parseFloat(zoomVal) || 1.0));
-    
-    // Update zoom buttons active state
-    document.querySelectorAll('.btn-zoom-step').forEach(btn => {
-      const z = parseFloat(btn.getAttribute('data-zoom'));
-      btn.classList.toggle('active', Math.abs(z - scannerState.zoom) < 0.05);
-    });
+  // Updates CSS transform for digital zoom and horizontal mirror inversion
+  function updateScannerTransform() {
+    const scale = scannerState.zoom || 1.0;
+    const flipX = scannerState.isMirrored ? -1 : 1;
 
-    // Apply digital zoom CSS transform to video and image preview
-    const scale = scannerState.zoom;
     if (scannerVideo) {
-      scannerVideo.style.transform = `scale(${scale})`;
+      scannerVideo.style.transform = `scale(${flipX * scale}, ${scale})`;
       scannerVideo.style.transformOrigin = 'center center';
     }
     if (scannerPhotoPreview) {
@@ -1079,13 +1082,45 @@
       scannerPhotoPreview.style.transformOrigin = 'center center';
     }
 
+    // Synchronize UI buttons
+    if (btnToggleMirror) {
+      btnToggleMirror.textContent = scannerState.isMirrored ? '🪞 Mirror: ON' : '🪞 Mirror: OFF';
+      btnToggleMirror.classList.toggle('active', !!scannerState.isMirrored);
+    }
+    if (btnHudMirror) {
+      btnHudMirror.textContent = scannerState.isMirrored ? '🪞 Mirror: ON' : '🪞 Mirror: OFF';
+      btnHudMirror.classList.toggle('active', !!scannerState.isMirrored);
+    }
+  }
+
+  // Toggles camera mirror inversion mode (flip horizontally)
+  function toggleScannerMirror() {
+    scannerState.isMirrored = !scannerState.isMirrored;
+    updateScannerTransform();
+    const source = (scannerVideo && scannerVideo.style.display !== 'none') ? scannerVideo : scannerPhotoPreview;
+    if (source) analyzeResistorImage(source);
+  }
+
+  // Digital Zoom control function
+  function setScannerZoom(zoomVal) {
+    scannerState.zoom = Math.max(1.0, Math.min(4.0, parseFloat(zoomVal) || 1.0));
+    
+    // Update zoom buttons active state (filtering for data-zoom attribute)
+    document.querySelectorAll('.btn-zoom-step[data-zoom]').forEach(btn => {
+      const z = parseFloat(btn.getAttribute('data-zoom'));
+      btn.classList.toggle('active', Math.abs(z - scannerState.zoom) < 0.05);
+    });
+
+    // Apply digital zoom & mirror CSS transform
+    updateScannerTransform();
+
     // Try hardware stream zoom if supported by camera device
     if (scannerState.stream) {
       const track = scannerState.stream.getVideoTracks()[0];
       if (track && track.getCapabilities) {
         const caps = track.getCapabilities();
         if (caps.zoom) {
-          const hwZoom = Math.min(caps.zoom.max, Math.max(caps.zoom.min, scale));
+          const hwZoom = Math.min(caps.zoom.max, Math.max(caps.zoom.min, scannerState.zoom));
           track.applyConstraints({ advanced: [{ zoom: hwZoom }] }).catch(() => {});
         }
       }
@@ -1153,7 +1188,19 @@
       if (scannerVideo) {
         scannerVideo.srcObject = stream;
         scannerVideo.style.display = 'block';
+        updateScannerTransform();
         await scannerVideo.play();
+      }
+
+      // Detect hardware facing mode and default mirroring
+      const videoTrack = stream.getVideoTracks()[0];
+      if (videoTrack && videoTrack.getSettings) {
+        const settings = videoTrack.getSettings();
+        if (settings.facingMode) {
+          scannerState.facingMode = settings.facingMode;
+          scannerState.isMirrored = (settings.facingMode !== 'environment');
+          updateScannerTransform();
+        }
       }
 
       if (scannerPhotoPreview) scannerPhotoPreview.style.display = 'none';
@@ -1246,6 +1293,8 @@
   // Flips front / back camera
   function flipScannerCamera() {
     scannerState.facingMode = (scannerState.facingMode === 'environment') ? 'user' : 'environment';
+    scannerState.isMirrored = (scannerState.facingMode === 'user');
+    updateScannerTransform();
     startScannerCamera();
   }
 
@@ -3719,6 +3768,8 @@
     if (btnStartCamera) btnStartCamera.addEventListener('click', startScannerCamera);
     if (btnStopCamera) btnStopCamera.addEventListener('click', stopScannerCamera);
     if (btnFlipCameraFacing) btnFlipCameraFacing.addEventListener('click', flipScannerCamera);
+    if (btnToggleMirror) btnToggleMirror.addEventListener('click', toggleScannerMirror);
+    if (btnHudMirror) btnHudMirror.addEventListener('click', toggleScannerMirror);
     if (btnLiveAutoDetect) btnLiveAutoDetect.addEventListener('click', toggleLiveAutoDetect);
     if (btnSnapAnalyze) {
       btnSnapAnalyze.addEventListener('click', () => {
@@ -3777,7 +3828,7 @@
     if (btnApplyToResistorCalc) btnApplyToResistorCalc.addEventListener('click', applyScannerToMainCalc);
 
     // Digital Zoom controls
-    document.querySelectorAll('.btn-zoom-step').forEach(btn => {
+    document.querySelectorAll('.btn-zoom-step[data-zoom]').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const z = parseFloat(btn.getAttribute('data-zoom'));
@@ -4328,6 +4379,9 @@
     calculatePh();
     calculateMolarMass();
     calculateFluidPressure();
+
+    // Synchronize camera scanner UI transform state
+    updateScannerTransform();
 
     // Ensure default initial active view is Resistor
     switchMasterTab('tabMasterElectronics');
