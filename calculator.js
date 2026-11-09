@@ -1796,6 +1796,7 @@
 
   function renderCapacitorSvg(code, capText, volt) {
     if (!graphicContent) return;
+    if (activeMaster !== 'tabMasterElectronics' || activeSubElectronics !== 'subTabCapacitor') return;
     graphicContent.innerHTML = `
       <svg viewBox="0 0 340 75" fill="none" xmlns="http://www.w3.org/2000/svg">
         <line x1="90" y1="52" x2="90" y2="70" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
@@ -1817,6 +1818,7 @@
 
   function renderDiodeSvg(model, vf, idMa, isZener) {
     if (!graphicContent) return;
+    if (activeMaster !== 'tabMasterElectronics' || activeSubElectronics !== 'subTabDiode') return;
     const bandColor = isZener ? '#38bdf8' : '#e2e8f0';
     const bodyColor = isZener ? '#0284c7' : '#1e293b';
     graphicContent.innerHTML = `
@@ -1840,18 +1842,19 @@
 
   function renderTransistorSvg(type, state, ibUa, icMa, vce) {
     if (!graphicContent) return;
+    if (activeMaster !== 'tabMasterElectronics' || activeSubElectronics !== 'subTabTransistor') return;
     const isPnp = (type === 'PNP');
     graphicContent.innerHTML = `
       <svg viewBox="0 0 340 75" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 40 55 A 18 18 0 0 1 76 55 L 76 60 L 40 60 Z" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
-        <rect x="42" y="24" width="32" height="32" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
-        <line x1="48" y1="56" x2="48" y2="72" stroke="#94a3b8" stroke-width="2"/>
-        <line x1="58" y1="56" x2="58" y2="72" stroke="#94a3b8" stroke-width="2"/>
-        <line x1="68" y1="56" x2="68" y2="72" stroke="#94a3b8" stroke-width="2"/>
-        <text x="48" y="20" font-size="8" font-weight="bold" fill="#64748b" text-anchor="middle">1:E</text>
-        <text x="58" y="20" font-size="8" font-weight="bold" fill="#64748b" text-anchor="middle">2:B</text>
-        <text x="68" y="20" font-size="8" font-weight="bold" fill="#64748b" text-anchor="middle">3:C</text>
-        <text x="58" y="42" font-size="8" font-family="monospace" fill="#94a3b8" text-anchor="middle">TO-92</text>
+        <path d="M 32 55 A 24 24 0 0 1 88 55 L 88 60 L 32 60 Z" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+        <rect x="34" y="22" width="52" height="34" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+        <line x1="44" y1="56" x2="44" y2="72" stroke="#94a3b8" stroke-width="2"/>
+        <line x1="60" y1="56" x2="60" y2="72" stroke="#94a3b8" stroke-width="2"/>
+        <line x1="76" y1="56" x2="76" y2="72" stroke="#94a3b8" stroke-width="2"/>
+        <text x="44" y="16" font-size="7.5" font-weight="bold" fill="#64748b" text-anchor="middle">1:E</text>
+        <text x="60" y="16" font-size="7.5" font-weight="bold" fill="#64748b" text-anchor="middle">2:B</text>
+        <text x="76" y="16" font-size="7.5" font-weight="bold" fill="#64748b" text-anchor="middle">3:C</text>
+        <text x="60" y="42" font-size="8.5" font-family="monospace" fill="#94a3b8" text-anchor="middle">TO-92</text>
         <circle cx="170" cy="37" r="22" stroke="#64748b" stroke-width="1.5" fill="#f8fafc"/>
         <line x1="125" y1="37" x2="160" y2="37" stroke="#003366" stroke-width="2"/>
         <line x1="160" y1="22" x2="160" y2="52" stroke="#003366" stroke-width="3"/>
@@ -1942,13 +1945,14 @@
       capTimeConstDisplay.textContent = `${tauMs < 1 ? (tauMs * 1000).toFixed(1) + ' µs' : tauMs.toFixed(3) + ' ms'} (fc: ${fcStr})`;
     }
 
-    lcdModeLabel.textContent = 'EIA Capacitor Code & Capacitance';
-    lcdExpression.textContent = `EIA ${codeStr}${tolCode} | Voltage Rating: ${voltVolts}V DC`;
-    lcdMainValue.textContent = `${baseUf >= 0.01 ? baseUf.toFixed(2) + ' µF' : baseNf.toFixed(1) + ' nF'} (Code ${codeStr}) ±${tolPct}%`;
-    lcdSubLeft.textContent = `Range: ${minNf.toFixed(1)} nF – ${maxNf.toFixed(1)} nF (${basePf.toLocaleString()} pF)`;
-    lcdSubRight.textContent = `Xc: ${xcOhms >= 1000 ? (xcOhms/1000).toFixed(1) + ' kΩ' : xcOhms.toFixed(0) + ' Ω'} @ ${freqHz}Hz`;
-
-    renderCapacitorSvg(codeStr + tolCode, baseUf >= 0.01 ? baseUf.toFixed(2) + 'µF' : baseNf.toFixed(0) + 'nF', voltVolts);
+    if (activeMaster === 'tabMasterElectronics' && activeSubElectronics === 'subTabCapacitor') {
+      lcdModeLabel.textContent = 'EIA Capacitor Code & Capacitance';
+      lcdExpression.textContent = `EIA ${codeStr}${tolCode} | Voltage Rating: ${voltVolts}V DC`;
+      lcdMainValue.textContent = `${baseUf >= 0.01 ? baseUf.toFixed(2) + ' µF' : baseNf.toFixed(1) + ' nF'} (Code ${codeStr}) ±${tolPct}%`;
+      lcdSubLeft.textContent = `Range: ${minNf.toFixed(1)} nF – ${maxNf.toFixed(1)} nF (${basePf.toLocaleString()} pF)`;
+      lcdSubRight.textContent = `Xc: ${xcOhms >= 1000 ? (xcOhms/1000).toFixed(1) + ' kΩ' : xcOhms.toFixed(0) + ' Ω'} @ ${freqHz}Hz`;
+      renderCapacitorSvg(codeStr + tolCode, baseUf >= 0.01 ? baseUf.toFixed(2) + 'µF' : baseNf.toFixed(0) + 'nF', voltVolts);
+    }
   }
 
   function calculateDiode() {
@@ -2060,13 +2064,14 @@
     if (diodeRsPowerDisplay) diodeRsPowerDisplay.textContent = `${rsPowerMw.toFixed(1)} mW`;
     if (diodeSafetyDisplay) diodeSafetyDisplay.textContent = safetyVerdict;
 
-    lcdModeLabel.textContent = mode === 'zener' ? 'Zener Voltage Regulator' : 'Diode Forward Conduction';
-    lcdExpression.textContent = `Vs: ${vs}V | Rs: ${rs}Ω | VD: ${diodeVolt.toFixed(2)}V`;
-    lcdMainValue.textContent = `ID = ${diodeCurrentMa.toFixed(2)} mA | VD = ${diodeVolt.toFixed(2)}V`;
-    lcdSubLeft.textContent = `Diode Dissipation: ${diodePowerMw.toFixed(1)} mW`;
-    lcdSubRight.textContent = `Status: ${statusText}`;
-
-    renderDiodeSvg(mode === 'zener' ? 'Zener Diode' : 'Rectifier Diode', diodeVolt, diodeCurrentMa, mode === 'zener');
+    if (activeMaster === 'tabMasterElectronics' && activeSubElectronics === 'subTabDiode') {
+      lcdModeLabel.textContent = mode === 'zener' ? 'Zener Voltage Regulator' : 'Diode Forward Conduction';
+      lcdExpression.textContent = `Vs: ${vs}V | Rs: ${rs}Ω | VD: ${diodeVolt.toFixed(2)}V`;
+      lcdMainValue.textContent = `ID = ${diodeCurrentMa.toFixed(2)} mA | VD = ${diodeVolt.toFixed(2)}V`;
+      lcdSubLeft.textContent = `Diode Dissipation: ${diodePowerMw.toFixed(1)} mW`;
+      lcdSubRight.textContent = `Status: ${statusText}`;
+      renderDiodeSvg(mode === 'zener' ? 'Zener Diode' : 'Rectifier Diode', diodeVolt, diodeCurrentMa, mode === 'zener');
+    }
   }
 
   function calculateTransistor() {
@@ -2146,13 +2151,14 @@
     if (transPrcDisplay) transPrcDisplay.textContent = `${prcMw.toFixed(1)} mW`;
     if (transOverdriveDisplay) transOverdriveDisplay.textContent = overdrive > 1 ? `${overdrive.toFixed(2)}× (Saturated)` : `${overdrive.toFixed(2)}× (Active)`;
 
-    lcdModeLabel.textContent = `${type} Transistor Biasing (${partName})`;
-    lcdExpression.textContent = `Vcc: ${vcc}V | Vin: ${vin}V | Rb: ${rb >= 1000 ? rb/1000 + 'k' : rb}Ω | Rc: ${rc >= 1000 ? rc/1000 + 'k' : rc}Ω`;
-    lcdMainValue.textContent = `${state.split(' ')[1] || state} | IC = ${icMa.toFixed(2)} mA | VCE = ${vce.toFixed(2)}V`;
-    lcdSubLeft.textContent = `Base Current: ${ibUa.toFixed(1)} µA (hFE: ${beta})`;
-    lcdSubRight.textContent = `Transistor Power: ${pdMw.toFixed(1)} mW`;
-
-    renderTransistorSvg(type, state, ibUa, icMa, vce);
+    if (activeMaster === 'tabMasterElectronics' && activeSubElectronics === 'subTabTransistor') {
+      lcdModeLabel.textContent = `${type} Transistor Biasing (${partName})`;
+      lcdExpression.textContent = `Vcc: ${vcc}V | Vin: ${vin}V | Rb: ${rb >= 1000 ? rb/1000 + 'k' : rb}Ω | Rc: ${rc >= 1000 ? rc/1000 + 'k' : rc}Ω`;
+      lcdMainValue.textContent = `${state.split(' ')[1] || state} | IC = ${icMa.toFixed(2)} mA | VCE = ${vce.toFixed(2)}V`;
+      lcdSubLeft.textContent = `Base Current: ${ibUa.toFixed(1)} µA (hFE: ${beta})`;
+      lcdSubRight.textContent = `Transistor Power: ${pdMw.toFixed(1)} mW`;
+      renderTransistorSvg(type, state, ibUa, icMa, vce);
+    }
   }
 
   // --------------------------------------------------------------------------
@@ -3011,11 +3017,13 @@
     if (loanIntBar) loanIntBar.style.width = `${intRatio.toFixed(1)}%`;
 
     // LCD screen
-    lcdModeLabel.textContent = 'Loan / Mortgage EMI';
-    lcdExpression.textContent = `$${P.toLocaleString()} @ ${rAnnual}% for ${termVal} ${unit}`;
-    lcdMainValue.textContent = `$${emi.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} / month`;
-    lcdSubLeft.textContent = `Total Interest: $${totalInt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    lcdSubRight.textContent = `Total Pay: $${totalPay.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    if (activeMaster === 'tabMasterFinance' && activeSubFinance === 'subTabFinanceLoan') {
+      lcdModeLabel.textContent = 'Loan / Mortgage EMI';
+      lcdExpression.textContent = `$${P.toLocaleString()} @ ${rAnnual}% for ${termVal} ${unit}`;
+      lcdMainValue.textContent = `$${emi.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} / month`;
+      lcdSubLeft.textContent = `Total Interest: $${totalInt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      lcdSubRight.textContent = `Total Pay: $${totalPay.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
   }
 
   function calculateCompoundInterest() {
@@ -3043,11 +3051,13 @@
     if (ciApyDisplay) ciApyDisplay.textContent = `${apy.toFixed(2)}%`;
 
     // LCD screen
-    lcdModeLabel.textContent = 'Compound Interest Growth';
-    lcdExpression.textContent = `$${P.toLocaleString()} @ ${rAnnual}% compounded for ${t} years`;
-    lcdMainValue.textContent = `$${A.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    lcdSubLeft.textContent = `Interest Earned: $${earned.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    lcdSubRight.textContent = `Effective APY: ${apy.toFixed(2)}%`;
+    if (activeMaster === 'tabMasterFinance' && activeSubFinance === 'subTabFinanceCompound') {
+      lcdModeLabel.textContent = 'Compound Interest Growth';
+      lcdExpression.textContent = `$${P.toLocaleString()} @ ${rAnnual}% compounded for ${t} years`;
+      lcdMainValue.textContent = `$${A.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      lcdSubLeft.textContent = `Interest Earned: $${earned.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      lcdSubRight.textContent = `Effective APY: ${apy.toFixed(2)}%`;
+    }
   }
 
   function calculateTip() {
@@ -3073,11 +3083,13 @@
     if (tipGuestsDisplay) tipGuestsDisplay.textContent = `${guests} guest${guests > 1 ? 's' : ''}`;
 
     // LCD screen
-    lcdModeLabel.textContent = 'Tip & Bill Split';
-    lcdExpression.textContent = `Bill $${bill.toFixed(2)} + ${tipPct}% tip split by ${guests}`;
-    lcdMainValue.textContent = `$${totalPerGuest.toFixed(2)} / person`;
-    lcdSubLeft.textContent = `Tip: $${tipTotal.toFixed(2)} ($${tipPerGuest.toFixed(2)} ea)`;
-    lcdSubRight.textContent = `Grand Total: $${grandTotal.toFixed(2)}`;
+    if (activeMaster === 'tabMasterFinance' && activeSubFinance === 'subTabFinanceTip') {
+      lcdModeLabel.textContent = 'Tip & Bill Split';
+      lcdExpression.textContent = `Bill $${bill.toFixed(2)} + ${tipPct}% tip split by ${guests}`;
+      lcdMainValue.textContent = `$${totalPerGuest.toFixed(2)} / person`;
+      lcdSubLeft.textContent = `Tip: $${tipTotal.toFixed(2)} ($${tipPerGuest.toFixed(2)} ea)`;
+      lcdSubRight.textContent = `Grand Total: $${grandTotal.toFixed(2)}`;
+    }
   }
 
   // --------------------------------------------------------------------------
@@ -3167,11 +3179,13 @@
     document.querySelector(`.bmi-zone.${activeZone}`)?.classList.add('active');
 
     // LCD screen
-    lcdModeLabel.textContent = 'Body Mass Index (BMI)';
-    lcdExpression.textContent = `Height: ${(heightM * 100).toFixed(0)}cm | Weight: ${weightKg.toFixed(1)}kg`;
-    lcdMainValue.textContent = `${bmi.toFixed(1)} kg/m² (${cat})`;
-    lcdSubLeft.textContent = `Healthy Weight: ${rangeStr}`;
-    lcdSubRight.textContent = 'WHO / CDC Standards';
+    if (activeMaster === 'tabMasterFitness' && activeSubFitness === 'subTabFitnessBmi') {
+      lcdModeLabel.textContent = 'Body Mass Index (BMI)';
+      lcdExpression.textContent = `Height: ${(heightM * 100).toFixed(0)}cm | Weight: ${weightKg.toFixed(1)}kg`;
+      lcdMainValue.textContent = `${bmi.toFixed(1)} kg/m² (${cat})`;
+      lcdSubLeft.textContent = `Healthy Weight: ${rangeStr}`;
+      lcdSubRight.textContent = 'WHO / CDC Standards';
+    }
   }
 
   function calculateBmr() {
@@ -3201,11 +3215,13 @@
     if (bmrGainDisplay) bmrGainDisplay.textContent = `${Math.round(gain).toLocaleString()} kcal`;
 
     // LCD screen
-    lcdModeLabel.textContent = 'Calorie Needs (TDEE)';
-    lcdExpression.textContent = `${gender === 'male' ? 'Male' : 'Female'}, ${age}y, ${h}cm, ${w}kg (${activity}× activity)`;
-    lcdMainValue.textContent = `${Math.round(tdee).toLocaleString()} kcal / day`;
-    lcdSubLeft.textContent = `Basal BMR: ${Math.round(bmr).toLocaleString()} kcal`;
-    lcdSubRight.textContent = `Mild Loss Target: ${Math.round(loss).toLocaleString()} kcal`;
+    if (activeMaster === 'tabMasterFitness' && activeSubFitness === 'subTabFitnessBmr') {
+      lcdModeLabel.textContent = 'Calorie Needs (TDEE)';
+      lcdExpression.textContent = `${gender === 'male' ? 'Male' : 'Female'}, ${age}y, ${h}cm, ${w}kg (${activity}× activity)`;
+      lcdMainValue.textContent = `${Math.round(tdee).toLocaleString()} kcal / day`;
+      lcdSubLeft.textContent = `Basal BMR: ${Math.round(bmr).toLocaleString()} kcal`;
+      lcdSubRight.textContent = `Mild Loss Target: ${Math.round(loss).toLocaleString()} kcal`;
+    }
   }
 
   // --------------------------------------------------------------------------
@@ -3402,11 +3418,13 @@
     if (badge) badge.textContent = `${curFrom} ${fromName} = ${curTo} ${toName}`;
 
     // LCD screen
-    lcdModeLabel.textContent = `Unit Converter (${conf.name})`;
-    lcdExpression.textContent = `Converting ${fromName} to ${toName}`;
-    lcdMainValue.textContent = `${curTo.toLocaleString()} ${uTo}`;
-    lcdSubLeft.textContent = `Input: ${curFrom.toLocaleString()} ${uFrom}`;
-    lcdSubRight.textContent = `Standard SI Base: ${conf.base}`;
+    if (activeMaster === 'tabMasterConverter') {
+      lcdModeLabel.textContent = `Unit Converter (${conf.name})`;
+      lcdExpression.textContent = `Converting ${fromName} to ${toName}`;
+      lcdMainValue.textContent = `${curTo.toLocaleString()} ${uTo}`;
+      lcdSubLeft.textContent = `Input: ${curFrom.toLocaleString()} ${uFrom}`;
+      lcdSubRight.textContent = `Standard SI Base: ${conf.base}`;
+    }
   }
 
   function swapConverterUnits() {
@@ -3494,11 +3512,13 @@
     if (dilutionMolesDisplay) dilutionMolesDisplay.textContent = `${moles.toFixed(3)} mol`;
 
     // LCD screen
-    lcdModeLabel.textContent = 'Solution Dilution (C₁V₁ = C₂V₂)';
-    lcdExpression.textContent = `Initial: ${C1}M × ${V1}mL = Final: ${C2}M × ${V2}mL`;
-    lcdMainValue.textContent = resLabel;
-    lcdSubLeft.textContent = `Solvent to Add: ${solventToAdd.toFixed(2)} mL`;
-    lcdSubRight.textContent = `Dilution Factor: ${factor.toFixed(2)}×`;
+    if (activeMaster === 'tabMasterChemistry' && activeSubChem === 'subTabChemDilution') {
+      lcdModeLabel.textContent = 'Solution Dilution (C₁V₁ = C₂V₂)';
+      lcdExpression.textContent = `Initial: ${C1}M × ${V1}mL = Final: ${C2}M × ${V2}mL`;
+      lcdMainValue.textContent = resLabel;
+      lcdSubLeft.textContent = `Solvent to Add: ${solventToAdd.toFixed(2)} mL`;
+      lcdSubRight.textContent = `Dilution Factor: ${factor.toFixed(2)}×`;
+    }
   }
 
   function calculatePh() {
@@ -3556,11 +3576,13 @@
     if (phDisplayOh) phDisplayOh.textContent = `${ohConc.toExponential(2)} M`;
 
     // LCD screen
-    lcdModeLabel.textContent = 'pH Equilibrium Solver';
-    lcdExpression.textContent = `[H⁺] = ${hConc.toExponential(2)} M | [OH⁻] = ${ohConc.toExponential(2)} M`;
-    lcdMainValue.textContent = `pH ${pH.toFixed(2)} (${classification})`;
-    lcdSubLeft.textContent = `pOH: ${pOH.toFixed(2)}`;
-    lcdSubRight.textContent = 'Standard Room Temp (25°C, Kw = 10⁻¹⁴)';
+    if (activeMaster === 'tabMasterChemistry' && activeSubChem === 'subTabChemPh') {
+      lcdModeLabel.textContent = 'pH Equilibrium Solver';
+      lcdExpression.textContent = `[H⁺] = ${hConc.toExponential(2)} M | [OH⁻] = ${ohConc.toExponential(2)} M`;
+      lcdMainValue.textContent = `pH ${pH.toFixed(2)} (${classification})`;
+      lcdSubLeft.textContent = `pOH: ${pOH.toFixed(2)}`;
+      lcdSubRight.textContent = 'Standard Room Temp (25°C, Kw = 10⁻¹⁴)';
+    }
   }
 
   function calculateMolarMass() {
@@ -3585,11 +3607,13 @@
     if (chemFormulaDisplay) chemFormulaDisplay.textContent = `${formula} (${name})`;
 
     // LCD screen
-    lcdModeLabel.textContent = 'Molar Mass & Stoichiometry';
-    lcdExpression.textContent = `${mass}g of ${name} (${formula})`;
-    lcdMainValue.textContent = `${moles.toFixed(4)} mol`;
-    lcdSubLeft.textContent = `Molecular Weight: ${mw} g/mol`;
-    lcdSubRight.textContent = `Molecules: ${molecules.toExponential(2)}`;
+    if (activeMaster === 'tabMasterChemistry' && activeSubChem === 'subTabChemMolar') {
+      lcdModeLabel.textContent = 'Molar Mass & Stoichiometry';
+      lcdExpression.textContent = `${mass}g of ${name} (${formula})`;
+      lcdMainValue.textContent = `${moles.toFixed(4)} mol`;
+      lcdSubLeft.textContent = `Molecular Weight: ${mw} g/mol`;
+      lcdSubRight.textContent = `Molecules: ${molecules.toExponential(2)}`;
+    }
   }
 
   function calculateFluidPressure() {
@@ -3616,11 +3640,13 @@
     if (fluidPaDisplay) fluidPaDisplay.textContent = `${Math.round(pPa).toLocaleString()} Pa`;
 
     // LCD screen
-    lcdModeLabel.textContent = 'Fluid Hydrostatic Pressure (P = ρgh)';
-    lcdExpression.textContent = `Depth ${h}m in fluid (${rho} kg/m³) with g = ${g} m/s²`;
-    lcdMainValue.textContent = `${pKpa.toFixed(2)} kPa (${pAtm.toFixed(3)} atm)`;
-    lcdSubLeft.textContent = `${pPsi.toFixed(2)} psi | ${pBar.toFixed(3)} bar`;
-    lcdSubRight.textContent = `Pascals: ${Math.round(pPa).toLocaleString()} Pa`;
+    if (activeMaster === 'tabMasterChemistry' && activeSubChem === 'subTabChemFluid') {
+      lcdModeLabel.textContent = 'Fluid Hydrostatic Pressure (P = ρgh)';
+      lcdExpression.textContent = `Depth ${h}m in fluid (${rho} kg/m³) with g = ${g} m/s²`;
+      lcdMainValue.textContent = `${pKpa.toFixed(2)} kPa (${pAtm.toFixed(3)} atm)`;
+      lcdSubLeft.textContent = `${pPsi.toFixed(2)} psi | ${pBar.toFixed(3)} bar`;
+      lcdSubRight.textContent = `Pascals: ${Math.round(pPa).toLocaleString()} Pa`;
+    }
   }
 
   // --------------------------------------------------------------------------
@@ -4302,6 +4328,10 @@
     calculatePh();
     calculateMolarMass();
     calculateFluidPressure();
+
+    // Ensure default initial active view is Resistor
+    switchMasterTab('tabMasterElectronics');
+    switchSubElectronicsTab('subTabColor');
   }
 
   document.addEventListener('DOMContentLoaded', initKeyboardAndListeners);
